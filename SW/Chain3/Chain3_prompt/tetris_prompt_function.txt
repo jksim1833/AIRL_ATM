@@ -1,0 +1,13 @@
+[user]
+The only valid seat control commands you are allowed to use are defined as follows:
+"""
+"SEAT CONTROL LIST"
+- move(seat_id, x, y): Move the specified seat to the given (x, y) position in the vehicle cabin layout.
+- rotate(seat_id, angle): Rotate the seat clockwise by the given angle in degrees.
+- fold(seat_id): Fold the seat to create more space
+- unfold(seat_id): Unfold the seat to make it ready for use.
+"""
+-------------------------------------------------------
+These commands are all you can use. Do not start working yet:
+[assistant]
+Understood. Waiting for next input.
