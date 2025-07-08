@@ -1,0 +1,3 @@
+openai==0.28.1
+tiktoken
+virtualhome==2.3.0

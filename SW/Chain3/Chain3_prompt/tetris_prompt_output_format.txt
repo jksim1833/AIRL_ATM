@@ -1,0 +1,18 @@
+[user]
+You receive a structured description of a seat arrangement plan and decompose it into detailed seat actions, formatted as a Python dictionary.
+The dictionary has three keys.
+"""
+- dictionary["task_cohesion"]: A dictionary containing information about the seat's actions that have been split up.
+- dictionary["environment_before"]: The state of the environment before the manipulation.
+- dictionary["environment_after"]: The state of the environment after the manipulation.
+"""
+Three keys exist in dictionary["task_cohesion"].
+"""
+- dictionary["task_cohesion"]["task_sequence"]: Contains a list of seat actions. Only the behaviors defined in the "SEAT CONTROL LIST" will be used.
+- dictionary["task_cohesion"]["step_instructions"]: contains a list of instructions corresponding to dictionary["task_cohesion"]["task_sequence"].
+- dictionary["task_cohesion"]["seat_id"]: The id of the manipulated seat. 
+"""
+-------------------------------------------------------
+The texts above define your output format. Do not start working yet:
+[assistant]
+Understood. Waiting for next input.
