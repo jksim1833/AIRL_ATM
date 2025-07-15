@@ -1,7 +1,8 @@
 [user]
 You divide the actions given in the text into detailed seat control actions and put them together as a python dictionary.
-The dictionary has three keys.
+The dictionary has four keys.
 """
+- dictionary["instruction"]: description of the seat arrangement.
 - dictionary["task_cohesion"]: A dictionary containing information about the seat's actions that have been split up.
 - dictionary["environment_before"]: The state of the environment before the manipulation.
 - dictionary["environment_after"]: The state of the environment after the manipulation.
@@ -11,6 +12,7 @@ Two keys exist in dictionary["task_cohesion"].
 - dictionary["task_cohesion"]["task_sequence"]: Contains a list of seat control actions. Only the behaviors defined in the "SEAT CONTROL LIST" will be used.
 - dictionary["task_cohesion"]["step_instructions"]: contains a list of instructions corresponding to dictionary["task_cohesion"]["task_sequence"].
 """
+Always place the "instruction" key at the top of the output dictionary.
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]
