@@ -95,7 +95,7 @@ class ChatGPT:
         text_json = text[text.find(
             '```') + 3:text.find('```', text.find('```') + 3)]
         return text_json
-# -----------------------------------------------------------------------
+
     def generate(self, message, environment):
         
         text_base = self.query
@@ -151,7 +151,7 @@ class ChatGPT:
             fp = os.path.join(dump_name + '.json')
             with open(fp, 'w') as f:
                 json.dump(self.json_dict, f, indent=4)
-# -----------------------------------------------------------------------------------------
+
 
 # 시나리오 선택: GPT에게 전달할 입력 데이터 구성 단계 
 if __name__ == "__main__":
