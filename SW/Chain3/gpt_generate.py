@@ -152,7 +152,6 @@ class ChatGPT:
             with open(fp, 'w') as f:
                 json.dump(self.json_dict, f, indent=4)
 
-
 # 시나리오 선택: GPT에게 전달할 입력 데이터 구성 단계 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()  
@@ -164,7 +163,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     scenario_name = args.scenario
 
-    if scenario_name == 'chain3_basic_test1':
+    if scenario_name == 'chain3_1seat':
         environment = {
             "objects": ["seat_1"],
             "object_states": {
@@ -175,13 +174,13 @@ if __name__ == "__main__":
         }
 
         instructions = ["seat_1(storage, 1, 1, forward)",  # 타입
-                        "seat_1(seat, 1, 1, backward)",    # 방향
-                        "seat_1(storage, 0, 0, forward)",  # 타입 + 위치
-                        "seat_1(storage, 0, 1, right)"]    # 타입 + 위치 + 방향
+                        "seat_1(storage, 1, 1, backward)", # 방향
+                        "seat_1(seat, 2, 2, backward)",    # 타입 + 위치
+                        "seat_1(storage, 0, 0, right)"]    # 타입 + 위치 + 방향
         
-    elif scenario_name == 'chain3_basic_test2':
+    elif scenario_name == 'chain3_2seat': #수정 필요 
         environment = {
-            "objects": ["seat_1"],
+            "objects": ["seat_1"], 
             "object_states": {
                 "seat_1": {
                 "type": "storage",
@@ -189,9 +188,9 @@ if __name__ == "__main__":
                 "direction": "right"}}
         }
 
-        instructions = ["seat_1(storage, 0, 0, right)",     # 위치 
-                        "seat_1(seat, 0, 2, right)",        # 타입   
-                        "seat_1(seat, 1, 1, forward)"]      # 타입 + 위치 + 방향 
+        instructions = ["seat_1(storage, 0, 0, right)",     
+                        "seat_1(seat, 0, 2, right)",          
+                        "seat_1(seat, 1, 1, forward)"]     
     
     
     else:
