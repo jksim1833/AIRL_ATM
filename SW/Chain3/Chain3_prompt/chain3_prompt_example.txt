@@ -1,0 +1,105 @@
+[user]
+I will give you some examples of the input and the output you will generate. 
+Example 1:
+"""
+- Input:
+{"objects": ["seat_1"],
+"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}},
+"instruction": "seat_1(storage, 1, 1, forward)"}
+- Output:
+```
+{"task_cohesion": {
+    "task_sequence": [
+       "fold(seat_1)"
+    ],
+    "step_instructions": [
+       "fold the seat to convert it into storage mode"
+    ]},
+"environment_before": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}}},
+"environment_after": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "storage", "position": [1, 1], "direction": "forward"}}}}
+```
+"""
+Example 2:
+"""
+- Input:
+{"objects": ["seat_1"],
+"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}},
+"instruction": "seat_1(seat, 1, 1, backward)"}
+- Output:
+```
+{"task_cohesion": {
+    "task_sequence": [
+       "rotate(seat_1, 180)"
+    ],
+    "step_instructions": [
+       "rotate the seat to face backward"
+    ]},
+"environment_before": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}}},
+"environment_after": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"}}}}
+```
+"""
+Example 3:
+"""
+- Input:
+{"objects": ["seat_1"],
+"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}},
+"instruction": "seat_1(storage, 0, 0, forward)"}
+- Output:
+```
+{"task_cohesion": {
+    "task_sequence": [
+       "fold(seat_1)",
+       "move(seat_1, 0, 0)"
+    ],
+    "step_instructions": [
+      "fold the seat to convert it into storage mode",
+      "move the seat to position (0, 0)"
+    ]},
+"environment_before": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}}},
+"environment_after": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "storage", "position": [0, 0], "direction": "forward"}}}}
+```
+"""
+Example 4:
+"""
+- Input:
+{"objects": ["seat_1"],
+"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}},
+"instruction": "seat_1(storage, 0, 1, right)"}
+- Output:
+```
+{"task_cohesion": {
+    "task_sequence": [
+      "fold(seat_1)",
+      "rotate(seat_1, 90)",
+      "move(seat_1, 0, 1)"
+    ],
+    "step_instructions": [
+      "fold the seat to convert it into storage mode",
+      "rotate the seat to face right",
+      "move the seat to position (0, 1)"
+    ]},
+"environment_before": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}}},
+"environment_after": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "storage", "position": [0, 1], "direction": "right"}}}}
+```
+"""
+From these examples, learn that some seat control actions have dependencies with the actions before and after them.
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. I will wait for further instructions before starting to work.

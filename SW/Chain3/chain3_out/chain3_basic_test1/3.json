@@ -1,0 +1,42 @@
+{
+    "task_cohesion": {
+        "task_sequence": [
+            "rotate(seat_1, 90)",
+            "move(seat_1, 0, 1)"
+        ],
+        "step_instructions": [
+            "rotate the seat to face right",
+            "move the seat to position (0, 1)"
+        ]
+    },
+    "environment_before": {
+        "objects": [
+            "seat_1"
+        ],
+        "object_states": {
+            "seat_1": {
+                "type": "storage",
+                "position": [
+                    0,
+                    0
+                ],
+                "direction": "forward"
+            }
+        }
+    },
+    "environment_after": {
+        "objects": [
+            "seat_1"
+        ],
+        "object_states": {
+            "seat_1": {
+                "type": "storage",
+                "position": [
+                    0,
+                    1
+                ],
+                "direction": "right"
+            }
+        }
+    }
+}
