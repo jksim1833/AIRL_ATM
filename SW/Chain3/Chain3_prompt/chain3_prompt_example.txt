@@ -33,9 +33,11 @@ Example 2:
 ```
 {"task_cohesion": {
     "task_sequence": [
+       "fold(seat_1)"
        "rotate(seat_1, 180)"
     ],
     "step_instructions": [
+       "fold the seat to convert it into storage mode"
        "rotate the seat to face backward"
     ]},
 "environment_before": {
