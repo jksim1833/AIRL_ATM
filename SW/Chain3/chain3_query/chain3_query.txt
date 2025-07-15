@@ -16,7 +16,7 @@ The dictionary that you return should be formatted as python dictionary. Follow 
 "STATE LIST"
 - type: "seat" or "storage". physical form of the seat. 
 - position: [x, y] coordinate of the seat. x, y must be integers in the range 0 ≤ x, y ≤ 2.
-- direction: "forward", "backward", "left", or "right". "forward" indicates the default front-facing direction of the vehicle.
+- direction: "forward", "backward", "left", or "right". This indicates the seat's orientation relative to the fixed forward direction of the vehicle. The vehicle’s forward direction is constant and does not change based on seat movement.
 """
 6. All keys of the dictionary should be double-quoted.
 7. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response.
