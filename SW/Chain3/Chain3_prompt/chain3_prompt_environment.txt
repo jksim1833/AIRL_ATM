@@ -1,0 +1,18 @@
+[user]
+Information about environments and objects are given as python dictionary. Example:
+"""
+{"environment":{
+	"objects": ["seat_1"],
+    	"object_states": {"seat_1": { "type": "seat", "position": [1, 1], "direction": "forward"}}}}
+"""
+Object states are represented using those state sets:
+"""
+"STATE LIST"
+- type: "seat" or "storage". physical form of the seat. 
+- position: [x, y] coordinate of the seat. x, y must be integers in the range 0 ≤ x, y ≤ 2.
+- direction: "forward", "backward", "left", or "right". "forward" indicates the default front-facing direction of the vehicle.
+"""
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. I will wait for further instructions before starting to work.

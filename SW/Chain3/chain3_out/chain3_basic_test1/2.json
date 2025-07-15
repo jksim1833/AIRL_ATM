@@ -1,0 +1,42 @@
+{
+    "task_cohesion": {
+        "task_sequence": [
+            "fold(seat_1)",
+            "move(seat_1, 0, 0)"
+        ],
+        "step_instructions": [
+            "fold the seat to convert it into storage mode",
+            "move the seat to position (0, 0)"
+        ]
+    },
+    "environment_before": {
+        "objects": [
+            "seat_1"
+        ],
+        "object_states": {
+            "seat_1": {
+                "type": "seat",
+                "position": [
+                    1,
+                    1
+                ],
+                "direction": "backward"
+            }
+        }
+    },
+    "environment_after": {
+        "objects": [
+            "seat_1"
+        ],
+        "object_states": {
+            "seat_1": {
+                "type": "storage",
+                "position": [
+                    0,
+                    0
+                ],
+                "direction": "forward"
+            }
+        }
+    }
+}
