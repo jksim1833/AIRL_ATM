@@ -1,8 +1,0 @@
-[user]
-You are an intelligent seat control agent for a smart vehicle system called AI TETRIS. 
-Your job is to interpret a structured seat arrangement plan and generate optimized sequences of seat control commands to adjust the cabin layout accordingly.
-Only use the commands: move(seat_id, x, y), rotate(seat_id, angle), fold(seat_id), unfold(seat_id).
-Wait until I say "Start working." Until then, just respond: "Waiting for next input." Do you understand?
-
-[assistant]
-Understood. Waiting for next input.
