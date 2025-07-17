@@ -2,26 +2,10 @@
 Necessary and sufficient seat control actions are defined as follows:
 """
 "SEAT CONTROL ACTION LIST"
-
-- move_object(): Move the object grabbed by the robot hand from one position to another. move_object() is allowed only when the object is not physically constrained by the environment. For example, if the robot hand moves an object on the floor to another location, move_object() is not allowed because the object is constrained by the floor. 
-- detach_from_plane(): This action can only be performed if an object is grabbed. Move the grabbed object from a state in which it is constrained by a plane to a state in which it is not constrained by any plane. For example, detach_from_plane() is used when a robot hand picks up an object on a table.
-- attach_to_plane(): This action can only be performed if an object is grabbed. The opposite operation of detach_from_plane().
-- open_by_rotate(): This action can only be performed if an object is grabbed. Open something by rotating an object that is rotationally constrained by its environment along its rotation. For example, when opening a refrigerator, the refrigerator handle makes this motion. Also, when opening the lid of a plastic bottle, the lid makes this motion.
-- adjust_by_rotate(): This action can only be performed if an object is grabbed. Rotate an object that is rotationally constrained by its environment along its rotation. For example, when adjusting the temperature of a refrigerator, the temperature knob makes this motion.
-- close_by_rotate(): This action can only be performed if an object is grabbed. The opposite operation of open_by_rotate().
-- open_by_slide(): This action can only be performed if an object is grabbed. Moves an object that is translationally constrained in two axes from its environment along one unbounded axis. For example, when opening a sliding door or drawer, the handle makes this movement.
-- adjust_by_slide(): This action can only be performed if an object is grabbed. Slide an object that is translationally constrained in two axes from its environment along one unbounded axis. For example, when widen the gap between a sliding door and the wall, the handle makes this movement.
-- close_by_slide(): This action can only be performed if an object is grabbed. The opposite operation of open_by_slide().
-- wipe_on_plane(): This action can only be performed if an object is grabbed. Move an object landinges along that plane. For example,  a sponge, the sponge makes this motion.
-
-
-- move(seat_id, x, y): This action performs the role of moving the seat corresponding to the seat_id to the allotted coordinate value (x,y). move(seat_id, x, y) is allowed only when the seat is storage() status. For example, if seat is sitting() status move(seat_id, x, y) action can't be operate. To operate move(seat_id, x, y) action, storage() action must precede.
+- chair(seat_id): This action performs the role of moving the seat corresponding to the seat_id to the chair postion. Chair position is set by bottom frame to 90 degree & back frame to 25 degree.
+- storage(seat_id): This action performs the role of moving the seat corresponding to the seat_id to the storage postion. It's for store seat with minimal volume to take advantage of the empty space. storage position is set by bottom frame to 0 degree & back frame to 0 degree.
+- move(seat_id, x, y): This action performs the role of moving the seat corresponding to the seat_id to the allotted coordinate value (x,y). move(seat_id, x, y) is allowed only when the seat is storage() status. For example, if seat is chair() status move(seat_id, x, y) action can't be operate. To operate move(seat_id, x, y) action, storage() action must precede.
 - rotate(seat_id, degree): This action performs the role of rotating the seat corresponding to the seat_id to the specified degree. For value of degree only allowed for 0, 90, 180, 270; no other values can be given.
-
-- flip(seat_id): This action transforms the seat from a folded state into a chair-like configuration. It can only be used when the seat is currently folded. If used, this command must appear at the final stage of the seat arrangement sequence, after all move(seat_id, x, y) and rotate(seat_id, degree) commands have been completed.
-- fold(seat_id): This action folds the entire seat into a compact, flat configuration to free up cabin space.
-
-
 """
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
