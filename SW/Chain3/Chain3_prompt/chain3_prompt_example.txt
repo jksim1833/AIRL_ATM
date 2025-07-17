@@ -36,11 +36,13 @@ Example 2:
 "task_cohesion": {
     "task_sequence": [
        "fold(seat_1)",
-       "rotate(seat_1, 180)"
+       "rotate(seat_1, 180)",
+       "flip(seat_1)"
     ],
     "step_instructions": [
        "fold the seat to convert it into storage mode",
-       "rotate the seat to face backward"
+       "rotate the seat to face backward",
+       "flip the seat to convert it into seat mode"
     ]},
 "environment_before": {
     "objects": ["seat_1"],
