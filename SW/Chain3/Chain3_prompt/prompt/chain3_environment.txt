@@ -1,23 +1,18 @@
 [user]
 Information about environments and objects are given as python dictionary. Example:
 """
-{"environment":{"assets":["<table>", "<shelf_bottom>", "<shelf_top>", "<trash_bin>", "<floor>"],
-    "asset_states": {"<shelf_bottom>": "on_something(<table>)", 
-                    "<trash_bin>": "on_something(<floor>)"},
-    "objects": ["<spam>", "<juice>"],
-    "object_states": {"<spam>": "on_something(<table>)", 
-                "<juice>": "on_something(<shelf_bottom>)"}}}
+{"environment":{
+    "objects":["seat_1"],
+    "object_states":["seat_1":{""type":"chair", "position":"(x,y)", "direction":"forward"}]
+    }}
 """
 Asset states and object states are represented using those state sets:
 """
 "STATE LIST"
-- on_something(<something>): Object is located on <something>
-- inside_something(<something>): Object is located inside <something>
-- inside_hand(): Object is being grasped by a robot hand
-- closed(): Object can be opened
-- open(): Object can be closed or kept opened
+- type:"chair" or "storage" form of the seat.
+- position:(x,y) coordinate of the seat. Each x,y must be integers in the range 0 to 2.
+- direction:"foward", "right", "backward", or "left" and each direction s
 """
-<something> should be one of the assets or objects in the environment.
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]

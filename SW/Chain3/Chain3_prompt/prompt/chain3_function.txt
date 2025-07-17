@@ -2,10 +2,10 @@
 Necessary and sufficient seat control actions are defined as follows:
 """
 "SEAT CONTROL ACTION LIST"
-- chair(seat_id): This action performs the role of moving the seat corresponding to the seat_id to the chair postion. Chair position is set by bottom frame to 90 degree & back frame to 25 degree.
-- storage(seat_id): This action performs the role of moving the seat corresponding to the seat_id to the storage postion. It's for store seat with minimal volume to take advantage of the empty space. storage position is set by bottom frame to 0 degree & back frame to 0 degree.
-- move(seat_id, x, y): This action performs the role of moving the seat corresponding to the seat_id to the allotted coordinate value (x,y). move(seat_id, x, y) is allowed only when the seat is storage() status. For example, if seat is chair() status move(seat_id, x, y) action can't be operate. To operate move(seat_id, x, y) action, storage() action must precede.
-- rotate(seat_id, degree): This action performs the role of rotating the seat corresponding to the seat_id to the specified degree. For value of degree only allowed for 0, 90, 180, 270; no other values can be given.
+- chair(seat_id): This action performs the role of moving the seat corresponding to the seat_id to the chair type. Chair position is set by bottom frame to 90 degree & back frame to 25 degree.
+- storage(seat_id): This action performs the role of moving the seat corresponding to the seat_id to the storage type. It's for store seat with minimal volume to take advantage of the empty space. storage position is set by bottom frame to 0 degree & back frame to 0 degree.
+- move(seat_id, x, y): This action performs the role of moving the seat corresponding to the seat_id to the allotted coordinate value (x,y). move(seat_id, x, y) is allowed only when the seat is storage(seat_id) status. For example, if seat is chair(seat_id) status move(seat_id, x, y) action can't be operate. To operate move(seat_id, x, y) action, storage() action must precede.
+- rotate(seat_id, degree): This action performs the role of rotating the seat corresponding to the seat_id to the specified degree. For value of degree only allowed for 0, 90, 180, 270; no other values can be given. rotate(seat_id, degree) is allowed only when the seat is storage(seat_id) status. For example, if seat is chair(seat_id) status rotate(seat_id, degree) action can't be operate. To operate rotate(seat_id, degree) action, storage() action must precede.
 """
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
