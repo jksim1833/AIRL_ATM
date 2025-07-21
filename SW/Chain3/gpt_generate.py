@@ -126,7 +126,7 @@ class ChatGPT:
         self.last_response = self.extract_json_part(self.last_response)
         self.last_response = self.last_response.replace("'", "\"")
         
-        # dump to a text file
+        # GPT응답을 텍스트 파일로 저장
         with open('chain3_last_response.txt', 'w') as f:
             f.write(self.last_response)
 
