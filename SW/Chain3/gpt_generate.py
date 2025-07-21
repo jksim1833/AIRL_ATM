@@ -178,21 +178,34 @@ if __name__ == "__main__":
                         "seat_1(seat, 2, 2, backward)",    # 타입 + 위치
                         "seat_1(storage, 0, 0, right)"]    # 타입 + 위치 + 방향
         
-    elif scenario_name == 'chain3_2seat': #수정 필요 
+    elif scenario_name == 'chain3_4seat_compact': 
         environment = {
-            "objects": ["seat_1"], 
+            "objects": ["seat_1", "seat_2", "seat_3", "seat_4"], 
             "object_states": {
                 "seat_1": {
-                "type": "storage",
-                "position": [0, 2],
-                "direction": "right"}}
-        }
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "forward"
+                },
+                "seat_2": {
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "forward"
+                },
+                "seat_3": {
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "forward"
+                },
+                "seat_4": {
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "forward"
+                }}}
 
-        instructions = ["seat_1(storage, 0, 0, right)",     
-                        "seat_1(seat, 0, 2, right)",          
-                        "seat_1(seat, 1, 1, forward)"]     
+        instructions = ["seat_1(storage, 0, 0, right), seat_2(storage, 2, 0, left), seat_3(storage, 0, 0, right), seat_4(storage, 2, 0, left)"]     
     
-    
+
     else:
         parser.error('Invalid scenario name:' + scenario_name)
 
