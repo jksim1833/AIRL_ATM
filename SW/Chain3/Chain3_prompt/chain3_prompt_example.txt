@@ -34,18 +34,18 @@ Example 2:
 """
 - Input:
 {"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}},
+"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"}},
 "instruction": "seat_1(storage, 0, 0, left)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}}},
+    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"}}},
 "instruction": "seat_1(storage, 0, 0, left)",
 "task_cohesion": {
     "task_sequence": [
       "fold(seat_1)",
-      "rotate(seat_1, -90)",
+      "rotate(seat_1, 90)",
       "move(seat_1, 0, 0)"
     ],
     "step_instructions": [
@@ -61,56 +61,110 @@ Example 2:
 Example 3:
 """
 - Input:
-{"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "storage", "position": [0, 0], "direction": "left"}},
-"instruction": "seat_1(seat, 1, 1, backward)"}
+{"objects": ["seat_1", "seat_2"],
+"object_states": {
+    "seat_1": {"type": "storage", "position": [0, 0], "direction": "right"},
+    "seat_2": {"type": "storage", "position": [2, 0], "direction": "left"}},
+"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward)"}
 - Output:
 ```
 {"environment_before": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "storage", "position": [0, 0], "direction": "left"}}},
-"instruction": "seat_1(seat, 1, 1, backward)",
+    "objects": ["seat_1", "seat_2"],
+    "object_states": {
+    "seat_1": {"type": "storage", "position": [0, 0], "direction": "right"},
+    "seat_2": {"type": "storage", "position": [2, 0], "direction": "left"}}},
+"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward)",
 "task_cohesion": {
-    "task_sequence": [
-       "move(seat_1, 1, 1)",
-       "rotate(seat_1, -90)",
-       "flip(seat_1)"
-       
+    "task_sequence": {
+    "seat_1": [
+    "move(seat_1, 1, 1)",
+    "rotate(seat_1, -90)",
+    "flip(seat_1)"
     ],
-    "step_instructions": [
-      "move the seat to position (1, 1)",
-      "rotate the seat to face backward",
-      "flip the seat to convert it into seat mode"
+    "seat_2": [
+    "move(seat_2, 1, 1)",
+    "rotate(seat_2, 90)",
+    "flip(seat_2)"
     ]},
+    "step_instructions": {
+    "seat_1": [
+    "move seat_1 to position (1, 1)",
+    "rotate seat_1 to face forward",
+    "flip seat_1 to convert it into seat mode"
+    ],
+    "seat_2": [
+    "move seat_2 to position (1, 1)",
+    "rotate seat_2 to face forward",
+    "flip seat_2 to convert it into seat mode"
+    ]}},
 "environment_after": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"}}}}
+    "objects": ["seat_1", "seat_2"],
+    "object_states": {
+        "seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"},
+        "seat_2": {"type": "seat", "position": [1, 1], "direction": "forward"}}}}
 ```
 """
 Example 4:
 """
 - Input:
-{"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "storage", "position": [2, 0], "direction": "backward"}},
-"instruction": "seat_1(storage, 0, 2, right)"}
+{"objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
+"object_states": {
+    "seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"},
+    "seat_2": {"type": "seat", "position": [1, 1], "direction": "backward"},
+    "seat_3": {"type": "seat", "position": [1, 1], "direction": "forward"},
+    "seat_4": {"type": "seat", "position": [1, 1], "direction": "forward"}},
+"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)"}
 - Output:
 ```
 {"environment_before": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "storage", "position": [2, 0], "direction": "backward"}}},
-"instruction": "seat_1(storage, 0, 2, right)",
+    "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
+    "object_states": {
+    "seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"},
+    "seat_2": {"type": "seat", "position": [1, 1], "direction": "backward"},
+    "seat_3": {"type": "seat", "position": [1, 1], "direction": "forward"},
+    "seat_4": {"type": "seat", "position": [1, 1], "direction": "forward"}}},
+"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)",
 "task_cohesion": {
-    "task_sequence": [
-       "move(seat_1, 0, 2)",
-       "rotate(seat_1, -90)"  
+    "task_sequence": {
+    "seat_1": [
+    "rotate(seat_1, 180)"
     ],
-    "step_instructions": [
-      "move the seat to position (0, 2)",
-      "rotate the seat to face right"
+    "seat_2": [
+    "rotate(seat_2, 180)"
+    ],
+    "seat_3": [
+    "fold(seat_3)",
+    "rotate(seat_3, -90)",
+    "move(seat_3, 0, 1)"
+    ],
+    "seat_4": [
+    "fold(seat_4)",
+    "rotate(seat_4, 90)",
+    "move(seat_4, 2, 1)"
     ]},
+    "step_instructions": {
+    "seat_1": [
+    "rotate seat_1 to face forward"
+    ],
+    "seat_2": [
+    "rotate seat_2 to face forward"
+    ],
+    "seat_3": [
+    "fold the seat to convert it into storage mode",
+    "rotate seat_3 to face left",
+    "move seat_3 to position (0, 1)"
+    ],
+    "seat_4": [
+    "fold the seat to convert it into storage mode",
+    "rotate seat_4 to face right",
+    "move seat_4 to position (2, 1)"]}},
 "environment_after": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "storage", "position": [0, 2], "direction": "right"}}}}
+    "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
+    "object_states": {
+        "seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"},
+        "seat_2": {"type": "seat", "position": [1, 1], "direction": "forward"},
+        "seat_3": {"type": "storage", "position": [0, 1], "direction": "left"},
+        "seat_4": {"type": "storage", "position": [2, 1], "direction": "right"}}}}
 ```
 """
 From these examples, learn that some seat control actions have dependencies with the actions before and after them.
