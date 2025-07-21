@@ -19,7 +19,7 @@ The dictionary that you return should be formatted as python dictionary. Follow 
 - direction: "forward", "backward", "left", or "right". This indicates the seat's orientation relative to the fixed forward direction of the vehicle. The vehicle’s forward direction is constant and does not change based on seat movement.
 """
 6. All keys of the dictionary should be double-quoted.
-7. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response.
+7. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response. Do not include the word "json" after the opening backticks. Only use plain backticks (```).
 8. Make sure that your seat control sequence obeys the following constraints:
 - move(seat_id, x, y) can only be used when the seat is in the "storage" state.
 - rotate(seat_id, degree) must be executed before flip(seat_id).
