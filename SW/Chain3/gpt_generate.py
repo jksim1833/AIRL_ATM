@@ -205,6 +205,32 @@ if __name__ == "__main__":
 
         instructions = ["seat_1(storage, 0, 0, right), seat_2(storage, 2, 0, left), seat_3(storage, 0, 0, right), seat_4(storage, 2, 0, left)"]     
     
+    elif scenario_name == 'chain3_4seat_pair_face':
+        environment = {
+            "objects": ["seat_1", "seat_2", "seat_3", "seat_4"], 
+            "object_states": {
+                "seat_1": {
+                "type": "storage",
+                "position": [1, 0],
+                "direction": "backward"
+                },
+                "seat_2": {
+                "type": "storage",
+                "position": [1, 0],
+                "direction": "backward"
+                },
+                "seat_3": {
+                "type": "storage",
+                "position": [0, 1],
+                "direction": "right"
+                },
+                "seat_4": {
+                "type": "storage",
+                "position": [2, 1],
+                "direction": "left"
+                }}}
+
+        instructions = ["seat_1(seat, 1, 2, right), seat_2(seat, 1, 2, left), seat_3(seat, 1, 0, right), seat_4(seat, 1, 0, left)"]   
 
     else:
         parser.error('Invalid scenario name:' + scenario_name)
