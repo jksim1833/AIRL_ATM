@@ -46,22 +46,22 @@
         "task_sequence": {
             "seat_1": [
                 "move(seat_1, 1, 2)",
-                "rotate(seat_1, 90)",
+                "rotate(seat_1, 270)",
                 "flip(seat_1)"
             ],
             "seat_2": [
                 "move(seat_2, 1, 2)",
-                "rotate(seat_2, -90)",
+                "rotate(seat_2, 90)",
                 "flip(seat_2)"
             ],
             "seat_3": [
                 "move(seat_3, 1, 0)",
-                "rotate(seat_3, 90)",
+                "rotate(seat_3, 270)",
                 "flip(seat_3)"
             ],
             "seat_4": [
                 "move(seat_4, 1, 0)",
-                "rotate(seat_4, -90)",
+                "rotate(seat_4, 90)",
                 "flip(seat_4)"
             ]
         },
@@ -97,7 +97,7 @@
         ],
         "object_states": {
             "seat_1": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     2
@@ -105,7 +105,7 @@
                 "direction": "right"
             },
             "seat_2": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     2
@@ -113,7 +113,7 @@
                 "direction": "left"
             },
             "seat_3": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     0
@@ -121,7 +121,7 @@
                 "direction": "right"
             },
             "seat_4": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     0
