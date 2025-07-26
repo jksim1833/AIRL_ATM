@@ -4,14 +4,14 @@ Example 1:
 """
 - Input:
 {"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"}},
-"instruction": "seat_1(seat, 0, 1, right)"}
+"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "forward"}},
+"instruction": "seat_1(chair, 0, 1, right)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"}}},
-"instruction": "seat_1(seat, 0, 1, right)",
+    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"}}},
+"instruction": "seat_1(chair, 0, 1, right)",
 "task_cohesion": {
     "task_sequence": [
        "fold(seat_1)",
@@ -27,20 +27,20 @@ Example 1:
     ]},
 "environment_after": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "seat", "position": [0, 1], "direction": "right"}}}}
+    "object_states": {"seat_1": {"type": "chair", "position": [0, 1], "direction": "right"}}}}
 ```
 """
 Example 2:
 """
 - Input:
 {"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"}},
+"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"}},
 "instruction": "seat_1(storage, 0, 0, left)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"}}},
+    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"}}},
 "instruction": "seat_1(storage, 0, 0, left)",
 "task_cohesion": {
     "task_sequence": [
@@ -65,7 +65,7 @@ Example 3:
 "object_states": {
     "seat_1": {"type": "storage", "position": [0, 0], "direction": "right"},
     "seat_2": {"type": "storage", "position": [2, 0], "direction": "left"}},
-"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward)"}
+"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward)"}
 - Output:
 ```
 {"environment_before": {
@@ -73,12 +73,12 @@ Example 3:
     "object_states": {
     "seat_1": {"type": "storage", "position": [0, 0], "direction": "right"},
     "seat_2": {"type": "storage", "position": [2, 0], "direction": "left"}}},
-"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward)",
+"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward)",
 "task_cohesion": {
     "task_sequence": {
     "seat_1": [
     "move(seat_1, 1, 1)",
-    "rotate(seat_1, -90)",
+    "rotate(seat_1, 270)",
     "flip(seat_1)"
     ],
     "seat_2": [
@@ -100,8 +100,8 @@ Example 3:
 "environment_after": {
     "objects": ["seat_1", "seat_2"],
     "object_states": {
-        "seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"},
-        "seat_2": {"type": "seat", "position": [1, 1], "direction": "forward"}}}}
+        "seat_1": {"type": "chair", "position": [1, 1], "direction": "forward"},
+        "seat_2": {"type": "chair", "position": [1, 1], "direction": "forward"}}}}
 ```
 """
 Example 4:
@@ -109,21 +109,21 @@ Example 4:
 - Input:
 {"objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
 "object_states": {
-    "seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"},
-    "seat_2": {"type": "seat", "position": [1, 1], "direction": "backward"},
-    "seat_3": {"type": "seat", "position": [1, 1], "direction": "forward"},
-    "seat_4": {"type": "seat", "position": [1, 1], "direction": "forward"}},
-"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)"}
+    "seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"},
+    "seat_2": {"type": "chair", "position": [1, 1], "direction": "backward"},
+    "seat_3": {"type": "chair", "position": [1, 1], "direction": "forward"},
+    "seat_4": {"type": "chair", "position": [1, 1], "direction": "forward"}},
+"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
     "object_states": {
-    "seat_1": {"type": "seat", "position": [1, 1], "direction": "backward"},
-    "seat_2": {"type": "seat", "position": [1, 1], "direction": "backward"},
-    "seat_3": {"type": "seat", "position": [1, 1], "direction": "forward"},
-    "seat_4": {"type": "seat", "position": [1, 1], "direction": "forward"}}},
-"instruction": "seat_1(seat, 1, 1, forward), seat_2(seat, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)",
+    "seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"},
+    "seat_2": {"type": "chair", "position": [1, 1], "direction": "backward"},
+    "seat_3": {"type": "chair", "position": [1, 1], "direction": "forward"},
+    "seat_4": {"type": "chair", "position": [1, 1], "direction": "forward"}}},
+"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)",
 "task_cohesion": {
     "task_sequence": {
     "seat_1": [
@@ -134,7 +134,7 @@ Example 4:
     ],
     "seat_3": [
     "fold(seat_3)",
-    "rotate(seat_3, -90)",
+    "rotate(seat_3, 270)",
     "move(seat_3, 0, 1)"
     ],
     "seat_4": [
@@ -161,8 +161,8 @@ Example 4:
 "environment_after": {
     "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
     "object_states": {
-        "seat_1": {"type": "seat", "position": [1, 1], "direction": "forward"},
-        "seat_2": {"type": "seat", "position": [1, 1], "direction": "forward"},
+        "seat_1": {"type": "chair", "position": [1, 1], "direction": "forward"},
+        "seat_2": {"type": "chair", "position": [1, 1], "direction": "forward"},
         "seat_3": {"type": "storage", "position": [0, 1], "direction": "left"},
         "seat_4": {"type": "storage", "position": [2, 1], "direction": "right"}}}}
 ```

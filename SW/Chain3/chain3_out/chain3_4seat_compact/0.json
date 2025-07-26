@@ -8,7 +8,7 @@
         ],
         "object_states": {
             "seat_1": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
@@ -16,7 +16,7 @@
                 "direction": "forward"
             },
             "seat_2": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
@@ -24,7 +24,7 @@
                 "direction": "forward"
             },
             "seat_3": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
@@ -32,7 +32,7 @@
                 "direction": "forward"
             },
             "seat_4": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
@@ -46,45 +46,45 @@
         "task_sequence": {
             "seat_1": [
                 "fold(seat_1)",
-                "rotate(seat_1, 90)",
-                "move(seat_1, 0, 0)"
+                "move(seat_1, 0, 0)",
+                "rotate(seat_1, 90)"
             ],
             "seat_2": [
                 "fold(seat_2)",
-                "rotate(seat_2, -90)",
-                "move(seat_2, 2, 0)"
+                "move(seat_2, 2, 0)",
+                "rotate(seat_2, 270)"
             ],
             "seat_3": [
                 "fold(seat_3)",
-                "rotate(seat_3, 90)",
-                "move(seat_3, 0, 0)"
+                "move(seat_3, 0, 0)",
+                "rotate(seat_3, 90)"
             ],
             "seat_4": [
                 "fold(seat_4)",
-                "rotate(seat_4, -90)",
-                "move(seat_4, 2, 0)"
+                "move(seat_4, 2, 0)",
+                "rotate(seat_4, 270)"
             ]
         },
         "step_instructions": {
             "seat_1": [
                 "fold the seat to convert it into storage mode",
-                "rotate the seat to face right",
-                "move the seat to position (0, 0)"
+                "move the seat to position (0, 0)",
+                "rotate the seat to face right"
             ],
             "seat_2": [
                 "fold the seat to convert it into storage mode",
-                "rotate the seat to face left",
-                "move the seat to position (2, 0)"
+                "move the seat to position (2, 0)",
+                "rotate the seat to face left"
             ],
             "seat_3": [
                 "fold the seat to convert it into storage mode",
-                "rotate the seat to face right",
-                "move the seat to position (0, 0)"
+                "move the seat to position (0, 0)",
+                "rotate the seat to face right"
             ],
             "seat_4": [
                 "fold the seat to convert it into storage mode",
-                "rotate the seat to face left",
-                "move the seat to position (2, 0)"
+                "move the seat to position (2, 0)",
+                "rotate the seat to face left"
             ]
         }
     },
