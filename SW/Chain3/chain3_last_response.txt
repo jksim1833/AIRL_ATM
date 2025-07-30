@@ -1,68 +1,64 @@
 
 {
-    "environment_before": {
-        "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
-        "object_states": {
-            "seat_1": {"type": "storage", "position": [1, 0], "direction": "backward"},
-            "seat_2": {"type": "storage", "position": [1, 0], "direction": "backward"},
-            "seat_3": {"type": "storage", "position": [0, 1], "direction": "right"},
-            "seat_4": {"type": "storage", "position": [2, 1], "direction": "left"}
-        }
-    },
-    "instruction": "seat_1(seat, 1, 2, right), seat_2(seat, 1, 2, left), seat_3(seat, 1, 0, right), seat_4(seat, 1, 0, left)",
-    "task_cohesion": {
-        "task_sequence": {
-            "seat_1": [
-                "move(seat_1, 1, 2)",
-                "rotate(seat_1, 270)",
-                "flip(seat_1)"
-            ],
-            "seat_2": [
-                "move(seat_2, 1, 2)",
-                "rotate(seat_2, 90)",
-                "flip(seat_2)"
-            ],
-            "seat_3": [
-                "move(seat_3, 1, 0)",
-                "rotate(seat_3, 270)",
-                "flip(seat_3)"
-            ],
-            "seat_4": [
-                "move(seat_4, 1, 0)",
-                "rotate(seat_4, 90)",
-                "flip(seat_4)"
-            ]
-        },
-        "step_instructions": {
-            "seat_1": [
-                "move seat_1 to position (1, 2)",
-                "rotate seat_1 to face right",
-                "flip seat_1 to convert it into seat mode"
-            ],
-            "seat_2": [
-                "move seat_2 to position (1, 2)",
-                "rotate seat_2 to face left",
-                "flip seat_2 to convert it into seat mode"
-            ],
-            "seat_3": [
-                "move seat_3 to position (1, 0)",
-                "rotate seat_3 to face right",
-                "flip seat_3 to convert it into seat mode"
-            ],
-            "seat_4": [
-                "move seat_4 to position (1, 0)",
-                "rotate seat_4 to face left",
-                "flip seat_4 to convert it into seat mode"
-            ]
-        }
-    },
-    "environment_after": {
-        "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
-        "object_states": {
-            "seat_1": {"type": "chair", "position": [1, 2], "direction": "right"},
-            "seat_2": {"type": "chair", "position": [1, 2], "direction": "left"},
-            "seat_3": {"type": "chair", "position": [1, 0], "direction": "right"},
-            "seat_4": {"type": "chair", "position": [1, 0], "direction": "left"}
-        }
+"environment_before": {
+    "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
+    "object_states": {
+        "seat_1": {"type": "storage", "position": [1, 0], "direction": "C"},
+        "seat_2": {"type": "storage", "position": [1, 0], "direction": "C"},
+        "seat_3": {"type": "storage", "position": [0, 1], "direction": "B"},
+        "seat_4": {"type": "storage", "position": [2, 1], "direction": "D"}
     }
+},
+"instruction": "seat_1(seat, 1, 2, B), seat_2(seat, 1, 2, D), seat_3(seat, 1, 0, B), seat_4(seat, 1, 0, D)",
+"task_cohesion": {
+    "task_sequence": {
+        "seat_1": [
+            "move(seat_1, 1, 2)",
+            "rotate(seat_1, 270)",
+            "flip(seat_1)"
+        ],
+        "seat_2": [
+            "move(seat_2, 1, 2)",
+            "rotate(seat_2, 90)",
+            "flip(seat_2)"
+        ],
+        "seat_3": [
+            "move(seat_3, 1, 0)",
+            "flip(seat_3)"
+        ],
+        "seat_4": [
+            "move(seat_4, 1, 0)",
+            "flip(seat_4)"
+        ]
+    },
+    "step_instructions": {
+        "seat_1": [
+            "move seat_1 to position (1, 2)",
+            "rotate seat_1 to face left",
+            "flip seat_1 to convert it into seat mode"
+        ],
+        "seat_2": [
+            "move seat_2 to position (1, 2)",
+            "rotate seat_2 to face right",
+            "flip seat_2 to convert it into seat mode"
+        ],
+        "seat_3": [
+            "move seat_3 to position (1, 0)",
+            "flip seat_3 to convert it into seat mode"
+        ],
+        "seat_4": [
+            "move seat_4 to position (1, 0)",
+            "flip seat_4 to convert it into seat mode"
+        ]
+    }
+},
+"environment_after": {
+    "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
+    "object_states": {
+        "seat_1": {"type": "chair", "position": [1, 2], "direction": "B"},
+        "seat_2": {"type": "chair", "position": [1, 2], "direction": "D"},
+        "seat_3": {"type": "chair", "position": [1, 0], "direction": "B"},
+        "seat_4": {"type": "chair", "position": [1, 0], "direction": "D"}
+    }
+}
 }

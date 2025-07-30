@@ -13,7 +13,7 @@
                     1,
                     1
                 ],
-                "direction": "forward"
+                "direction": "A"
             },
             "seat_2": {
                 "type": "chair",
@@ -21,7 +21,7 @@
                     1,
                     1
                 ],
-                "direction": "forward"
+                "direction": "A"
             },
             "seat_3": {
                 "type": "chair",
@@ -29,7 +29,7 @@
                     1,
                     1
                 ],
-                "direction": "forward"
+                "direction": "A"
             },
             "seat_4": {
                 "type": "chair",
@@ -37,11 +37,11 @@
                     1,
                     1
                 ],
-                "direction": "forward"
+                "direction": "A"
             }
         }
     },
-    "instruction": "seat_1(storage, 0, 0, right), seat_2(storage, 2, 0, left), seat_3(storage, 0, 0, right), seat_4(storage, 2, 0, left)",
+    "instruction": "seat_1(storage, 0, 0, B), seat_2(storage, 2, 0, D), seat_3(storage, 0, 0, B), seat_4(storage, 2, 0, D)",
     "task_cohesion": {
         "task_sequence": {
             "seat_1": [
@@ -102,7 +102,7 @@
                     0,
                     0
                 ],
-                "direction": "right"
+                "direction": "B"
             },
             "seat_2": {
                 "type": "storage",
@@ -110,7 +110,7 @@
                     2,
                     0
                 ],
-                "direction": "left"
+                "direction": "D"
             },
             "seat_3": {
                 "type": "storage",
@@ -118,7 +118,7 @@
                     0,
                     0
                 ],
-                "direction": "right"
+                "direction": "B"
             },
             "seat_4": {
                 "type": "storage",
@@ -126,7 +126,7 @@
                     2,
                     0
                 ],
-                "direction": "left"
+                "direction": "D"
             }
         }
     }

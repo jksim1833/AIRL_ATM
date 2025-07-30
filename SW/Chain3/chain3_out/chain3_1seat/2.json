@@ -10,11 +10,11 @@
                     1,
                     1
                 ],
-                "direction": "backward"
+                "direction": "C"
             }
         }
     },
-    "instruction": "seat_1(seat, 2, 2, backward)",
+    "instruction": "seat_1(seat, 2, 2, C)",
     "task_cohesion": {
         "task_sequence": [
             "move(seat_1, 2, 2)",
@@ -31,12 +31,12 @@
         ],
         "object_states": {
             "seat_1": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     2,
                     2
                 ],
-                "direction": "backward"
+                "direction": "C"
             }
         }
     }

@@ -3,7 +3,7 @@ Information about environments and objects are given as python dictionary. Examp
 """
 {"environment":{
 	"objects": ["seat_1"],
-    	"object_states": {"seat_1": { "type": "chair", "position": [1, 1], "direction": "forward"}}}}
+    	"object_states": {"seat_1": { "type": "chair", "position": [1, 1], "direction": "A"}}}}
 """
 Object states are represented using those state sets:
 """
@@ -13,8 +13,7 @@ Object states are represented using those state sets:
 - position: [x, y] coordinate of the seat. x, y must be integers in the range 0 ≤ x, y ≤ 2.
 Each seat (seat_1 to seat_4) is controlled independently in separate physical regions. Even if their coordinates overlap, there is no physical conflict between them. 
 
-- direction: "forward", "backward", "left", or "right". Fixed directions based on the vehicle. It does NOT represent the rotation direction (e.g., clockwise or counterclockwise).  
-"""
+- direction: "A", "B", "C", or "D". These represent four absolute orientations in the cabin.
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]
