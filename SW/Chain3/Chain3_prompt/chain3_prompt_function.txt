@@ -6,25 +6,7 @@ Necessary and sufficient seat control actions are defined as follows:
 
 #Motion action
 - move(seat_id, x, y): Move the specified seat to the given (x, y) position in the vehicle cabin layout. This action can be performed regardless of the seat's current state, whether "chair" (unfolded) or "storage" (folded). Avoid using unnecessary fold or unfold commands to ensure an efficient sequence.
-- rotate(seat_id, degree): Rotate the seat by the specified degree (only allowed values: 0, 90, 180, or 270; do not use -180 or other values). This command can only be executed when the seat is in the "storage"(folded) state. If the current state is "chair", fold(seat_id) must be executed beforehand. However, if the seat is already in the "storage" state, fold(seat_id) should be omitted.
-
-[Direction Rotation Rule]
-
-The seat’s current angle is considered 0 degrees.
-Do NOT confuse "direction = right" with "rotate 90 degrees".
-If the seat's current direction already matches the target direction, do NOT generate a rotate command.
-
-- right → backward = rotate 90
-- right → left = rotate 180
-- right → forward = rotate 270
-
-- backward → left = rotate 90
-- backward → forward = rotate 180
-- backward → right = rotate 270
-
-- left → forward = rotate 90
-- left → right = rotate 180
-- left → backward = rotate 270
+- rotate(seat_id, degree): Rotate the seat by the specified degree (only allowed values: 0, 90, 180, or 270; do not use -180 or other values). The seat’s current angle is considered 0 degrees. If the current state is "chair", fold(seat_id) must be executed beforehand. However, if the seat is already in the "storage" state, fold(seat_id) should be omitted.
 
 #State action
 - flip(seat_id): This action transforms the seat from a folded state into a chair-like configuration. It can only be used when the seat is currently folded. If used, this command must appear at the final stage of the seat arrangement sequence, after all move(seat_id, x, y) and rotate(seat_id, degree) commands have been completed.

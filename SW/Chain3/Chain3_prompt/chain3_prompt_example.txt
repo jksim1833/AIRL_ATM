@@ -4,14 +4,14 @@ Example 1:
 """
 - Input:
 {"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "forward"}},
-"instruction": "seat_1(chair, 0, 1, right)"}
+"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "A"}},
+"instruction": "seat_1(chair, 0, 1, B)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"}}},
-"instruction": "seat_1(chair, 0, 1, right)",
+    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}}},
+"instruction": "seat_1(chair, 0, 1, B)",
 "task_cohesion": {
     "task_sequence": [
        "fold(seat_1)",
@@ -27,21 +27,21 @@ Example 1:
     ]},
 "environment_after": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "chair", "position": [0, 1], "direction": "right"}}}}
+    "object_states": {"seat_1": {"type": "chair", "position": [0, 1], "direction": "B"}}}}
 ```
 """
 Example 2:
 """
 - Input:
 {"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"}},
-"instruction": "seat_1(storage, 0, 0, left)"}
+"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}},
+"instruction": "seat_1(storage, 0, 0, D)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"}}},
-"instruction": "seat_1(storage, 0, 0, left)",
+    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}}},
+"instruction": "seat_1(storage, 0, 0, D)",
 "task_cohesion": {
     "task_sequence": [
       "fold(seat_1)",
@@ -55,7 +55,7 @@ Example 2:
     ]},
 "environment_after": {
     "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "storage", "position": [0, 0], "direction": "left"}}}}
+    "object_states": {"seat_1": {"type": "storage", "position": [0, 0], "direction": "D"}}}}
 ```
 """
 Example 3:
@@ -63,17 +63,17 @@ Example 3:
 - Input:
 {"objects": ["seat_1", "seat_2"],
 "object_states": {
-    "seat_1": {"type": "storage", "position": [0, 0], "direction": "right"},
-    "seat_2": {"type": "storage", "position": [2, 0], "direction": "left"}},
-"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward)"}
+    "seat_1": {"type": "storage", "position": [0, 0], "direction": "B"},
+    "seat_2": {"type": "storage", "position": [2, 0], "direction": "D"}},
+"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, A)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1", "seat_2"],
     "object_states": {
-    "seat_1": {"type": "storage", "position": [0, 0], "direction": "right"},
-    "seat_2": {"type": "storage", "position": [2, 0], "direction": "left"}}},
-"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward)",
+    "seat_1": {"type": "storage", "position": [0, 0], "direction": "B"},
+    "seat_2": {"type": "storage", "position": [2, 0], "direction": "D"}}},
+"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, A)",
 "task_cohesion": {
     "task_sequence": {
     "seat_1": [
@@ -100,8 +100,8 @@ Example 3:
 "environment_after": {
     "objects": ["seat_1", "seat_2"],
     "object_states": {
-        "seat_1": {"type": "chair", "position": [1, 1], "direction": "forward"},
-        "seat_2": {"type": "chair", "position": [1, 1], "direction": "forward"}}}}
+        "seat_1": {"type": "chair", "position": [1, 1], "direction": "A"},
+        "seat_2": {"type": "chair", "position": [1, 1], "direction": "A"}}}}
 ```
 """
 Example 4:
@@ -109,21 +109,21 @@ Example 4:
 - Input:
 {"objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
 "object_states": {
-    "seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"},
-    "seat_2": {"type": "chair", "position": [1, 1], "direction": "backward"},
-    "seat_3": {"type": "chair", "position": [1, 1], "direction": "forward"},
-    "seat_4": {"type": "chair", "position": [1, 1], "direction": "forward"}},
-"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)"}
+    "seat_1": {"type": "chair", "position": [1, 1], "direction": "C"},
+    "seat_2": {"type": "chair", "position": [1, 1], "direction": "C"},
+    "seat_3": {"type": "chair", "position": [1, 1], "direction": "A"},
+    "seat_4": {"type": "chair", "position": [1, 1], "direction": "A"}},
+"instruction": "seat_1(chair, 1, 1, A), seat_2(chair, 1, 1, A), seat_3(storage, 0, 1, D), seat_4(storage, 2, 1, B)"}
 - Output:
 ```
 {"environment_before": {
     "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
     "object_states": {
-    "seat_1": {"type": "chair", "position": [1, 1], "direction": "backward"},
-    "seat_2": {"type": "chair", "position": [1, 1], "direction": "backward"},
-    "seat_3": {"type": "chair", "position": [1, 1], "direction": "forward"},
-    "seat_4": {"type": "chair", "position": [1, 1], "direction": "forward"}}},
-"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, forward), seat_3(storage, 0, 1, left), seat_4(storage, 2, 1, right)",
+    "seat_1": {"type": "chair", "position": [1, 1], "direction": "C"},
+    "seat_2": {"type": "chair", "position": [1, 1], "direction": "C"},
+    "seat_3": {"type": "chair", "position": [1, 1], "direction": "A"},
+    "seat_4": {"type": "chair", "position": [1, 1], "direction": "A"}}},
+"instruction": "seat_1(chair, 1, 1, A), seat_2(chair, 1, 1, A), seat_3(storage, 0, 1, D), seat_4(storage, 2, 1, B)",
 "task_cohesion": {
     "task_sequence": {
     "seat_1": [
@@ -161,10 +161,10 @@ Example 4:
 "environment_after": {
     "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
     "object_states": {
-        "seat_1": {"type": "chair", "position": [1, 1], "direction": "forward"},
-        "seat_2": {"type": "chair", "position": [1, 1], "direction": "forward"},
-        "seat_3": {"type": "storage", "position": [0, 1], "direction": "left"},
-        "seat_4": {"type": "storage", "position": [2, 1], "direction": "right"}}}}
+        "seat_1": {"type": "chair", "position": [1, 1], "direction": "A"},
+        "seat_2": {"type": "chair", "position": [1, 1], "direction": "A"},
+        "seat_3": {"type": "storage", "position": [0, 1], "direction": "D"},
+        "seat_4": {"type": "storage", "position": [2, 1], "direction": "B"}}}}
 ```
 """
 From these examples, learn that some seat control actions have dependencies with the actions before and after them.

@@ -10,17 +10,17 @@
                     1,
                     1
                 ],
-                "direction": "forward"
+                "direction": "A"
             }
         }
     },
-    "instruction": "seat_1(storage, 1, 1, backward)",
+    "instruction": "seat_1(storage, 1, 1, C)",
     "task_cohesion": {
         "task_sequence": [
             "rotate(seat_1, 180)"
         ],
         "step_instructions": [
-            "rotate the seat to face backward"
+            "rotate the seat to face direction C"
         ]
     },
     "environment_after": {
@@ -34,7 +34,7 @@
                     1,
                     1
                 ],
-                "direction": "backward"
+                "direction": "C"
             }
         }
     }

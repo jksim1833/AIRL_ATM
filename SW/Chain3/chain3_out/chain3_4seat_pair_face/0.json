@@ -13,7 +13,7 @@
                     1,
                     0
                 ],
-                "direction": "backward"
+                "direction": "C"
             },
             "seat_2": {
                 "type": "storage",
@@ -21,7 +21,7 @@
                     1,
                     0
                 ],
-                "direction": "backward"
+                "direction": "C"
             },
             "seat_3": {
                 "type": "storage",
@@ -29,7 +29,7 @@
                     0,
                     1
                 ],
-                "direction": "right"
+                "direction": "B"
             },
             "seat_4": {
                 "type": "storage",
@@ -37,11 +37,11 @@
                     2,
                     1
                 ],
-                "direction": "left"
+                "direction": "D"
             }
         }
     },
-    "instruction": "seat_1(seat, 1, 2, right), seat_2(seat, 1, 2, left), seat_3(seat, 1, 0, right), seat_4(seat, 1, 0, left)",
+    "instruction": "seat_1(seat, 1, 2, B), seat_2(seat, 1, 2, D), seat_3(seat, 1, 0, B), seat_4(seat, 1, 0, D)",
     "task_cohesion": {
         "task_sequence": {
             "seat_1": [
@@ -56,34 +56,30 @@
             ],
             "seat_3": [
                 "move(seat_3, 1, 0)",
-                "rotate(seat_3, 270)",
                 "flip(seat_3)"
             ],
             "seat_4": [
                 "move(seat_4, 1, 0)",
-                "rotate(seat_4, 90)",
                 "flip(seat_4)"
             ]
         },
         "step_instructions": {
             "seat_1": [
                 "move seat_1 to position (1, 2)",
-                "rotate seat_1 to face right",
+                "rotate seat_1 to face left",
                 "flip seat_1 to convert it into seat mode"
             ],
             "seat_2": [
                 "move seat_2 to position (1, 2)",
-                "rotate seat_2 to face left",
+                "rotate seat_2 to face right",
                 "flip seat_2 to convert it into seat mode"
             ],
             "seat_3": [
                 "move seat_3 to position (1, 0)",
-                "rotate seat_3 to face right",
                 "flip seat_3 to convert it into seat mode"
             ],
             "seat_4": [
                 "move seat_4 to position (1, 0)",
-                "rotate seat_4 to face left",
                 "flip seat_4 to convert it into seat mode"
             ]
         }
@@ -102,7 +98,7 @@
                     1,
                     2
                 ],
-                "direction": "right"
+                "direction": "B"
             },
             "seat_2": {
                 "type": "chair",
@@ -110,7 +106,7 @@
                     1,
                     2
                 ],
-                "direction": "left"
+                "direction": "D"
             },
             "seat_3": {
                 "type": "chair",
@@ -118,7 +114,7 @@
                     1,
                     0
                 ],
-                "direction": "right"
+                "direction": "B"
             },
             "seat_4": {
                 "type": "chair",
@@ -126,7 +122,7 @@
                     1,
                     0
                 ],
-                "direction": "left"
+                "direction": "D"
             }
         }
     }
