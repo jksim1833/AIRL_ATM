@@ -28,7 +28,7 @@ class ChatGPT:
 
         self.credentials = credentials    #tetris_secrets.json에서 불러온 인증 정보 
         self.messages = []           #GPT에게 전달할 대화 내용을 리스트로 저장할 공간 
-        self.max_token_length = 8000          #GPT에게 보낼 전체 프롬프트 최대 토큰 수 제한 
+        self.max_token_length = 10000       #GPT에게 보낼 전체 프롬프트 최대 토큰 수 제한 
         self.max_completion_length = 1000         #GPT가 생성할 응답 최대 길이 
         self.last_response = None          #GPT가 마지막에 출력한 응답 저장용 변수 
         self.query = ''
@@ -152,6 +152,7 @@ class ChatGPT:
             with open(fp, 'w') as f:
                 json.dump(self.json_dict, f, indent=4)
 
+
 # 시나리오 선택: GPT에게 전달할 입력 데이터 구성 단계 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()  
@@ -244,10 +245,13 @@ if __name__ == "__main__":
     # 출력 결과 저장하는 폴더 생성 
     if not os.path.exists('./chain3_out/' + scenario_name): 
         os.makedirs('./chain3_out/' + scenario_name)
+
+
     # 현재 환경 출력 
     for i, instruction in enumerate(instructions):
         print(json.dumps(environment)) 
 
+        
         # GPT에게 instruction과 environment 입력으로 줌 > 시퀀스 생성 요청 > 결과 text로 받음
         # generate(): ChatGPT 클래스 안에 정의됨
         text = aimodel.generate(
@@ -256,6 +260,7 @@ if __name__ == "__main__":
         
         # 새로 업데이트 된 환경 
         environment = aimodel.environment
+
 
         # dump_json(): gpt응답, 환경 등 정보를 담은 JSON 파일을 만들어 저장
         aimodel.dump_json(f'./chain3_out/{scenario_name}/{i}')

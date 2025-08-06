@@ -23,7 +23,7 @@ Example 1:
        "fold the seat to convert it into storage mode",
        "rotate the seat to face right",
        "move the seat to position (0, 1)",
-       "flip the seat to convert it into seat mode"
+       "flip the seat to convert it into chair mode"
     ]},
 "environment_after": {
     "objects": ["seat_1"],
@@ -65,7 +65,7 @@ Example 3:
 "object_states": {
     "seat_1": {"type": "storage", "position": [0, 0], "direction": "B"},
     "seat_2": {"type": "storage", "position": [2, 0], "direction": "D"}},
-"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, A)"}
+"instruction": "seat_1(chair, 1, 1, A), seat_2(chair, 1, 1, A)"}
 - Output:
 ```
 {"environment_before": {
@@ -73,7 +73,7 @@ Example 3:
     "object_states": {
     "seat_1": {"type": "storage", "position": [0, 0], "direction": "B"},
     "seat_2": {"type": "storage", "position": [2, 0], "direction": "D"}}},
-"instruction": "seat_1(chair, 1, 1, forward), seat_2(chair, 1, 1, A)",
+"instruction": "seat_1(chair, 1, 1, A), seat_2(chair, 1, 1, A)",
 "task_cohesion": {
     "task_sequence": {
     "seat_1": [
@@ -90,12 +90,12 @@ Example 3:
     "seat_1": [
     "move seat_1 to position (1, 1)",
     "rotate seat_1 to face forward",
-    "flip seat_1 to convert it into seat mode"
+    "flip seat_1 to convert it into chair mode"
     ],
     "seat_2": [
     "move seat_2 to position (1, 1)",
     "rotate seat_2 to face forward",
-    "flip seat_2 to convert it into seat mode"
+    "flip seat_2 to convert it into chair mode"
     ]}},
 "environment_after": {
     "objects": ["seat_1", "seat_2"],
