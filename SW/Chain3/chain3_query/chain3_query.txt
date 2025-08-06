@@ -11,7 +11,7 @@ The dictionary that you return should be formatted as python dictionary. Follow 
 2. The length of the ["step_instructions"] list must be the same as the length of the ["task_sequence"] list.
 3. Never left ',' at the end of the list.
 4. Keep track of all items listed in the "objects" section of the "environment_before" field. Please ensure that you fill out both the "objects" and "object_states" sections for all listed items. 
-5. Format your output exactly like the examples shown in "chain3_prompt_example". 
+5. You must output strictly in the same format as the examples in "chain3_prompt_example".
 6. All keys of the dictionary should be double-quoted.
 7. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response. Do not include the word "json" after the opening backticks. Only use plain backticks (```).
 8. Make sure that your seat control sequence obeys the following constraints:
@@ -19,6 +19,7 @@ The dictionary that you return should be formatted as python dictionary. Follow 
 - rotate(seat_id, degree) must be executed before flip(seat_id).
 - flip(seat_id) must appear at the final stage of the sequence.
 - If the seat's current direction already matches the target direction, do NOT generate a rotate command.
-- A → B, B → C, C → D, D → A means rotate(seat_id, 90)
-- A → D, D → C, C → B, B → A means rotate(seat_id, 270)
+- if "direction" changes from A to B or B to C or C to D or D to A, "degree" is 90
+- if "direction" changes from A to D or D to C or C to B or B to A, "degree" is 270
+
 Adhere to the output format I defined above. Follow the eight rules. Think step by step.
