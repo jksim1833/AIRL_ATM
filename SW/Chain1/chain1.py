@@ -109,11 +109,11 @@ class ChatGPT:
 
         
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4-turbo",
             # "gpt-4" is available, too. Check the available models in https://platform.openai.com/docs/models/
             messages=self.create_prompt(),
             temperature=0.1,
-            max_tokens =self.max_completion_length, 
+            max_tokens=self.max_completion_length,
             top_p=0.5,
             frequency_penalty=0.0,
             presence_penalty=0.0
@@ -137,7 +137,7 @@ class ChatGPT:
             self.json_dict = None
 
             import pdb
-            pdb.set_trace() # GPT 응답 JSON으로 파싱 실패하면 자동으로 pdb 디버거 실행됨
+            pdb.set_trace()
 
         if len(self.messages) > 0 and self.last_response is not None:
             self.messages.append(
