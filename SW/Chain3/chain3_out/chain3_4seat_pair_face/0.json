@@ -1,4 +1,5 @@
 {
+    "instruction": "seat_1(seat, 1, 2, B), seat_2(seat, 1, 2, D), seat_3(seat, 1, 0, B), seat_4(seat, 1, 0, D)",
     "environment_before": {
         "objects": [
             "seat_1",
@@ -41,7 +42,6 @@
             }
         }
     },
-    "instruction": "seat_1(seat, 1, 2, B), seat_2(seat, 1, 2, D), seat_3(seat, 1, 0, B), seat_4(seat, 1, 0, D)",
     "task_cohesion": {
         "task_sequence": {
             "seat_1": [
@@ -60,27 +60,29 @@
             ],
             "seat_4": [
                 "move(seat_4, 1, 0)",
+                "rotate(seat_4, 90)",
                 "flip(seat_4)"
             ]
         },
         "step_instructions": {
             "seat_1": [
                 "move seat_1 to position (1, 2)",
-                "rotate seat_1 to face left",
-                "flip seat_1 to convert it into seat mode"
+                "rotate seat_1 to face backward",
+                "flip seat_1 to convert it into chair mode"
             ],
             "seat_2": [
                 "move seat_2 to position (1, 2)",
-                "rotate seat_2 to face right",
-                "flip seat_2 to convert it into seat mode"
+                "rotate seat_2 to face forward",
+                "flip seat_2 to convert it into chair mode"
             ],
             "seat_3": [
                 "move seat_3 to position (1, 0)",
-                "flip seat_3 to convert it into seat mode"
+                "flip seat_3 to convert it into chair mode"
             ],
             "seat_4": [
                 "move seat_4 to position (1, 0)",
-                "flip seat_4 to convert it into seat mode"
+                "rotate seat_4 to face forward",
+                "flip seat_4 to convert it into chair mode"
             ]
         }
     },

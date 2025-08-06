@@ -8,7 +8,7 @@
         ],
         "object_states": {
             "seat_1": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
@@ -16,7 +16,7 @@
                 "direction": "A"
             },
             "seat_2": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
@@ -24,7 +24,7 @@
                 "direction": "A"
             },
             "seat_3": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
@@ -32,7 +32,7 @@
                 "direction": "A"
             },
             "seat_4": {
-                "type": "seat",
+                "type": "chair",
                 "position": [
                     1,
                     1
