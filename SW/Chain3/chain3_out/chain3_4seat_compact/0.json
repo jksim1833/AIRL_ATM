@@ -67,23 +67,23 @@
         },
         "step_instructions": {
             "seat_1": [
-                "fold the seat to convert it into storage mode",
-                "rotate seat_1 to face right",
+                "fold the seat_1 to convert it into storage mode",
+                "rotate the seat_1 90 degrees clockwise",
                 "move seat_1 to position (0, 0)"
             ],
             "seat_2": [
-                "fold the seat to convert it into storage mode",
-                "rotate seat_2 to face left",
+                "fold the seat_2 to convert it into storage mode",
+                "rotate the seat_2 90 degrees counterclockwise",
                 "move seat_2 to position (2, 0)"
             ],
             "seat_3": [
-                "fold the seat to convert it into storage mode",
-                "rotate seat_3 to face right",
+                "fold the seat_3 to convert it into storage mode",
+                "rotate the seat_3 90 degrees clockwise",
                 "move seat_3 to position (0, 0)"
             ],
             "seat_4": [
-                "fold the seat to convert it into storage mode",
-                "rotate seat_4 to face left",
+                "fold the seat_4 to convert it into storage mode",
+                "rotate the seat_4 90 degrees counterclockwise",
                 "move seat_4 to position (2, 0)"
             ]
         }
