@@ -113,7 +113,7 @@ class ChatGPT:
             # "gpt-4" is available, too. Check the available models in https://platform.openai.com/docs/models/
             messages=self.create_prompt(),
             temperature=0.1,
-            max_tokens =self.max_completion_length, 
+            max_completion_tokens =self.max_completion_length, 
             top_p=0.5,
             frequency_penalty=0.0,
             presence_penalty=0.0
