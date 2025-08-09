@@ -1,13 +1,13 @@
 from openai import OpenAI
 import tiktoken
-import yaml  # json 대신 yaml 추가
+import yaml
 import os
 import re
 import argparse
 
 enc = tiktoken.get_encoding("cl100k_base")   # 토크나이저 불러오는 코드 : 토큰 수 계산하기 위해. *토큰: 지피티가 텍스트를 나누어 처리하는 최소 단위 
-with open('../tetris_secrets.json') as f:
-    credentials = json.load(f)  # 기존 json 파일은 그대로 유지
+with open('../tetris_secrets.yaml') as f:
+    credentials = yaml.safe_load(f)
 
 dir_system = './chain3_system'
 dir_prompt = './chain3_prompt'
@@ -26,7 +26,7 @@ class ChatGPT:
             prompt_load_order):
         self.client = OpenAI(api_key=credentials["openai"]["OPENAI_API_KEY"])
 
-        self.credentials = credentials    #tetris_secrets.json에서 불러온 인증 정보 
+        self.credentials = credentials    #tetris_secrets.yaml에서 불러온 인증 정보 
         self.messages = []           #GPT에게 전달할 대화 내용을 리스트로 저장할 공간 
         self.max_token_length = 8000          #GPT에게 보낼 전체 프롬프트 최대 토큰 수 제한 
         self.max_completion_length = 1000         #GPT가 생성할 응답 최대 길이 
@@ -85,22 +85,22 @@ class ChatGPT:
             prompt = self.create_prompt() 
         return prompt 
 
-    # GPT 응답 중 json파트만 추출
-    # json part is between ``` and ```.
-    def extract_json_part(self, text):
+    # GPT 응답 중 yaml파트만 추출
+    # yaml part is between ``` and ```.
+    def extract_yaml_part(self, text):
 
         if text.find('```') == -1:
             return text
         
-        text_json = text[text.find(
+        text_yaml = text[text.find(
             '```') + 3:text.find('```', text.find('```') + 3)]
-        return text_json
+        return text_yaml
 
     def generate(self, message, environment):
         
         text_base = self.query
         if text_base.find('[ENVIRONMENT]') != -1:
-            text_base = text_base.replace('[ENVIRONMENT]', yaml.dump(environment, default_flow_style=False))  # json.dumps 대신 yaml.dump 사용
+            text_base = text_base.replace('[ENVIRONMENT]', yaml.dump(environment))
         
         if text_base.find('[INSTRUCTION]') != -1:
             text_base = text_base.replace('[INSTRUCTION]', message)
@@ -123,18 +123,17 @@ class ChatGPT:
 
 
         self.last_response = text
-        self.last_response = self.extract_json_part(self.last_response)
-        self.last_response = self.last_response.replace("'", "\"")
+        self.last_response = self.extract_yaml_part(self.last_response)
         
         # dump to a text file
         with open('chain3_last_response.txt', 'w') as f:
             f.write(self.last_response)
 
         try:
-            self.yaml_dict = yaml.safe_load(self.last_response)  # json.loads 대신 yaml.safe_load 사용
+            self.yaml_dict = yaml.safe_load(self.last_response)
             self.environment = self.yaml_dict["environment_after"]
         except BaseException:
-            self.yaml_dict = None  # json_dict 대신 yaml_dict 사용
+            self.yaml_dict = None
 
             import pdb
             pdb.set_trace()
@@ -143,14 +142,14 @@ class ChatGPT:
             self.messages.append(
                 {"sender": "assistant", "text": self.last_response})
 
-        return self.yaml_dict  # json_dict 대신 yaml_dict 반환
+        return self.yaml_dict
 
-    def dump_yaml(self, dump_name=None):  # dump_json을 dump_yaml로 변경
+    def dump_yaml(self, dump_name=None):
         if dump_name is not None:
             # dump the dictionary to yaml file dump 1, 2, ...
-            fp = os.path.join(dump_name + '.yaml')  # .json을 .yaml로 변경
-            with open(fp, 'w', encoding='utf-8') as f:  # 한글 지원을 위해 encoding 추가
-                yaml.dump(self.yaml_dict, f, default_flow_style=False, allow_unicode=True)  # json.dump 대신 yaml.dump 사용
+            fp = os.path.join(dump_name + '.yaml')
+            with open(fp, 'w') as f:
+                yaml.dump(self.yaml_dict, f, indent=4)
 
 # 시나리오 선택: GPT에게 전달할 입력 데이터 구성 단계 
 if __name__ == "__main__":
@@ -207,7 +206,7 @@ if __name__ == "__main__":
         os.makedirs('./chain3_out/' + scenario_name)
     # 현재 환경 출력 
     for i, instruction in enumerate(instructions):
-        print(yaml.dump(environment, default_flow_style=False))  # json.dumps 대신 yaml.dump 사용
+        print(yaml.dump(environment)) 
 
         # GPT에게 instruction과 environment 입력으로 줌 > 시퀀스 생성 요청 > 결과 text로 받음
         # generate(): ChatGPT 클래스 안에 정의됨
@@ -219,4 +218,4 @@ if __name__ == "__main__":
         environment = aimodel.environment
 
         # dump_yaml(): gpt응답, 환경 등 정보를 담은 YAML 파일을 만들어 저장
-        aimodel.dump_yaml(f'./chain3_out/{scenario_name}/{i}')  # dump_json을 dump_yaml로 변경
+        aimodel.dump_yaml(f'./chain3_out/{scenario_name}/{i}')
