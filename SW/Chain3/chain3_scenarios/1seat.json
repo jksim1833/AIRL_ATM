@@ -1,0 +1,10 @@
+{"environment": {
+    "objects": ["seat_1"],
+    "object_states": {
+    "seat_1": {"type": "seat", "position": [1, 1], "direction": "A"}}
+    },
+"instructions" : [
+    "seat_1(storage, 1, 1, A)", 
+    "seat_1(storage, 1, 1, C)", 
+    "seat_1(seat, 2, 2, C)",    
+    "seat_1(storage, 0, 0, B)"]}
