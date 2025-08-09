@@ -6,22 +6,21 @@ The instruction is as follows:
 """
 {"instruction": [INSTRUCTION]}
 """
-The dictionary that you return should be formatted as python dictionary. Follow these rules:
+The dictionary that you return should be formatted as valid JSON object (not Python dict), with all keys and string values using double quotes. Follow these rules:
 1. Make sure that each element of the ["step_instructions"] explains corresponding element of the ["task_sequence"]. Refer to the "SEAT CONTROL LIST" to understand the elements of ["task_sequence"].
 2. The length of the ["step_instructions"] list must be the same as the length of the ["task_sequence"] list.
 3. Never left ',' at the end of the list.
 4. Keep track of all items listed in the "objects" section of the "environment_before" field. Please ensure that you fill out both the "objects" and "object_states" sections for all listed items. 
-5. Use the "STATE LIST" for the "object states" field.
-"""
-"STATE LIST"
-- type: "seat" or "storage". physical form of the seat. 
-- position: [x, y] coordinate of the seat. x, y must be integers in the range 0 ≤ x, y ≤ 2.
-- direction: "forward", "backward", "left", or "right". This indicates the seat's orientation relative to the fixed forward direction of the vehicle. The vehicle’s forward direction is constant and does not change based on seat movement.
-"""
-6. All keys of the dictionary should be double-quoted.
-7. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response.
-8. Make sure that your seat control sequence obeys the following constraints:
+5. All keys of the dictionary should be double-quoted.
+6. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response, with no other text before or after. Do not include the word "json" after the opening backticks. Only use plain backticks (```).
+7. your seat control sequence must obey the following constraints:
+
 - move(seat_id, x, y) can only be used when the seat is in the "storage" state.
 - rotate(seat_id, degree) must be executed before flip(seat_id).
 - flip(seat_id) must appear at the final stage of the sequence.
+- If the seat's direction is the same in both environment_before and environment_after, do NOT generate a rotate command in the seat control actions.
+- if "direction" changes from A to B or B to C or C to D or D to A, "degree" is 90
+- if "direction" changes from A to D or D to C or C to B or B to A, "degree" is 270
+8. You must output strictly in the same format as the examples in "chain3_prompt_example".
+
 Adhere to the output format I defined above. Follow the eight rules. Think step by step.

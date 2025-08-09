@@ -126,7 +126,7 @@ class ChatGPT:
         self.last_response = self.extract_json_part(self.last_response)
         self.last_response = self.last_response.replace("'", "\"")
         
-        # dump to a text file
+        # GPT응답을 텍스트 파일로 저장
         with open('chain3_last_response.txt', 'w') as f:
             f.write(self.last_response)
 
@@ -170,29 +170,68 @@ if __name__ == "__main__":
                 "seat_1": {
                 "type": "seat",
                 "position": [1, 1],
-                "direction": "forward"}}
+                "direction": "A"}}
         }
 
-        instructions = ["seat_1(storage, 1, 1, forward)",  # 타입
-                        "seat_1(storage, 1, 1, backward)", # 방향
-                        "seat_1(seat, 2, 2, backward)",    # 타입 + 위치
-                        "seat_1(storage, 0, 0, right)"]    # 타입 + 위치 + 방향
+        instructions = ["seat_1(storage, 1, 1, A)",  # 타입
+                        "seat_1(storage, 1, 1, C)", # 방향
+                        "seat_1(seat, 2, 2, C)",    # 타입 + 위치
+                        "seat_1(storage, 0, 0, B)"]    # 타입 + 위치 + 방향
         
-    elif scenario_name == 'chain3_2seat': #수정 필요 
+    elif scenario_name == 'chain3_4seat_compact': 
         environment = {
-            "objects": ["seat_1"], 
+            "objects": ["seat_1", "seat_2", "seat_3", "seat_4"], 
+            "object_states": {
+                "seat_1": {
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "A"
+                },
+                "seat_2": {
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "A"
+                },
+                "seat_3": {
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "A"
+                },
+                "seat_4": {
+                "type": "seat",
+                "position": [1, 1],
+                "direction": "A"
+                }}}
+
+        instructions = ["seat_1(storage, 0, 0, B), seat_2(storage, 2, 0, D), seat_3(storage, 0, 0, B), seat_4(storage, 2, 0, D)"]     
+    
+    elif scenario_name == 'chain3_4seat_pair_face':
+        environment = {
+            "objects": ["seat_1", "seat_2", "seat_3", "seat_4"], 
             "object_states": {
                 "seat_1": {
                 "type": "storage",
-                "position": [0, 2],
-                "direction": "right"}}
-        }
+                "position": [1, 0],
+                "direction": "C"
+                },
+                "seat_2": {
+                "type": "storage",
+                "position": [1, 0],
+                "direction": "C"
+                },
+                "seat_3": {
+                "type": "storage",
+                "position": [0, 1],
+                "direction": "B"
+                },
+                "seat_4": {
+                "type": "storage",
+                "position": [2, 1],
+                "direction": "D"
+                }}}
 
-        instructions = ["seat_1(storage, 0, 0, right)",     
-                        "seat_1(seat, 0, 2, right)",          
-                        "seat_1(seat, 1, 1, forward)"]     
-    
-    
+        instructions = ["seat_1(seat, 1, 2, B), seat_2(seat, 1, 2, D), seat_3(seat, 1, 0, B), seat_4(seat, 1, 0, D)"]   
+
     else:
         parser.error('Invalid scenario name:' + scenario_name)
 
