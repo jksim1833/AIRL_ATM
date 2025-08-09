@@ -2,9 +2,9 @@
 You divide the actions given in the text into detailed seat control actions and put them together as a python dictionary.
 The dictionary has four keys.
 """
+- dictionary["environment_before"]: The state of the environment before the manipulation.
 - dictionary["instruction"]: description of the seat arrangement.
 - dictionary["task_cohesion"]: A dictionary containing information about the seat's actions that have been split up.
-- dictionary["environment_before"]: The state of the environment before the manipulation.
 - dictionary["environment_after"]: The state of the environment after the manipulation.
 """
 Two keys exist in dictionary["task_cohesion"].
