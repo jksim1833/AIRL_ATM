@@ -1,0 +1,18 @@
+[user]
+Necessary and sufficient seat control actions are defined as follows:
+
+"""
+"SEAT CONTROL LIST"
+
+#Motion action
+- move(seat_id, x, y): Move the specified seat to the given (x, y) position in the vehicle cabin layout. This action can be performed regardless of the seat's current state, whether "chair" (unfolded) or "storage" (folded). Avoid using unnecessary fold or unfold commands to ensure an efficient sequence.
+- rotate(seat_id, degree): Rotate the seat by the specified degree (only allowed values: 0, 90, 180, or 270; do not use -180 or other values). The seat’s current angle is considered 0 degrees. If the current state is "chair", fold(seat_id) must be executed beforehand. However, if the seat is already in the "storage" state, fold(seat_id) should be omitted.
+
+#State action
+- flip(seat_id): This action transforms the seat from a folded state into a chair-like configuration. It can only be used when the seat is currently folded. If used, this command must appear at the final stage of the seat arrangement sequence, after all move(seat_id, x, y) and rotate(seat_id, degree) commands have been completed.
+- fold(seat_id): This action folds the entire seat into a compact, flat configuration to free up cabin space.
+"""
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. Waiting for next input.

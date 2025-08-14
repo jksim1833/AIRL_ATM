@@ -1,0 +1,65 @@
+[user]
+I will give you some examples of the input and the output you will generate. 
+Example 1:
+"""
+- Input:
+{"objects": ["seat_1"],
+"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "A"}},
+"instruction": "seat_1(chair, 0, 1, B)"}
+- Output:
+```
+{"environment_before": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}}},
+"instruction": "seat_1(chair, 0, 1, B)",
+"task_cohesion": {
+    "task_sequence": [
+       "fold(seat_1)",
+       "rotate(seat_1, 90)",
+       "move(seat_1, 0, 1)",
+       "flip(seat_1)"
+    ],
+    "step_instructions": [
+       "fold the seat_1 to convert it into storage mode",
+       "rotate the seat_1 90 degrees clockwise",
+       "move the seat_1 to position (0, 1)",
+       "flip the seat_1 to convert it into chair mode"
+    ]},
+"environment_after": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "chair", "position": [0, 1], "direction": "B"}}}}
+```
+"""
+Example 2:
+"""
+- Input:
+{"objects": ["seat_1"],
+"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}},
+"instruction": "seat_1(storage, 0, 0, D)"}
+- Output:
+```
+{"environment_before": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}}},
+"instruction": "seat_1(storage, 0, 0, D)",
+"task_cohesion": {
+    "task_sequence": [
+      "fold(seat_1)",
+      "rotate(seat_1, 90)",
+      "move(seat_1, 0, 0)"
+    ],
+    "step_instructions": [
+      "fold the seat_1 to convert it into storage mode",
+      "rotate the seat_1 90 degrees clockwise",
+      "move the seat_1 to position (0, 0)"
+    ]},
+"environment_after": {
+    "objects": ["seat_1"],
+    "object_states": {"seat_1": {"type": "storage", "position": [0, 0], "direction": "D"}}}}
+```
+"""
+From these examples, learn that some seat control actions have dependencies with the actions before and after them.
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. I will wait for further instructions before starting to work.

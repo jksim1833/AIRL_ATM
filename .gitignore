@@ -1,3 +1,6 @@
 SW/secrets.json
 ChatGPT-Robot-Manipulation_source/secrets.json
 HW/secrets.json
+SW/tetris_secrets.json
+HW/tetris_secrets.json
+SW/langchain_v1/.env

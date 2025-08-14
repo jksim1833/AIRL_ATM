@@ -1,0 +1,99 @@
+environment_after:
+    object_states:
+        seat_1:
+            direction: B
+            position:
+            - 0
+            - 0
+            type: storage
+        seat_2:
+            direction: D
+            position:
+            - 2
+            - 0
+            type: storage
+        seat_3:
+            direction: B
+            position:
+            - 0
+            - 0
+            type: storage
+        seat_4:
+            direction: D
+            position:
+            - 2
+            - 0
+            type: storage
+    objects:
+    - seat_1
+    - seat_2
+    - seat_3
+    - seat_4
+environment_before:
+    object_states:
+        seat_1:
+            direction: A
+            position:
+            - 1
+            - 1
+            type: chair
+        seat_2:
+            direction: A
+            position:
+            - 1
+            - 1
+            type: chair
+        seat_3:
+            direction: A
+            position:
+            - 1
+            - 1
+            type: chair
+        seat_4:
+            direction: A
+            position:
+            - 1
+            - 1
+            type: chair
+    objects:
+    - seat_1
+    - seat_2
+    - seat_3
+    - seat_4
+instruction: seat_1(storage, 0, 0, B), seat_2(storage, 2, 0, D), seat_3(storage, 0,
+    0, B), seat_4(storage, 2, 0, D)
+task_cohesion:
+    step_instructions:
+        seat_1:
+        - fold the seat_1 to convert it into storage mode
+        - rotate the seat_1 90 degrees clockwise
+        - move seat_1 to position (0, 0)
+        seat_2:
+        - fold the seat_2 to convert it into storage mode
+        - rotate the seat_2 270 degrees clockwise
+        - move seat_2 to position (2, 0)
+        seat_3:
+        - fold the seat_3 to convert it into storage mode
+        - rotate the seat_3 90 degrees clockwise
+        - move seat_3 to position (0, 0)
+        seat_4:
+        - fold the seat_4 to convert it into storage mode
+        - rotate the seat_4 270 degrees clockwise
+        - move seat_4 to position (2, 0)
+    task_sequence:
+        seat_1:
+        - fold(seat_1)
+        - rotate(seat_1, 90)
+        - move(seat_1, 0, 0)
+        seat_2:
+        - fold(seat_2)
+        - rotate(seat_2, 270)
+        - move(seat_2, 2, 0)
+        seat_3:
+        - fold(seat_3)
+        - rotate(seat_3, 90)
+        - move(seat_3, 0, 0)
+        seat_4:
+        - fold(seat_4)
+        - rotate(seat_4, 270)
+        - move(seat_4, 2, 0)

@@ -1,0 +1,9 @@
+{"environment" : {
+    "objects": ["seat_1", "seat_2", "seat_3", "seat_4"], 
+    "object_states": {
+        "seat_1": {"type": "seat", "position": [1, 1], "direction": "A"},
+        "seat_2": {"type": "seat", "position": [1, 1], "direction": "A"},
+        "seat_3": {"type": "seat", "position": [1, 1], "direction": "A"},
+        "seat_4": {"type": "seat", "position": [1, 1], "direction": "A"}}},
+
+"instructions" : ["seat_1(storage, 0, 0, B), seat_2(storage, 2, 0, D), seat_3(storage, 0, 0, B), seat_4(storage, 2, 0, D)"]}
