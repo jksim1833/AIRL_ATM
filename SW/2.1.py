@@ -464,7 +464,7 @@ Output format:
                 # 좌표 저장
                 self.save_coordinates(model_name, result, image_name)
                 
-                # 바운딩 박스 그리기
+                # 바운딩 박스 그리기Q
                 self.draw_bounding_box(image_path, result, model_name, image_name)
             else:
                 print(f"모델 {model_name} 분석 실패")
