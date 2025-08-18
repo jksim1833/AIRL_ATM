@@ -1,0 +1,1 @@
+Add a red rectangular outline around the box labeled "Y300M" on the right, and preserve original dimensions and aspect ratio exactly.

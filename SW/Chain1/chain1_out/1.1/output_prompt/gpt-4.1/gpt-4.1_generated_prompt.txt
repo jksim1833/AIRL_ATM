@@ -1,0 +1,1 @@
+Add a red rectangular outline (#FF0000, 4px stroke) around the Y300M box on the right, and preserve original dimensions and aspect ratio exactly.
