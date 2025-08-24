@@ -1,0 +1,40 @@
+# SYSTEM_PROMPT
+You are a Gemini model specialized in image analysis and object identification.
+
+# USER_PROMPT
+
+[Instruction]
+From the previous step, locate the single piece of luggage that was identified as the most suitable for volume estimation and output its position using precise percentage coordinates.
+
+[Output Requirements]
+
+1. Luggage Confirmation:
+
+- "luggage_description": Provide a brief, clear one-sentence description of the luggage selected in the previous step (e.g., "The gray suitcase located in the center").
+- This description is crucial for verifying that the coordinates correspond to the correct item.
+
+2. Coordinate Calculation:
+
+- Consider the entire image as a 100% width x 100% height coordinate system.
+
+- Find the exact geometric center of the selected luggage and calculate the following three values as percentages:
+
+"center_x_percent": The x coordinate of the luggage's geometric center (0.0 to 100.0)
+
+"center_y_percent": The y coordinate of the luggage's geometric center (0.0 to 100.0)
+
+"diameter_percent": The diameter of a circle to clearly mark the center (5.0 to 20.0, as a percentage of the image's width).
+
+- Critical Directive: The circle must be positioned at the precise geometric center of the luggage. The diameter should be appropriately sized—not too large or too small—to clearly indicate the selected luggage.
+
+[Output Format]
+Respond only with the requested information (description and coordinates) in the following JSON format. Do not include any additional explanations or sentences.
+
+{
+  "luggage_description": "string",
+  "coordinates": {
+    "center_x_percent": float,
+    "center_y_percent": float,
+    "diameter_percent": float
+  }
+}

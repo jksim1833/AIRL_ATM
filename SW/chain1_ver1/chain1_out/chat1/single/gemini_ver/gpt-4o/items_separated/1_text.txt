@@ -1,0 +1,12 @@
+Single Prompt Circle Response:
+luggage_description="The large brown box labeled 'UltraGear' on the left side of the image." coordinates=CircleCoords(center_x_percent=25.0, center_y_percent=60.0, diameter_percent=15.0)
+
+Parsed Coordinates:
+{
+  "luggage_description": "The large brown box labeled 'UltraGear' on the left side of the image.",
+  "coordinates": {
+    "center_x_percent": 25.0,
+    "center_y_percent": 60.0,
+    "diameter_percent": 15.0
+  }
+}

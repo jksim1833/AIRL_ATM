@@ -1,0 +1,19 @@
+Single Prompt Circle Response:
+{
+  "luggage_description": "The top cardboard box labeled 'Y300M' with clear tape on its top surface.",
+  "coordinates": {
+    "center_x_percent": 36.27,
+    "center_y_percent": 52.99,
+    "diameter_percent": 15.0
+  }
+}
+
+Parsed Coordinates:
+{
+  "luggage_description": "The top cardboard box labeled 'Y300M' with clear tape on its top surface.",
+  "coordinates": {
+    "center_x_percent": 36.27,
+    "center_y_percent": 52.99,
+    "diameter_percent": 15.0
+  }
+}

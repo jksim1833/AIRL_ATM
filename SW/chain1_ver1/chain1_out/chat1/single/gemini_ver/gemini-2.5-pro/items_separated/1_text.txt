@@ -1,0 +1,19 @@
+Single Prompt Circle Response:
+{
+  "luggage_description": "The large cardboard box labeled 'UltraGear' on the lower-left side of the floor.",
+  "coordinates": {
+    "center_x_percent": 23.8,
+    "center_y_percent": 71.7,
+    "diameter_percent": 10.0
+  }
+}
+
+Parsed Coordinates:
+{
+  "luggage_description": "The large cardboard box labeled 'UltraGear' on the lower-left side of the floor.",
+  "coordinates": {
+    "center_x_percent": 23.8,
+    "center_y_percent": 71.7,
+    "diameter_percent": 10.0
+  }
+}

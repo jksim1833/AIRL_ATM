@@ -1,0 +1,32 @@
+[Role and Objective]
+Analyze the provided image to identify the single piece of luggage best suited for volume estimation. Then, output its location using precise percentage coordinates.
+
+[Analysis and Selection Criteria]
+Evaluate each piece of luggage based on the following criteria to choose the most suitable one for volume estimation:
+- Shape Regularity: Geometrically distinct and regular shape (e.g., cuboid) that simplifies volume calculation.
+- Surface Visibility: Three main surfaces (length, width, height) or sufficient visual cues are visible to infer its 3D shape.
+- Relative Size: Large enough within the image for accurate measurement.
+- Angle and Perspective: The angle and position of the luggage aid in precise volume estimation.
+
+[Output Requirements]
+1. Luggage Confirmation:
+- "luggage_description": Provide a brief, one-sentence description of the selected luggage (e.g., "The gray suitcase in the center") to confirm the coordinates match the correct item.
+
+2. Coordinate Calculation:
+- View the image as a 100% x 100% coordinate system.
+- The center point must be the **2D geometric center** of the luggage as it appears in the image, ignoring any 3D depth. This should be the visually perceived center.
+- Use the input image's dimensions ({image_width}px, {image_height}px) for the most accurate estimation.
+- "center_x_percent": The x-coordinate of the 2D geometric center (0.0 to 100.0).
+- "center_y_percent": The y-coordinate of the 2D geometric center (0.0 to 100.0).
+- "diameter_percent": The diameter of a circle to mark the center, as a percentage of the image's width (5.0 to 20.0). It should be appropriately sized to clearly indicate the item without being too large or too small.
+
+[Output Format]
+Respond ONLY with a JSON object. Ensure no other text or explanation is included.
+{
+  "luggage_description": "string",
+  "coordinates": {
+    "center_x_percent": float,
+    "center_y_percent": float,
+    "diameter_percent": float
+  }
+}
