@@ -1,0 +1,120 @@
+import openai
+import re
+import argparse
+import math
+import numpy as np
+import os
+import json
+import time
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--prompt", type=str, default="SW\Chain2\main\source\chain2_basic.txt")
+parser.add_argument("--sysprompt", type=str, default="SW\Chain2\main\source\chain2_system.txt")
+args = parser.parse_args()
+
+with open('../tetris_secrets.json') as f:
+    credentials = json.load(f)
+
+with open(args.sysprompt, "r") as f:
+    sysprompt = f.read()
+
+chat_history = [
+    {
+        "role": "system",
+        "content": sysprompt
+    },
+    {
+        "role": "user",
+        "content": "all seat face foward"
+    },
+    {
+        "role": "assistant",
+        "content": """```python
+{
+    seat1: ("W", "B", "F"),
+    seat2: ("H", "A", "F"),
+    seat3: ("H", "C", "F"),
+    seat4: ("W", "B", "F")
+}
+```
+This output seat settings to face the seat forward a new direction that is seat_direction("F")."""
+    }
+]
+
+
+def ask(prompt):
+    chat_history.append(
+        {
+            "role": "user",
+            "content": prompt,
+        }
+    )
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=chat_history,
+        temperature=0
+    )
+    chat_history.append(
+        {
+            "role": "assistant",
+            "content": completion.choices[0].message.content,
+        }
+    )
+    return chat_history[-1]["content"]
+
+
+print(f"Done.")
+
+code_block_regex = re.compile(r"```(.*?)```", re.DOTALL)
+
+
+def extract_python_code(content):
+    code_blocks = code_block_regex.findall(content)
+    if code_blocks:
+        full_code = "\n".join(code_blocks)
+
+        if full_code.startswith("python"):
+            full_code = full_code[7:]
+
+        return full_code
+    else:
+        return None
+
+
+class colors:  # You may need to change color settings
+    RED = "\033[31m"
+    ENDC = "\033[m"
+    GREEN = "\033[32m"
+    YELLOW = "\033[33m"
+    BLUE = "\033[34m"
+
+
+print(f"Initializing AirSim...")
+aw = AirSimWrapper()
+print(f"Done.")
+
+with open(args.prompt, "r") as f:
+    prompt = f.read()
+
+ask(prompt)
+print("Welcome to the AirSim chatbot! I am ready to help you with your AirSim questions and commands.")
+
+while True:
+    question = input(colors.YELLOW + "AirSim> " + colors.ENDC)
+
+    if question == "!quit" or question == "!exit":
+        break
+
+    if question == "!clear":
+        os.system("cls")
+        continue
+
+    response = ask(question)
+
+    print(f"\n{response}\n")
+
+    code = extract_python_code(response)
+    if code is not None:
+        print("Please wait while I run the code in AirSim...")
+        exec(extract_python_code(response))
+        print("Done!\n")
