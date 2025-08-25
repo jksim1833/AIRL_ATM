@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 0.98
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "회색 플라스틱 의자",
+      "object_confidence": 0.98,
+      "special_note": "부피가 크고 형태가 고정되어 있음",
+      "special_note_confidence": 0.97
+    },
+    "luggage 2": {
+      "object": "검은색 데스크톱 컴퓨터 본체",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "흑색 백팩",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "적색 원통형 침낭 가방",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "박스 포장된 LG 울트라와이드 모니터",
+      "object_confidence": 0.98,
+      "special_note": "부피가 크고 납작한 형태",
+      "special_note_confidence": 0.95
+    },
+    "luggage 6": {
+      "object": "갈색 종이 상자",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "분리형 나무 행거",
+      "object_confidence": 0.98,
+      "special_note": "길이가 매우 김, 차량 탑재 시 주의 필요",
+      "special_note_confidence": 0.98
+    },
+    "luggage 8": {
+      "object": "22인치 평면 모니터",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 9": {
+      "object": "빨간색 소형 소화기",
+      "object_confidence": 0.98,
+      "special_note": "원통형, 액체 또는 분말 포함 가능성",
+      "special_note_confidence": 0.95
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "분리형 나무 행거",
+      "largest_confidence": 0.99
+    },
+    "smallest": {
+      "object": "빨간색 소형 소화기",
+      "smallest_confidence": 0.97
+    }
+  }
+}

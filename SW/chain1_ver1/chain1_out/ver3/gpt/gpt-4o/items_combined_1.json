@@ -1,0 +1,60 @@
+{
+  "total_luggage": {
+    "count": 7,
+    "confidence": 0.95
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검은색 스트랩 백팩",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "빨간색 소화기",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "갈색 나무 옷걸이",
+      "object_confidence": 0.9,
+      "special_note": "길이가 긴 물체",
+      "special_note_confidence": 0.85
+    },
+    "luggage 4": {
+      "object": "검은색 컴퓨터 모니터",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "검은색 컴퓨터 본체",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "갈색 골판지 상자",
+      "object_confidence": 0.85,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "갈색 의자",
+      "object_confidence": 0.9,
+      "special_note": "차량 공간을 많이 차지할 수 있음",
+      "special_note_confidence": 0.9
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "갈색 나무 옷걸이",
+      "largest_confidence": 0.9
+    },
+    "smallest": {
+      "object": "빨간색 소화기",
+      "smallest_confidence": 0.95
+    }
+  }
+}

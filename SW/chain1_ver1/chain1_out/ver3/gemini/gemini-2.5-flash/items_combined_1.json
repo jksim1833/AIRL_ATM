@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검은색 직사각형 데스크톱 컴퓨터 본체",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "어두운 회색 플라스틱 등받이와 좌석, 크롬 다리가 달린 사무용 의자",
+      "object_confidence": 0.98,
+      "special_note": "분리형이 아닌 일체형으로 부피가 크고 부피를 줄이기 어려움",
+      "special_note_confidence": 0.95
+    },
+    "luggage 3": {
+      "object": "빨간색 원통형 압축 주머니에 들어있는 침낭 또는 텐트",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "검은색 삼성 로고가 있는 평면 컴퓨터 모니터",
+      "object_confidence": 0.98,
+      "special_note": "액정이 파손될 우려가 있어 조심스러운 취급 필요",
+      "special_note_confidence": 0.9
+    },
+    "luggage 5": {
+      "object": "검은색 나일론 소재의 백팩, 흰색 한자 로고와 '대한민국 공군 ROKAF' 파란색 태그 부착",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "빨간색 원통형 소화기, 노란색 띠가 둘러져 있음",
+      "object_confidence": 0.99,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "밝은 갈색 나무 재질의 가지 모양 후크가 있는 긴 옷걸이 스탠드",
+      "object_confidence": 0.98,
+      "special_note": "길이가 매우 길고 불규칙한 형태를 가짐",
+      "special_note_confidence": 0.95
+    },
+    "luggage 8": {
+      "object": "크고 평평한 황토색 골판지 상자, '68.4cm', '144Hz', 'IPS', 'HDR' 문구와 'SAMSUNG' 로고가 인쇄되어 있음",
+      "object_confidence": 0.97,
+      "special_note": "부피가 크고 평평하며 내용물 파손 우려",
+      "special_note_confidence": 0.9
+    },
+    "luggage 9": {
+      "object": "황토색 골판지 상자, 'Y300M 최고가방' 문구와 'WHITE/BLACK' 선택 옵션 인쇄",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "밝은 갈색 나무 재질의 가지 모양 후크가 있는 긴 옷걸이 스탠드",
+      "largest_confidence": 0.95
+    },
+    "smallest": {
+      "object": "빨간색 원통형 소화기, 노란색 띠가 둘러져 있음",
+      "smallest_confidence": 0.98
+    }
+  }
+}

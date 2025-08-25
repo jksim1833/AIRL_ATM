@@ -1,0 +1,66 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "커다란 울트라기어 모니터 상자",
+      "object_confidence": 0.95,
+      "special_note": "부피가 커서 많은 공간 차지",
+      "special_note_confidence": 0.9
+    },
+    "luggage 2": {
+      "object": "붉은색 소방기",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "검은색 백팩",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "검은색 컴퓨터 본체",
+      "object_confidence": 0.9,
+      "special_note": "무게가 무거울 수 있음",
+      "special_note_confidence": 0.8
+    },
+    "luggage 5": {
+      "object": "갈색 코트 행거",
+      "object_confidence": 0.95,
+      "special_note": "길이가 길어 적재에 유의 필요",
+      "special_note_confidence": 0.9
+    },
+    "luggage 6": {
+      "object": "작은 LCD 모니터",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "회색 플라스틱 의자",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 8": {
+      "object": "붉은색 침낭",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "커다란 울트라기어 모니터 상자",
+      "largest_confidence": 0.95
+    },
+    "smallest": {
+      "object": "붉은색 소방기",
+      "smallest_confidence": 0.9
+    }
+  }
+}

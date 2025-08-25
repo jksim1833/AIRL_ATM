@@ -1,0 +1,60 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검은색 직사각형 금속/플라스틱 PC 본체, 전면 통풍구 및 포트, 상단 손잡이.",
+      "object_confidence": 0.98,
+      "special_note": "부피가 크고 무거워 보이며, 견고한 직사각형 형태.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 2": {
+      "object": "검은색 패브릭 백팩, 여러 수납공간, 전면 메시 포켓, 작은 흰색 로고.",
+      "object_confidence": 0.98
+    },
+    "luggage 3": {
+      "object": "붉은색 원통형 패브릭 침낭 또는 스터프 색, 상단 조임끈, 측면 흰색 'RHEA' 로고.",
+      "object_confidence": 0.97
+    },
+    "luggage 4": {
+      "object": "갈색 골판지 상자, 'Y300M 철가방' 텍스트, 'G' 형태 로고 (GIGABYTE 추정).",
+      "object_confidence": 0.95
+    },
+    "luggage 5": {
+      "object": "검은색 평면 모니터, 직사각형 화면, 하단 검은색 스탠드 부착.",
+      "object_confidence": 0.98,
+      "special_note": "깨지기 쉬운 전자제품.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 6": {
+      "object": "붉은색 원통형 금속 소화기, 상단 압력 게이지, 검은색 노즐/호스.",
+      "object_confidence": 0.98,
+      "special_note": "특정 위험물 또는 비상 장비로 분류될 수 있음.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 7": {
+      "object": "갈색 골판지 상자, 'UltraGear 27GN650' 텍스트, LG 로고 추정.",
+      "object_confidence": 0.97,
+      "special_note": "부피가 크고 깨지기 쉬운 전자제품 포함 가능성.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 8": {
+      "object": "밝은 갈색 나무 소재의 분해된 옷걸이, 긴 기둥형, 여러 개의 짧은 가지.",
+      "object_confidence": 0.98,
+      "special_note": "매우 긴 형태이며, 차량 내부에 배치 시 좌석 공간에 큰 영향을 줄 수 있음.",
+      "special_note_confidence": 0.98
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "밝은 갈색 나무 소재의 분해된 옷걸이",
+      "largest_confidence": 0.98
+    },
+    "smallest": {
+      "object": "붉은색 원통형 금속 소화기",
+      "smallest_confidence": 0.95
+    }
+  }
+}

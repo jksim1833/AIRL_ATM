@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 0.98
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "짙은 회색 플라스틱 등받이 구멍 3개 금속 프레임 의자",
+      "object_confidence": 0.98,
+      "special_note": "부피가 크고 단단하게 고정되어야 함",
+      "special_note_confidence": 0.97
+    },
+    "luggage 2": {
+      "object": "검정색 데스크탑 본체, 전면에 포트와 스티커 부착, 금속 재질",
+      "object_confidence": 0.99,
+      "special_note": "상대적으로 무거워 보임",
+      "special_note_confidence": 0.95
+    },
+    "luggage 3": {
+      "object": "검정색 백팩, 다수의 포켓, 패브릭 재질",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "빨간색 원통형 침낭 또는 휴대용 파우치, 패브릭, 스트링 파우치 상단",
+      "object_confidence": 0.96,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "중형 갈색 골판지 박스, 검은/노란 텍스트 라벨, 테이핑",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "27인치대 평면 베젤 모니터, 검정색 플라스틱, 패널 스탠드 포함",
+      "object_confidence": 0.97,
+      "special_note": "파손 위험, 세워서 적재 추천",
+      "special_note_confidence": 0.92
+    },
+    "luggage 7": {
+      "object": "LG UltraGear 대형 모니터 박스, 골판지, 라벨과 인쇄 있음",
+      "object_confidence": 0.99,
+      "special_note": "가장 부피가 큼",
+      "special_note_confidence": 0.99
+    },
+    "luggage 8": {
+      "object": "긴 나무제 구조물, 닻 혹은 오리 모양 꼬리, 나무다리",
+      "object_confidence": 0.96,
+      "special_note": "길이가 길어서 차량 공간 배치에 큰 영향",
+      "special_note_confidence": 0.99
+    },
+    "luggage 9": {
+      "object": "빨간색 휴대용 소화기, 금속과 플라스틱 혼합재, 손잡이 스트랩",
+      "object_confidence": 0.98,
+      "special_note": "무게가 있음, 세워서 적재 필요",
+      "special_note_confidence": 0.93
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "LG UltraGear 대형 모니터 박스, 골판지, 라벨과 인쇄 있음",
+      "largest_confidence": 0.99
+    },
+    "smallest": {
+      "object": "빨간색 원통형 침낭 또는 휴대용 파우치, 패브릭, 스트링 파우치 상단",
+      "smallest_confidence": 0.95
+    }
+  }
+}

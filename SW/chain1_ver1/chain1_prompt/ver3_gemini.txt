@@ -1,0 +1,47 @@
+다음 이미지는 PBV 또는 일반 차량에 실을 수 있는 짐들을 보여줍니다. 이미지를 철저히 분석하여 각 짐에 대한 정보를 완벽하게 파악하고, 아래의 JSON 형식에 맞춰 응답하세요.
+
+[명령]:
+
+1.전체 짐의 개수: 이미지 속 모든 짐의 총 개수를 세어 total_luggage.count에 정수로 입력합니다.
+
+2. 짐 세부 정보: 각 짐에 대해 다음을 상세히 파악합니다.
+
+- 물체 식별: luggage_details 내에 각 짐을 고유하게 식별하는 키를 생성하고, object에 해당 짐을 설명합니다. 
+색상, 재질, 모양, 표면 텍스트/로고 등을 종합적으로 고려하여 누가 보아도 명확하게 식별 가능한 수준으로 구체적으로 서술하세요. (예: "검은색 하드케이스 캐리어", "푸른색 나일론 더플백", "황토색 종이 상자").
+
+- 특이사항: 차량 배치에 영향을 줄 수 있는 매우 큰 부피, 긴 길이, 특이한 형태 등의 특징이 있다면 special_note에 간결하게 기술합니다.
+
+3. 크기 비교: 전체 짐 중에서 가장 큰 짐과 가장 작은 짐을 식별하고, 각 짐의 object를 extremes에 정확히 기재합니다.
+
+4. 신뢰도: 위에 나열된 각 정보(count, object, special_note, largest, smallest)에 대해 Gemini의 분석 신뢰도를 0에서 1 사이의 값으로 함께 표기합니다.
+
+[출력 형식]: 모든 분석 결과는 다음 JSON 형식에 엄격히 맞춰 응답해야 합니다. 추가적인 설명이나 문장은 절대 포함하지 않습니다.
+
+{
+  "total_luggage": {
+    "count": <int>,
+    "confidence": <float>
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "<string>",
+      "object_confidence": <float>,
+      "special_note": "<string>",
+      "special_note_confidence": <float>
+    },
+    "luggage 2": {
+      "object": "<string>",
+      "object_confidence": <float>
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "<string>",
+      "largest_confidence": <float>
+    },
+    "smallest": {
+      "object": "<string>",
+      "smallest_confidence": <float>
+    }
+  }
+}

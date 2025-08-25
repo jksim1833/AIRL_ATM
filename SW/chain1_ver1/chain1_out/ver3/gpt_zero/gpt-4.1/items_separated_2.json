@@ -1,0 +1,42 @@
+{
+  "total_luggage": {
+    "count": 4,
+    "confidence": 0.98
+  },
+  "luggage_details": {
+    "suitcase": {
+      "object": "suitcase",
+      "object_confidence": 0.96,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "duffel bag": {
+      "object": "duffel bag",
+      "object_confidence": 0.91,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "backpack": {
+      "object": "backpack",
+      "object_confidence": 0.88,
+      "special_note": "unusually large",
+      "special_note_confidence": 0.87
+    },
+    "small tote": {
+      "object": "small tote",
+      "object_confidence": 0.79,
+      "special_note": null,
+      "special_note_confidence": null
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "backpack",
+      "largest_confidence": 0.87
+    },
+    "smallest": {
+      "object": "small tote",
+      "smallest_confidence": 0.79
+    }
+  }
+}

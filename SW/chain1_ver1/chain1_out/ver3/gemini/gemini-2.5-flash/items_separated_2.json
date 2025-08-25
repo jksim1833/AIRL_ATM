@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "회색 플라스틱 등받이와 좌석, 크롬 다리가 있는 사무용 의자",
+      "object_confidence": 0.98,
+      "special_note": "접히지 않는 형태로 부피를 차지함.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 2": {
+      "object": "검은색 직사각형 금속 데스크탑 컴퓨터 케이스, 전면에 포트와 버튼, 상단에 손잡이가 있음",
+      "object_confidence": 0.98,
+      "special_note": "비교적 크고 무거울 수 있음.",
+      "special_note_confidence": 0.85
+    },
+    "luggage 3": {
+      "object": "검은색 나일론 재질의 일반적인 백팩, 전면에 작은 포켓과 흰색 로고 같은 문양이 있음",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "붉은색 나일론 재질의 둥글게 말린 침낭, 흰색 글씨와 로고가 보임",
+      "object_confidence": 0.97,
+      "special_note": "압축되어 있어 부피가 작음.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 5": {
+      "object": "갈색 골판지 상자, 'Y300M' 및 '철가방' 문구가 인쇄되어 있으며, 상단에 투명 테이프가 붙어있음",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "검은색 평면 컴퓨터 모니터, 직사각형 스크린과 사각형 받침대가 있음",
+      "object_confidence": 0.98,
+      "special_note": "깨지기 쉬운 액정 패널이 있어 주의 필요.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 7": {
+      "object": "붉은색 금속 소화기, 상단에 압력 게이지와 손잡이, 노즐이 있음",
+      "object_confidence": 0.98,
+      "special_note": "원통형으로 형태가 고정되어 있음.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 8": {
+      "object": "밝은 갈색 나무 재질의 긴 코트 행거 또는 옷걸이 스탠드, 여러 갈래의 가지 모양 돌기가 있음",
+      "object_confidence": 0.97,
+      "special_note": "매우 길고 독특한 형태를 가짐, 차량 내부에 싣기 위해 긴 공간이 필요함.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 9": {
+      "object": "크고 넓은 갈색 골판지 상자, 'UltraGear' 로고와 '27GN650' 모델명, '68.4cm' 등의 정보가 인쇄되어 있음",
+      "object_confidence": 0.98,
+      "special_note": "매우 크고 넓은 부피를 차지함.",
+      "special_note_confidence": 0.95
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "밝은 갈색 나무 재질의 긴 코트 행거 또는 옷걸이 스탠드, 여러 갈래의 가지 모양 돌기가 있음",
+      "largest_confidence": 0.95
+    },
+    "smallest": {
+      "object": "붉은색 금속 소화기, 상단에 압력 게이지와 손잡이, 노즐이 있음",
+      "smallest_confidence": 0.9
+    }
+  }
+}

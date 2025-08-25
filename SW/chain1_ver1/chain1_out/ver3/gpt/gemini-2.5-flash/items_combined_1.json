@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "갈색 골판지 상자, 상단에 투명 테이프, 전면에 'Y300M JTYS' 텍스트와 제품 이미지, 'WHITE'와 'BLACK' 옵션 표시",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "갈색 골판지 상자, 상단에 '68.4cm', '144Hz', 'NVIDIA G-SYNC Compatible', 'IPS | HDR' 텍스트 표시",
+      "object_confidence": 0.98,
+      "special_note": "비교적 큰 부피를 차지함",
+      "special_note_confidence": 0.9
+    },
+    "luggage 3": {
+      "object": "검은색 직사각형 금속/플라스틱 데스크탑 PC 본체, 측면에 환기구, 상단에 손잡이와 흰색 스티커",
+      "object_confidence": 0.97,
+      "special_note": "부피가 크고 무게가 나갈 수 있음",
+      "special_note_confidence": 0.9
+    },
+    "luggage 4": {
+      "object": "빨간색 원통형으로 말린 침낭, 흰색 로고와 검은색 스트랩으로 고정",
+      "object_confidence": 0.97,
+      "special_note": "유연한 부피로 공간 활용에 용이",
+      "special_note_confidence": 0.85
+    },
+    "luggage 5": {
+      "object": "검은색 평면 디스플레이 모니터, 'SAMSUNG' 로고, 직사각형 스탠드",
+      "object_confidence": 0.98,
+      "special_note": "부피가 있고 깨지기 쉬우며 고정된 형태",
+      "special_note_confidence": 0.95
+    },
+    "luggage 6": {
+      "object": "검은색 패브릭 백팩, 여러 개의 지퍼 수납공간, 전면에 흰색 한자 자수, 파란색 '대한민국 공군 ROKAF' 키링 부착",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "빨간색 금속 소화기, 노란색 밴드와 압력 게이지, 검은색 노즐",
+      "object_confidence": 0.99,
+      "special_note": "원통형이며 금속 재질로 무게가 나갈 수 있음",
+      "special_note_confidence": 0.9
+    },
+    "luggage 8": {
+      "object": "밝은 갈색 나무 재질의 분리 가능한 옷걸이 스탠드, 긴 기둥과 여러 개의 돌출된 가지 형태",
+      "object_confidence": 0.96,
+      "special_note": "매우 길어서 차량 내부 배치 시 좌석 공간을 크게 침범할 수 있음",
+      "special_note_confidence": 0.98
+    },
+    "luggage 9": {
+      "object": "회색 플라스틱 등받이와 좌석, 크롬 도금 금속 프레임으로 된 의자, 등받이에 수평 슬릿 디자인",
+      "object_confidence": 0.97,
+      "special_note": "부피가 크고 고정된 형태로, 차량 내 공간을 많이 차지할 수 있음",
+      "special_note_confidence": 0.95
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "밝은 갈색 나무 재질의 분리 가능한 옷걸이 스탠드",
+      "largest_confidence": 0.95
+    },
+    "smallest": {
+      "object": "빨간색 금속 소화기",
+      "smallest_confidence": 0.9
+    }
+  }
+}

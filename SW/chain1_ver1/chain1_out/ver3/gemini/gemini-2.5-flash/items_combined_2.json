@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검은색 금속/플라스틱 데스크톱 컴퓨터 본체",
+      "object_confidence": 0.98,
+      "special_note": "비교적 부피가 크고 무거울 수 있으며, 손잡이가 달려 있음.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 2": {
+      "object": "검은색 패브릭 백팩 (앞면에 흰색 장식 또는 핀이 있음)",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "빨간색 롤업된 매트리스 또는 침낭 (흰색 KHEA, UltraGear 로고가 보임)",
+      "object_confidence": 0.97,
+      "special_note": "원통형으로 형태가 고정되어 있음.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 4": {
+      "object": "검은색 플라스틱 프레임의 평면 모니터",
+      "object_confidence": 0.98,
+      "special_note": "깨지기 쉬운 전자제품이며, 평평하고 넓은 면적을 차지함.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 5": {
+      "object": "어두운 회색 플라스틱 등받이와 좌석을 가진 금속 프레임 의자",
+      "object_confidence": 0.98,
+      "special_note": "부피가 크고 형태가 불규칙하여 공간 활용에 제약이 있을 수 있음.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 6": {
+      "object": "위쪽에 놓인 갈색 골판지 상자 (상단에 투명 테이프, 'Y300M' 라벨)",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "아래쪽에 깔린 넓고 납작한 갈색 골판지 상자 ('UltraGear 27GN650' 라벨)",
+      "object_confidence": 0.98,
+      "special_note": "다른 상자에 비해 넓고 납작한 형태.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 8": {
+      "object": "빨간색 원통형 소화기 (상단에 검은색 호스 및 압력계, 흰색/노란색 라벨)",
+      "object_confidence": 0.98,
+      "special_note": "원통형이며 금속 재질로 무거울 수 있음.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 9": {
+      "object": "여러 개의 가지가 달린 긴 나무 옷걸이/스탠드 (황토색 나무 재질)",
+      "object_confidence": 0.97,
+      "special_note": "매우 길고 독특한 형태로, 차량 내부에 싣기 위해 대각선 또는 분해가 필요할 수 있음.",
+      "special_note_confidence": 0.98
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "여러 개의 가지가 달린 긴 나무 옷걸이/스탠드 (황토색 나무 재질)",
+      "largest_confidence": 0.97
+    },
+    "smallest": {
+      "object": "빨간색 롤업된 매트리스 또는 침낭 (흰색 KHEA, UltraGear 로고가 보임)",
+      "smallest_confidence": 0.95
+    }
+  }
+}

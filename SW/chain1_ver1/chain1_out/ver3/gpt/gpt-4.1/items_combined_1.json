@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검은색 플라스틱 등받이 회의용 의자, 은색 철제 다리",
+      "object_confidence": 1.0,
+      "special_note": "크기가 커서 차량 3열 공간 배치에 큰 영향, 부피 큼",
+      "special_note_confidence": 1.0
+    },
+    "luggage 2": {
+      "object": "갈색 목재 코트행거, 다리와 옷걸이 돌출, 길이가 길고 부피 불규칙",
+      "object_confidence": 0.95,
+      "special_note": "길이 매우 길고 구조상 눕혀야 적재 가능, 공간 차지 큼",
+      "special_note_confidence": 1.0
+    },
+    "luggage 3": {
+      "object": "검은색 데스크탑 본체, 수직 형태, 금속/플라스틱 재질",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "검은색 모니터, 얇은 프레임, 바닥 거치대 부착",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "검은색 배낭, 앞면 작은 로고와 네임 태그 부착",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "빨간색 원통형 침낭, 흰색 텍스트 프린팅(캠핑 브랜드)",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "갈색 골판지 박스, 테이프 포장, 박스 측면 라벨 프린트",
+      "object_confidence": 0.99,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 8": {
+      "object": "베이지색 납작한 박스, 노트북 또는 전자제품 패키지 추정, 상부에 검은 스티커",
+      "object_confidence": 0.96,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 9": {
+      "object": "빨간색 소화기, 금속 몸체에 노란색 띠, 윗부분 손잡이",
+      "object_confidence": 0.99,
+      "special_note": "작지만 매우 무거운 금속성 물품",
+      "special_note_confidence": 0.8
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "갈색 목재 코트행거, 다리와 옷걸이 돌출, 길이가 길고 부피 불규칙",
+      "largest_confidence": 0.98
+    },
+    "smallest": {
+      "object": "빨간색 소화기, 금속 몸체에 노란색 띠, 윗부분 손잡이",
+      "smallest_confidence": 0.95
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "total_luggage": {
+    "count": 3,
+    "confidence": 0.96
+  },
+  "luggage_details": {
+    "backpack": {
+      "object": "backpack",
+      "object_confidence": 0.97,
+      "special_note": "appears heavy",
+      "special_note_confidence": 0.88
+    },
+    "rolling suitcase": {
+      "object": "rolling suitcase",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "purse": {
+      "object": "purse",
+      "object_confidence": 0.93,
+      "special_note": "designer brand",
+      "special_note_confidence": 0.84
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "rolling suitcase",
+      "largest_confidence": 0.95
+    },
+    "smallest": {
+      "object": "purse",
+      "smallest_confidence": 0.93
+    }
+  }
+}

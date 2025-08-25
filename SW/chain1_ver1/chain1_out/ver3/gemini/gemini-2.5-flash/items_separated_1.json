@@ -1,0 +1,66 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "붉은색 원통형 나일론 소재의 슬리핑백 또는 수납 주머니. 상단에 흰색 'RHEA' 로고와 'Everest' 글자가 세로로 인쇄되어 있으며, 입구는 검은색 끈으로 조여져 있고 검은색 플라스틱 스토퍼가 달려있음.",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "검은색 나일론 소재의 백팩. 전면에 두 개의 지퍼 달린 주머니가 돌출되어 있고, 상단 플랩에 흰색 그래픽 로고와 'L.L.Bean' 같은 텍스트가 희미하게 보임. 파란색 'LG' 로고가 있는 키링이 부착되어 있음.",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "검은색 직사각형 금속 케이스의 데스크탑 PC 본체. 전면에는 세로로 긴 통풍구가 있고, 상단에는 검은색 플라스틱 손잡이가 있음. 측면에는 흰색 직사각형 스티커가 붙어 있음.",
+      "object_confidence": 0.98,
+      "special_note": "비교적 부피가 크고 무거울 수 있음.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 4": {
+      "object": "상단이 테이프로 밀봉된 황토색 골판지 상자. 전면에 'LG UltraGear' 로고와 '27GN650' 모델명이 인쇄되어 있으며, '144 Hz | 1ms GTG' 등의 특징과 여러 아이콘이 표시되어 있음.",
+      "object_confidence": 0.98,
+      "special_note": "직사각형 형태로 부피가 큰 편.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 5": {
+      "object": "검은색 평면 스크린 컴퓨터 모니터. 직사각형 화면과 검은색 플라스틱 스탠드로 구성되어 있으며, 스탠드 하단 베젤 중앙에 'SAMSUNG' 로고가 희미하게 보임.",
+      "object_confidence": 0.97,
+      "special_note": "깨지기 쉬운 전자제품이며, 스탠드 포함 시 부피가 있는 편.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 6": {
+      "object": "붉은색 원통형 금속 소화기. 상단에 검은색 손잡이와 노란색 안전핀, 그리고 검은색 고무 호스가 연결되어 있고, 호스 끝에는 노란색 분사 노즐이 달려 있음. 본체 중간에 노란색 고정 밴드가 둘러져 있음.",
+      "object_confidence": 0.99,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "상단이 테이프로 밀봉된 황토색 골판지 상자. 전면에 'GUTS Y300M' 로고와 '청계방' 한글 문구, 그리고 PC 케이스 이미지가 인쇄되어 있음. 'Full Mesh Design' 등의 특징이 영어로 표기되어 있음.",
+      "object_confidence": 0.97,
+      "special_note": "직사각형 형태로 부피가 큰 편.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 8": {
+      "object": "밝은 갈색의 나무 소재 스탠드형 옷걸이. 중앙의 긴 기둥에서 위쪽으로 여러 개의 짧은 가지들이 뻗어 나와 있으며, 하단은 세 갈래의 곡선형 다리로 지지되어 있음.",
+      "object_confidence": 0.98,
+      "special_note": "길이가 길고, 가지 형태로 인해 특정 공간을 차지하며 운반 시 분해 필요할 수 있음.",
+      "special_note_confidence": 0.95
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "황토색 직사각형 종이 상자 (LG UltraGear 모니터)",
+      "largest_confidence": 0.9
+    },
+    "smallest": {
+      "object": "붉은색 원통형 금속 소화기",
+      "smallest_confidence": 0.95
+    }
+  }
+}
