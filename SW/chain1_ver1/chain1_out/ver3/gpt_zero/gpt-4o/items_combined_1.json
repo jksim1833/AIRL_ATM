@@ -1,36 +1,72 @@
 {
   "total_luggage": {
-    "count": 5,
-    "confidence": 0.95
+    "count": 9,
+    "confidence": 1.0
   },
   "luggage_details": {
-    "suitcase": {
-      "object": "suitcase",
-      "object_confidence": 0.9,
+    "box_1": {
+      "object": "박스 1",
+      "object_confidence": 0.95,
       "special_note": null,
       "special_note_confidence": null
     },
-    "backpack": {
-      "object": "backpack",
-      "object_confidence": 0.85,
-      "special_note": "Handle with care",
-      "special_note_confidence": 0.8
+    "box_2": {
+      "object": "박스 2",
+      "object_confidence": 0.95,
+      "special_note": "부피 큼",
+      "special_note_confidence": 0.9
     },
-    "duffle_bag": {
-      "object": "duffle_bag",
-      "object_confidence": 0.78,
+    "computer_case": {
+      "object": "컴퓨터 본체",
+      "object_confidence": 0.95,
+      "special_note": "무게감 있음",
+      "special_note_confidence": 0.9
+    },
+    "monitor": {
+      "object": "모니터",
+      "object_confidence": 0.95,
+      "special_note": "깨지기 쉬움",
+      "special_note_confidence": 0.9
+    },
+    "chair": {
+      "object": "의자",
+      "object_confidence": 0.95,
       "special_note": null,
       "special_note_confidence": null
+    },
+    "fire_extinguisher": {
+      "object": "소화기",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "bag": {
+      "object": "가방",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "cylindrical_object": {
+      "object": "원통형 물체",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "wooden_hanger": {
+      "object": "나무 옷걸이",
+      "object_confidence": 0.95,
+      "special_note": "매우 길쭉함",
+      "special_note_confidence": 0.9
     }
   },
   "extremes": {
     "largest": {
-      "object": "suitcase",
-      "largest_confidence": 0.92
+      "object": "나무 옷걸이",
+      "largest_confidence": 0.9
     },
     "smallest": {
-      "object": "backpack",
-      "smallest_confidence": 0.83
+      "object": "소화기",
+      "smallest_confidence": 0.9
     }
   }
 }

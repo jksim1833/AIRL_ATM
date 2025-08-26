@@ -1,42 +1,72 @@
 {
   "total_luggage": {
-    "count": 4,
-    "confidence": 0.98
+    "count": 8,
+    "confidence": 0.99
   },
   "luggage_details": {
-    "suitcase": {
-      "object": "suitcase",
-      "object_confidence": 0.97,
-      "special_note": "hard-shell, blue",
-      "special_note_confidence": 0.94
+    "box1": {
+      "object": "중간 크기 골판지 박스 (상단 테이핑, 'BLUE MOOD' 인쇄)",
+      "object_confidence": 0.98,
+      "special_note": "부피 일정, 쌓기 용이",
+      "special_note_confidence": 0.95
+    },
+    "box2": {
+      "object": "얇고 넓은 골판지 박스 (하단, 'DELL' 인쇄)",
+      "object_confidence": 0.98,
+      "special_note": "평평, 가벼울 수 있음",
+      "special_note_confidence": 0.93
+    },
+    "desktop": {
+      "object": "검은색 데스크탑 본체 (금속/플라스틱, 직육면체)",
+      "object_confidence": 0.99,
+      "special_note": "무게감, 단단함, 세로/가로 적재 모두 고려",
+      "special_note_confidence": 0.97
+    },
+    "sleeping_bag": {
+      "object": "빨간색 원통형 침낭/매트 ('KZM' 로고)",
+      "object_confidence": 0.99,
+      "special_note": "연질, 부피 대비 가벼움, 틈새 적재 가능",
+      "special_note_confidence": 0.96
     },
     "backpack": {
-      "object": "backpack",
-      "object_confidence": 0.95,
-      "special_note": "contains laptop",
-      "special_note_confidence": 0.89
+      "object": "검은색 백팩 (패브릭, 지퍼, 로고/텍스트)",
+      "object_confidence": 0.99,
+      "special_note": "연질, 내용물 불확실, 틈새 적재 가능",
+      "special_note_confidence": 0.95
     },
-    "duffel bag": {
-      "object": "duffel bag",
-      "object_confidence": 0.93,
+    "monitor": {
+      "object": "검은색 모니터 (플라스틱, 스탠드 부착)",
+      "object_confidence": 0.99,
+      "special_note": "깨지기 쉬움, 평면, 보호 필요",
+      "special_note_confidence": 0.97
+    },
+    "extinguisher": {
+      "object": "빨간색 소화기 (금속, 실린더형)",
+      "object_confidence": 0.99,
+      "special_note": "무게감, 원통형, 단단함",
+      "special_note_confidence": 0.96
+    },
+    "hanger": {
+      "object": "나무 행거 (연한 목재, 길쭉함, 분리형 구조)",
+      "object_confidence": 0.99,
+      "special_note": "길이 매우 길고 부피 불규칙, 좌석 접기 필요 가능성 높음",
+      "special_note_confidence": 0.98
+    },
+    "chair": {
+      "object": "의자 (플라스틱/금속, 회색, 등받이 구멍 3개)",
+      "object_confidence": 0.99,
       "special_note": null,
       "special_note_confidence": null
-    },
-    "briefcase": {
-      "object": "briefcase",
-      "object_confidence": 0.9,
-      "special_note": "leather, black",
-      "special_note_confidence": 0.87
     }
   },
   "extremes": {
     "largest": {
-      "object": "suitcase",
-      "largest_confidence": 0.96
+      "object": "나무 행거",
+      "largest_confidence": 0.98
     },
     "smallest": {
-      "object": "briefcase",
-      "smallest_confidence": 0.92
+      "object": "소화기",
+      "smallest_confidence": 0.95
     }
   }
 }

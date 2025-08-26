@@ -1,42 +1,66 @@
 {
   "total_luggage": {
-    "count": 4,
+    "count": 8,
     "confidence": 0.99
   },
   "luggage_details": {
-    "suitcase": {
-      "object": "suitcase",
-      "object_confidence": 0.98,
-      "special_note": null,
-      "special_note_confidence": null
-    },
-    "duffel bag": {
-      "object": "duffel bag",
-      "object_confidence": 0.9,
-      "special_note": "bright orange strap",
-      "special_note_confidence": 0.85
+    "desktop_tower": {
+      "object": "검은색 데스크탑 본체",
+      "object_confidence": 0.99,
+      "special_note": "무게감 있음, 직육면체, 상단 흰색 메모지 부착, 공간 차지 큼",
+      "special_note_confidence": 0.98
     },
     "backpack": {
-      "object": "backpack",
-      "object_confidence": 0.93,
-      "special_note": null,
-      "special_note_confidence": null
+      "object": "검은색 백팩",
+      "object_confidence": 0.99,
+      "special_note": "유연함, 부피 중간, 앞면 흰색 로고/텍스트",
+      "special_note_confidence": 0.97
     },
-    "tote bag": {
-      "object": "tote bag",
-      "object_confidence": 0.97,
-      "special_note": "contains fragile items",
-      "special_note_confidence": 0.92
+    "sleeping_bag": {
+      "object": "빨간색 침낭(또는 패킹된 천 소재 용품)",
+      "object_confidence": 0.98,
+      "special_note": "압축 스트랩, 부피 작음, 가벼움, 측면 흰색 로고/텍스트",
+      "special_note_confidence": 0.97
+    },
+    "monitor": {
+      "object": "검은색 모니터(스탠드 포함)",
+      "object_confidence": 0.99,
+      "special_note": "얇고 넓음, 파손 위험, 세심한 적재 필요",
+      "special_note_confidence": 0.98
+    },
+    "small_box": {
+      "object": "갈색 테이핑 작은 상자",
+      "object_confidence": 0.98,
+      "special_note": "측면 라벨(한글), 부피 작음~중간, 내용물 불명",
+      "special_note_confidence": 0.96
+    },
+    "large_box": {
+      "object": "갈색 테이핑 큰 상자(평평함)",
+      "object_confidence": 0.99,
+      "special_note": "평평하고 넓음, 라벨(한글), 부피 큼, 내용물 불명",
+      "special_note_confidence": 0.97
+    },
+    "fire_extinguisher": {
+      "object": "빨간색 소화기",
+      "object_confidence": 0.99,
+      "special_note": "무게감 있음, 실린더형, 라벨(한글), 고정 필요",
+      "special_note_confidence": 0.97
+    },
+    "wooden_hanger": {
+      "object": "원목 행거(분리된 상태)",
+      "object_confidence": 0.99,
+      "special_note": "매우 길쭉, 분리 조립형, 구조상 긴 짐, 적재 방식 영향 큼",
+      "special_note_confidence": 0.99
     }
   },
   "extremes": {
     "largest": {
-      "object": "suitcase",
-      "largest_confidence": 0.97
+      "object": "원목 행거(길이 기준)",
+      "largest_confidence": 0.98
     },
     "smallest": {
-      "object": "tote bag",
-      "smallest_confidence": 0.95
+      "object": "빨간색 침낭(압축 상태)",
+      "smallest_confidence": 0.97
     }
   }
 }

@@ -1,48 +1,66 @@
 {
   "total_luggage": {
-    "count": 5,
-    "confidence": 0.92
+    "count": 7,
+    "confidence": 0.95
   },
   "luggage_details": {
-    "suitcase": {
-      "object": "suitcase",
-      "object_confidence": 0.95,
-      "special_note": "contains laptop",
+    "large_box": {
+      "object": "large box",
+      "object_confidence": 0.9,
+      "special_note": "Bulky, may require seat folding",
       "special_note_confidence": 0.85
     },
-    "backpack": {
-      "object": "backpack",
-      "object_confidence": 0.88,
-      "special_note": "contains documents",
-      "special_note_confidence": 0.8
+    "small_box": {
+      "object": "small box",
+      "object_confidence": 0.85,
+      "special_note": null,
+      "special_note_confidence": null
     },
-    "duffel_bag": {
-      "object": "duffel_bag",
+    "monitor": {
+      "object": "monitor",
+      "object_confidence": 0.9,
+      "special_note": "Fragile, needs secure placement",
+      "special_note_confidence": 0.9
+    },
+    "fire_extinguisher": {
+      "object": "fire extinguisher",
+      "object_confidence": 0.9,
+      "special_note": "Heavy, stable placement required",
+      "special_note_confidence": 0.85
+    },
+    "red_bag": {
+      "object": "red bag",
+      "object_confidence": 0.85,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "black_bag": {
+      "object": "black bag",
+      "object_confidence": 0.85,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "wooden_hanger": {
+      "object": "wooden hanger",
+      "object_confidence": 0.9,
+      "special_note": "Long, may require seat adjustment",
+      "special_note_confidence": 0.85
+    },
+    "computer_tower": {
+      "object": "computer tower",
       "object_confidence": 0.9,
       "special_note": null,
       "special_note_confidence": null
-    },
-    "carry_on": {
-      "object": "carry_on",
-      "object_confidence": 0.87,
-      "special_note": null,
-      "special_note_confidence": null
-    },
-    "briefcase": {
-      "object": "briefcase",
-      "object_confidence": 0.91,
-      "special_note": "contains charger",
-      "special_note_confidence": 0.86
     }
   },
   "extremes": {
     "largest": {
-      "object": "suitcase",
-      "largest_confidence": 0.95
+      "object": "large box",
+      "largest_confidence": 0.9
     },
     "smallest": {
-      "object": "carry_on",
-      "smallest_confidence": 0.87
+      "object": "fire extinguisher",
+      "smallest_confidence": 0.9
     }
   }
 }

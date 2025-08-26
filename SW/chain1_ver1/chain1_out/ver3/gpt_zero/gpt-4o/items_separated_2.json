@@ -1,35 +1,65 @@
 {
   "total_luggage": {
-    "count": 5,
+    "count": 8,
     "confidence": 0.95
   },
   "luggage_details": {
-    "bag": {
-      "object": "backpack",
+    "computer_case": {
+      "object": "컴퓨터 본체",
       "object_confidence": 0.9,
-      "special_note": "fragile",
-      "special_note_confidence": 0.75
+      "special_note": "무게감 있음, 직사각형 형태",
+      "special_note_confidence": 0.85
     },
-    "suitcase": {
-      "object": "suitcase",
-      "object_confidence": 0.85,
+    "chair": {
+      "object": "의자",
+      "object_confidence": 0.9,
+      "special_note": "부피 큼, 형태 고정",
+      "special_note_confidence": 0.85
+    },
+    "box_1": {
+      "object": "박스 1",
+      "object_confidence": 0.9,
+      "special_note": "부피 큼, 직사각형 형태",
+      "special_note_confidence": 0.85
+    },
+    "box_2": {
+      "object": "박스 2",
+      "object_confidence": 0.9,
+      "special_note": "부피 중간, 직사각형 형태",
+      "special_note_confidence": 0.85
+    },
+    "monitor": {
+      "object": "모니터",
+      "object_confidence": 0.9,
+      "special_note": "깨지기 쉬움, 직사각형 형태",
+      "special_note_confidence": 0.85
+    },
+    "fire_extinguisher": {
+      "object": "소화기",
+      "object_confidence": 0.9,
+      "special_note": "깨지기 쉬움, 원통형",
+      "special_note_confidence": 0.85
+    },
+    "duffle_bag": {
+      "object": "더플백",
+      "object_confidence": 0.9,
       "special_note": null,
       "special_note_confidence": null
     },
-    "trunk": {
-      "object": "trunk",
-      "object_confidence": 0.92,
-      "special_note": "heavy",
-      "special_note_confidence": 0.8
+    "red_cylindrical_bag": {
+      "object": "빨간색 원통형 가방",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
     }
   },
   "extremes": {
     "largest": {
-      "object": "trunk",
-      "largest_confidence": 0.92
+      "object": "긴 나무 구조물",
+      "largest_confidence": 0.9
     },
     "smallest": {
-      "object": "bag",
+      "object": "소화기",
       "smallest_confidence": 0.9
     }
   }

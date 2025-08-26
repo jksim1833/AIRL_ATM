@@ -1,36 +1,72 @@
 {
   "total_luggage": {
-    "count": 3,
+    "count": 9,
     "confidence": 0.95
   },
   "luggage_details": {
-    "suitcase": {
-      "object": "suitcase",
-      "object_confidence": 0.98,
-      "special_note": "handle broken",
-      "special_note_confidence": 0.9
-    },
-    "backpack": {
-      "object": "backpack",
-      "object_confidence": 0.92,
+    "item_1_chair": {
+      "object": "Chair",
+      "object_confidence": 0.95,
       "special_note": null,
       "special_note_confidence": null
     },
-    "duffel bag": {
-      "object": "duffel bag",
-      "object_confidence": 0.85,
-      "special_note": "heavy",
+    "item_2_desktop_pc_tower": {
+      "object": "Desktop PC Tower",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "item_3_backpack": {
+      "object": "Backpack",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "item_4_red_rolled_item": {
+      "object": "Red rolled item (e.g., sleeping bag)",
+      "object_confidence": 0.9,
+      "special_note": "Possibly a sleeping bag or small tent",
+      "special_note_confidence": 0.85
+    },
+    "item_5_computer_monitor": {
+      "object": "Computer Monitor",
+      "object_confidence": 0.96,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "item_6_cardboard_box_y300m": {
+      "object": "Cardboard Box (Y300M)",
+      "object_confidence": 0.95,
+      "special_note": "Smaller box on top of another",
+      "special_note_confidence": 0.9
+    },
+    "item_7_cardboard_box_ultragear": {
+      "object": "Cardboard Box (Ultragear 27GN650)",
+      "object_confidence": 0.95,
+      "special_note": "Larger box, possibly containing a monitor",
+      "special_note_confidence": 0.9
+    },
+    "item_8_fire_extinguisher": {
+      "object": "Fire Extinguisher",
+      "object_confidence": 0.99,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "item_9_wooden_coat_rack": {
+      "object": "Disassembled wooden coat rack",
+      "object_confidence": 0.92,
+      "special_note": "Appears to be a disassembled wooden coat rack or similar stand",
       "special_note_confidence": 0.88
     }
   },
   "extremes": {
     "largest": {
-      "object": "suitcase",
-      "largest_confidence": 0.98
+      "object": "Disassembled wooden coat rack",
+      "largest_confidence": 0.9
     },
     "smallest": {
-      "object": "backpack",
-      "smallest_confidence": 0.92
+      "object": "Red rolled item (e.g., sleeping bag)",
+      "smallest_confidence": 0.88
     }
   }
 }

@@ -1,36 +1,66 @@
 {
   "total_luggage": {
-    "count": 3,
-    "confidence": 0.95
+    "count": 8,
+    "confidence": 0.98
   },
   "luggage_details": {
-    "suitcase_1": {
-      "object": "suitcase",
-      "object_confidence": 0.98,
-      "special_note": "fragile contents",
-      "special_note_confidence": 0.92
+    "pc_tower": {
+      "object": "Black PC tower",
+      "object_confidence": 0.95,
+      "special_note": "Fragile internal components, requires careful handling.",
+      "special_note_confidence": 0.85
     },
-    "backpack_1": {
-      "object": "backpack",
+    "large_cardboard_box": {
+      "object": "Large brown cardboard box",
+      "object_confidence": 0.95,
+      "special_note": "Heavy, used as a base for other items.",
+      "special_note_confidence": 0.75
+    },
+    "medium_cardboard_box": {
+      "object": "Medium brown cardboard box (Y300M, likely a monitor or PC case box)",
       "object_confidence": 0.9,
-      "special_note": null,
-      "special_note_confidence": null
+      "special_note": "Contains electronics, fragile.",
+      "special_note_confidence": 0.85
     },
-    "suitcase_2": {
-      "object": "suitcase",
-      "object_confidence": 0.97,
-      "special_note": "priority handling",
-      "special_note_confidence": 0.88
+    "red_cylindrical_bag": {
+      "object": "Red cylindrical duffel bag or sleeping bag",
+      "object_confidence": 0.9,
+      "special_note": "Flexible, but long; may contain soft goods.",
+      "special_note_confidence": 0.7
+    },
+    "black_backpack": {
+      "object": "Black backpack with 'ROKAF' tag",
+      "object_confidence": 0.95,
+      "special_note": "Contents unknown, potentially fragile items inside.",
+      "special_note_confidence": 0.6
+    },
+    "monitor": {
+      "object": "Black computer monitor with 'SAMSUNG' logo",
+      "object_confidence": 0.95,
+      "special_note": "Screen is very fragile, requires careful packing and protection.",
+      "special_note_confidence": 0.9
+    },
+    "fire_extinguisher": {
+      "object": "Red fire extinguisher",
+      "object_confidence": 0.98,
+      "special_note": "Heavy and dense, needs to be secured to prevent rolling.",
+      "special_note_confidence": 0.8
+    },
+    "wooden_coat_hanger": {
+      "object": "Disassembled wooden coat hanger",
+      "object_confidence": 0.9,
+      "special_note": "Long and irregularly shaped, prone to snagging or breaking.",
+      "special_note_confidence": 0.85
     }
   },
   "extremes": {
     "largest": {
-      "object": "suitcase",
-      "largest_confidence": 0.98
+      "object": "Disassembled wooden coat hanger",
+      "largest_confidence": 0.9
     },
     "smallest": {
-      "object": "backpack",
-      "smallest_confidence": 0.9
+      "object": "Red fire extinguisher",
+      "smallest_confidence": 0.95
     }
   }
 }

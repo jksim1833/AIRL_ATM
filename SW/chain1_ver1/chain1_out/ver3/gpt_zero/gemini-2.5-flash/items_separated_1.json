@@ -1,48 +1,66 @@
 {
   "total_luggage": {
-    "count": 7,
-    "confidence": 0.95
+    "count": 8,
+    "confidence": 0.98
   },
   "luggage_details": {
-    "large suitcase": {
-      "object": "large suitcase",
-      "object_confidence": 0.92,
-      "special_note": "fragile sticker",
-      "special_note_confidence": 0.88
+    "red_compression_sack": {
+      "object": "Red cylindrical compression sack (RHEA)",
+      "object_confidence": 0.95,
+      "special_note": "Flexible, can be compressed, suitable for filling gaps.",
+      "special_note_confidence": 0.9
     },
-    "backpack": {
-      "object": "two backpacks",
-      "object_confidence": 0.89,
-      "special_note": "one has a handle broken note",
-      "special_note_confidence": 0.75
+    "black_backpack": {
+      "object": "Black backpack",
+      "object_confidence": 0.95,
+      "special_note": "Flexible, can be compressed, contents unknown but likely soft goods.",
+      "special_note_confidence": 0.85
     },
-    "carry-on bag": {
-      "object": "carry-on bag",
-      "object_confidence": 0.91,
-      "special_note": null,
-      "special_note_confidence": null
+    "black_pc_tower": {
+      "object": "Black desktop computer tower",
+      "object_confidence": 0.98,
+      "special_note": "Heavy, rigid, contains sensitive electronics, requires stable placement.",
+      "special_note_confidence": 0.95
     },
-    "small duffel bag": {
-      "object": "small duffel bag",
-      "object_confidence": 0.85,
-      "special_note": null,
-      "special_note_confidence": null
+    "black_monitor": {
+      "object": "Black flat-screen monitor (SAMSUNG)",
+      "object_confidence": 0.98,
+      "special_note": "Fragile screen, awkward shape due to stand, requires careful handling and stable placement.",
+      "special_note_confidence": 0.95
     },
-    "guitar case": {
-      "object": "guitar case",
-      "object_confidence": 0.93,
-      "special_note": null,
-      "special_note_confidence": null
+    "lg_ultragear_box": {
+      "object": "Brown cardboard box (LG UltraGear monitor)",
+      "object_confidence": 0.98,
+      "special_note": "Large, flat, likely contains a fragile monitor, requires stable, flat placement.",
+      "special_note_confidence": 0.95
+    },
+    "red_fire_extinguisher": {
+      "object": "Red fire extinguisher",
+      "object_confidence": 0.98,
+      "special_note": "Heavy, metal, cylindrical, should be secured to prevent rolling.",
+      "special_note_confidence": 0.9
+    },
+    "wooden_coat_stand": {
+      "object": "Wooden coat stand",
+      "object_confidence": 0.95,
+      "special_note": "Very long and irregularly shaped, potentially fragile wood, requires significant linear space and careful handling.",
+      "special_note_confidence": 0.95
+    },
+    "gigabyte_y300m_box": {
+      "object": "Brown cardboard box (GIGABYTE PC case)",
+      "object_confidence": 0.98,
+      "special_note": "Medium-large, rigid, likely contains a PC case, requires stable placement.",
+      "special_note_confidence": 0.9
     }
   },
   "extremes": {
     "largest": {
-      "object": "large suitcase",
-      "largest_confidence": 0.92
+      "object": "Wooden coat stand",
+      "largest_confidence": 0.98
     },
     "smallest": {
-      "object": "small duffel bag",
-      "smallest_confidence": 0.85
+      "object": "Red fire extinguisher",
+      "smallest_confidence": 0.98
     }
   }
 }

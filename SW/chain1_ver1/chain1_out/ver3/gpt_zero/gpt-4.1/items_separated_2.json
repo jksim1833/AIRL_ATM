@@ -1,42 +1,66 @@
 {
   "total_luggage": {
-    "count": 4,
-    "confidence": 0.98
+    "count": 7,
+    "confidence": 0.99
   },
   "luggage_details": {
-    "suitcase": {
-      "object": "suitcase",
-      "object_confidence": 0.96,
+    "PC 본체": {
+      "object": "검은색 PC 본체",
+      "object_confidence": 0.99,
+      "special_note": "무게감 있음, 고정 필요",
+      "special_note_confidence": 0.95
+    },
+    "백팩": {
+      "object": "검은색 백팩",
+      "object_confidence": 0.99,
       "special_note": null,
       "special_note_confidence": null
     },
-    "duffel bag": {
-      "object": "duffel bag",
-      "object_confidence": 0.91,
+    "침낭": {
+      "object": "빨간색 원통형 침낭",
+      "object_confidence": 0.99,
       "special_note": null,
       "special_note_confidence": null
     },
-    "backpack": {
-      "object": "backpack",
-      "object_confidence": 0.88,
-      "special_note": "unusually large",
-      "special_note_confidence": 0.87
-    },
-    "small tote": {
-      "object": "small tote",
-      "object_confidence": 0.79,
+    "소형 박스": {
+      "object": "갈색 소형 박스",
+      "object_confidence": 0.99,
       "special_note": null,
       "special_note_confidence": null
+    },
+    "대형 박스": {
+      "object": "대형 갈색 박스 (UltraGear)",
+      "object_confidence": 0.99,
+      "special_note": "부피 큼, 평면 적재 필요",
+      "special_note_confidence": 0.95
+    },
+    "모니터": {
+      "object": "모니터",
+      "object_confidence": 0.99,
+      "special_note": "깨지기 쉬움, 세심한 적재 필요",
+      "special_note_confidence": 0.95
+    },
+    "소화기": {
+      "object": "빨간색 소화기",
+      "object_confidence": 0.99,
+      "special_note": "무게감, 파손 위험",
+      "special_note_confidence": 0.95
+    },
+    "긴 나무 구조물": {
+      "object": "긴 나무 구조물",
+      "object_confidence": 0.99,
+      "special_note": "매우 길고 불규칙, 좌석 접기/이동 필요 가능성 큼",
+      "special_note_confidence": 0.98
     }
   },
   "extremes": {
     "largest": {
-      "object": "backpack",
-      "largest_confidence": 0.87
+      "object": "긴 나무 구조물",
+      "largest_confidence": 0.98
     },
     "smallest": {
-      "object": "small tote",
-      "smallest_confidence": 0.79
+      "object": "백팩",
+      "smallest_confidence": 0.85
     }
   }
 }
