@@ -1,0 +1,37 @@
+```json
+{
+  "total_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "등받이와 좌석이 있는 의자",
+      "special_note": "크기가 커서 넓은 공간 확보 필요"
+    },
+    "luggage_2": {
+      "object": "직육면체 컴퓨터 본체"
+    },
+    "luggage_3": {
+      "object": "비정형 직육면체 배낭"
+    },
+    "luggage_4": {
+      "object": "원통형으로 말린 침낭"
+    },
+    "luggage_5": {
+      "object": "직사각형 평면 모니터"
+    },
+    "luggage_6": {
+      "object": "직육면체 골판지 상자"
+    },
+    "luggage_7": {
+      "object": "직육면체 골판지 상자"
+    },
+    "luggage_8": {
+      "object": "원통형 소화기",
+      "special_note": "가장 작은 짐으로, 틈새 공간 활용 가능"
+    },
+    "luggage_9": {
+      "object": "매우 긴 막대 형태의 나무 옷걸이",
+      "special_note": "가장 큰 짐으로, 얇지만 매우 길어, 충분한 세로 공간 확보 필요"
+    }
+  }
+}
+```
