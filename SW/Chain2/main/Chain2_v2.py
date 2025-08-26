@@ -1,10 +1,8 @@
+from pathlib import Path
+import os, json, re, argparse
 import openai
-import re
-import argparse
 import math
 import numpy as np
-import os
-import json
 import time
 
 parser = argparse.ArgumentParser()
@@ -12,7 +10,7 @@ parser.add_argument("--prompt", type=str, default="SW/Chain2/main/source/chain2_
 parser.add_argument("--sysprompt", type=str, default="SW/Chain2/main/source/chain2_system.txt")
 args = parser.parse_args()
 
-with open("..\tetris_secrets.json") as f:
+with open('C:/Users/AIRL/Desktop/Test/AIRL_ATM/SW/tetris_secrets.json') as f:
     credentials = json.load(f)
 
 print("Initializing ChatGPT...")
