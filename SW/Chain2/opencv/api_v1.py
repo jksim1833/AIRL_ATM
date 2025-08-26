@@ -192,10 +192,10 @@ def render_divided_square(
 
 if __name__ == "__main__":
     cfg = {
-        1: ("W", "B", "F"),
-        2: ("H", "A", "R"),
-        3: ("W", "C", "B"),
-        4: ("H", "B", "L"),
+        1: ("W", "A", "R"),
+        2: ("H", "C", "L"),
+        3: ("H", "A", "R"),
+        4: ("W", "C", "L"),
     }
 
     result = render_divided_square(cfg)
