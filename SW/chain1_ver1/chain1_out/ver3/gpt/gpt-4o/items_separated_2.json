@@ -1,0 +1,58 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 0.95
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검정색 플라스틱 소재의 의자, 뚫린 등받이",
+      "object_confidence": 0.9
+    },
+    "luggage 2": {
+      "object": "중간 크기의 갈색 골판지 상자, 야구무늬 로고",
+      "object_confidence": 0.9
+    },
+    "luggage 3": {
+      "object": "검정색 컴퓨터 케이스, 전면에 스티커",
+      "object_confidence": 0.9
+    },
+    "luggage 4": {
+      "object": "검정색 백팩, 여러 장식 패치",
+      "object_confidence": 0.85
+    },
+    "luggage 5": {
+      "object": "붉은색 원통형 수납 백, 경량",
+      "object_confidence": 0.85
+    },
+    "luggage 6": {
+      "object": "평평한 화면 모니터, 블랙 베젤",
+      "object_confidence": 0.9
+    },
+    "luggage 7": {
+      "object": "대형 갈색 박스, 울트라기어 로고",
+      "object_confidence": 0.9,
+      "special_note": "부피가 큰 상자",
+      "special_note_confidence": 0.95
+    },
+    "luggage 8": {
+      "object": "붉은색 소화기, 노란띠가 둘러져 있음",
+      "object_confidence": 0.95
+    },
+    "luggage 9": {
+      "object": "나무 재질의 긴 오브젝트, 끝이 갈라진 구조",
+      "object_confidence": 0.85,
+      "special_note": "긴 구조물",
+      "special_note_confidence": 0.95
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "대형 갈색 박스, 울트라기어 로고",
+      "largest_confidence": 0.95
+    },
+    "smallest": {
+      "object": "붉은색 소화기, 노란띠가 둘러져 있음",
+      "smallest_confidence": 0.9
+    }
+  }
+}

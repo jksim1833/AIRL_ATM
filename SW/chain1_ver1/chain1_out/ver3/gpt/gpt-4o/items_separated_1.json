@@ -1,0 +1,54 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 0.95
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "큰 모니터 박스, 'UltraGear' 로고 확인됨",
+      "object_confidence": 0.9
+    },
+    "luggage 2": {
+      "object": "검은색 하드 케이스 PC 타워",
+      "object_confidence": 0.9
+    },
+    "luggage 3": {
+      "object": "검은색 백팩",
+      "object_confidence": 0.85
+    },
+    "luggage 4": {
+      "object": "빨간색 원통형 가방, 'THICK' 로고 확인됨",
+      "object_confidence": 0.9
+    },
+    "luggage 5": {
+      "object": "갈색 박스, 'T390M' 텍스트 확인됨",
+      "object_confidence": 0.85
+    },
+    "luggage 6": {
+      "object": "나무 옷걸이 스탠드",
+      "object_confidence": 0.9,
+      "special_note": "긴 구조로 차량 좌석 배치에 영향",
+      "special_note_confidence": 0.95
+    },
+    "luggage 7": {
+      "object": "모니터 화면",
+      "object_confidence": 0.9
+    },
+    "luggage 8": {
+      "object": "빨간색 소화기",
+      "object_confidence": 0.9,
+      "special_note": "화재 안전 도구로 무거울 가능성",
+      "special_note_confidence": 0.85
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "큰 모니터 박스, 'UltraGear' 로고 확인됨",
+      "largest_confidence": 0.9
+    },
+    "smallest": {
+      "object": "빨간색 소화기",
+      "smallest_confidence": 0.9
+    }
+  }
+}

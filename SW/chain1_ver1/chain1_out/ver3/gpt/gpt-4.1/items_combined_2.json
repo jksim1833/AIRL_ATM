@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 0.98
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검은색 플라스틱 등받이 의자",
+      "object_confidence": 0.99,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "검은색 미들타워 PC 본체",
+      "object_confidence": 0.98,
+      "special_note": "매우 무거워 보임",
+      "special_note_confidence": 0.95
+    },
+    "luggage 3": {
+      "object": "검은색 백팩, 앞면에 작은 로고 부착",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "빨간색 침낭 또는 원통형 패킹백, 흰 텍스트 라벨",
+      "object_confidence": 0.96,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "27인치급 평면 모니터, 검은색, 받침대 없음",
+      "object_confidence": 0.98,
+      "special_note": "깨지기 쉬움, 부피 불규칙",
+      "special_note_confidence": 0.93
+    },
+    "luggage 6": {
+      "object": "갈색 골판지 박스, 테이프 포장, 라벨 부착",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "납작한 큰 박스, LG UltraGear 27GN750, 모니터 포장박스",
+      "object_confidence": 0.98,
+      "special_note": "매우 커서 좌석 배치에 영향",
+      "special_note_confidence": 0.98
+    },
+    "luggage 8": {
+      "object": "긴 나무 옷걸이 스탠드, 분리형, 길이 매우 김, 형태 특이",
+      "object_confidence": 0.97,
+      "special_note": "길이가 매우 길어 차량 내부 배치에 영향",
+      "special_note_confidence": 0.99
+    },
+    "luggage 9": {
+      "object": "빨간색 소화기, 금속 실린더, 손잡이 및 라벨 부착",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "긴 나무 옷걸이 스탠드, 분리형, 길이 매우 김, 형태 특이",
+      "largest_confidence": 0.99
+    },
+    "smallest": {
+      "object": "빨간색 소화기, 금속 실린더, 손잡이 및 라벨 부착",
+      "smallest_confidence": 0.98
+    }
+  }
+}

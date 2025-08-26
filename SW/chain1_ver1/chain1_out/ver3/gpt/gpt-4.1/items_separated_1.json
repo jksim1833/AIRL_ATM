@@ -1,0 +1,66 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 0.98
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "대형 갈색 종이박스, 'UltraGear' 흰색 로고, 사각 형태, 모니터 포장용 의심",
+      "object_confidence": 0.98,
+      "special_note": "부피가 매우 커서 차량 적재공간 및 좌석배치에 영향 큼",
+      "special_note_confidence": 0.99
+    },
+    "luggage 2": {
+      "object": "중형 갈색 종이박스, 인쇄된 텍스트('Y390M'), 모서리 중 일부 테이핑",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "짙은 회색 데스크탑 본체, 세로 직육면체, 전면 USB포트/버튼 있음",
+      "object_confidence": 0.97,
+      "special_note": "일반 짐보다 무거울 수 있음",
+      "special_note_confidence": 0.85
+    },
+    "luggage 4": {
+      "object": "검은색 노트북 백팩, 컴팩트형, 손잡이와 여러 포켓, 패딩 있음",
+      "object_confidence": 0.93,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "빨간색 원통형 침낭 가방, 'THICK' 흰색 텍스트 로고, 드로스트링 마감",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "검은색 평면 모니터, 사각형, 베젤 얇음, 받침대 포함",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "빨간색 소화기, 작은 손잡이 및 노란색 안전핀 포함",
+      "object_confidence": 0.99,
+      "special_note": "내용물상 무거움, 운반·적재시 주의 필요",
+      "special_note_confidence": 0.95
+    },
+    "luggage 8": {
+      "object": "연갈색 목재 행거, 길쭉하고 다리와 옷걸이 형태 돌기 있음, 비규칙 부피",
+      "object_confidence": 0.96,
+      "special_note": "길이가 길어 좌석 및 적재공간에 구조적 제약 가능",
+      "special_note_confidence": 0.97
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "대형 갈색 종이박스, 'UltraGear' 흰색 로고, 사각 형태, 모니터 포장용 의심",
+      "largest_confidence": 0.99
+    },
+    "smallest": {
+      "object": "빨간색 소화기, 작은 손잡이 및 노란색 안전핀 포함",
+      "smallest_confidence": 0.98
+    }
+  }
+}

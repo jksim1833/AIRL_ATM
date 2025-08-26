@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 0.98
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "연한 갈색 판지 박스 상자, 테이프가 위에 붙어 있음",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "밝은 갈색 긴 직사각형 판지 박스",
+      "object_confidence": 0.95,
+      "special_note": "길이가 매우 길고 차 내부 배치에 주의 필요",
+      "special_note_confidence": 0.98
+    },
+    "luggage 3": {
+      "object": "검은색 데스크탑 컴퓨터 본체",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "회색 플라스틱 의자",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "빨간색 원통형 소화기",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "짙은 남색 백팩, 앞면에 흰 로고 존재",
+      "object_confidence": 0.97,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "검은색 평면 모니터",
+      "object_confidence": 0.98,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 8": {
+      "object": "빨간색 원통형 침낭, 흰색 라벨(Blue Moon)",
+      "object_confidence": 0.95,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 9": {
+      "object": "연한 원목색 코트 행거, 분해된 상태로 길이가 매우 김",
+      "object_confidence": 0.98,
+      "special_note": "길이와 형태가 특이해 차량 공간 배치에 큰 영향",
+      "special_note_confidence": 1.0
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "연한 원목색 코트 행거, 분해된 상태로 길이가 매우 김",
+      "largest_confidence": 0.99
+    },
+    "smallest": {
+      "object": "빨간색 원통형 소화기",
+      "smallest_confidence": 0.95
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "회색 플라스틱 의자(금속 다리)",
+      "object_confidence": 1.0,
+      "special_note": "부피가 커서 차량 내 고정 필요",
+      "special_note_confidence": 0.95
+    },
+    "luggage 2": {
+      "object": "검은색 컴퓨터 데스크탑 본체",
+      "object_confidence": 1.0,
+      "special_note": "충격에 주의 필요",
+      "special_note_confidence": 0.9
+    },
+    "luggage 3": {
+      "object": "검은색 백팩",
+      "object_confidence": 1.0,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "빨간색 침낭(원통형 파우치)",
+      "object_confidence": 1.0,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "노란색 종이 상자(인쇄 텍스트 있음)",
+      "object_confidence": 1.0,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "모니터(검은색, 받침대 포함)",
+      "object_confidence": 1.0,
+      "special_note": "파손 위험, 주의 필요",
+      "special_note_confidence": 0.95
+    },
+    "luggage 7": {
+      "object": "빨간색 소화기(실린더형, 노란 띠)",
+      "object_confidence": 1.0,
+      "special_note": "안정적으로 고정 필요",
+      "special_note_confidence": 0.98
+    },
+    "luggage 8": {
+      "object": "브라운 박스 포장된 LG UltraGear 모니터 박스",
+      "object_confidence": 1.0,
+      "special_note": "가장 큰 크기",
+      "special_note_confidence": 1.0
+    },
+    "luggage 9": {
+      "object": "긴 목재 행거(의자 뒤벽 쪽에 놓임, T자 모양)",
+      "object_confidence": 1.0,
+      "special_note": "긴 길이, 차량에 수평 적재 필요",
+      "special_note_confidence": 0.98
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "긴 목재 행거(의자 뒤벽 쪽에 놓임, T자 모양)",
+      "largest_confidence": 1.0
+    },
+    "smallest": {
+      "object": "빨간색 소화기(실린더형, 노란 띠)",
+      "smallest_confidence": 0.95
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "total_luggage": {
+    "count": 7,
+    "confidence": 0.95
+  },
+  "luggage_details": {
+    "large suitcase": {
+      "object": "large suitcase",
+      "object_confidence": 0.92,
+      "special_note": "fragile sticker",
+      "special_note_confidence": 0.88
+    },
+    "backpack": {
+      "object": "two backpacks",
+      "object_confidence": 0.89,
+      "special_note": "one has a handle broken note",
+      "special_note_confidence": 0.75
+    },
+    "carry-on bag": {
+      "object": "carry-on bag",
+      "object_confidence": 0.91,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "small duffel bag": {
+      "object": "small duffel bag",
+      "object_confidence": 0.85,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "guitar case": {
+      "object": "guitar case",
+      "object_confidence": 0.93,
+      "special_note": null,
+      "special_note_confidence": null
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "large suitcase",
+      "largest_confidence": 0.92
+    },
+    "smallest": {
+      "object": "small duffel bag",
+      "smallest_confidence": 0.85
+    }
+  }
+}

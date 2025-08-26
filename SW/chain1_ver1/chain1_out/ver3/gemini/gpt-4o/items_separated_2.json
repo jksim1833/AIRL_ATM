@@ -1,0 +1,66 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 0.95
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "검은색 플라스틱 의자",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "갈색 판지 상자",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "나무로 된 긴 노",
+      "object_confidence": 0.9,
+      "special_note": "긴 길이로 공간 차지",
+      "special_note_confidence": 0.85
+    },
+    "luggage 4": {
+      "object": "검은색 컴퓨터 본체",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "검은색 배낭",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "빨간색 나일론 더플백",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 7": {
+      "object": "검은색 모니터",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 8": {
+      "object": "빨간색 소화기",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "나무로 된 긴 노",
+      "largest_confidence": 0.9
+    },
+    "smallest": {
+      "object": "빨간색 소화기",
+      "smallest_confidence": 0.9
+    }
+  }
+}

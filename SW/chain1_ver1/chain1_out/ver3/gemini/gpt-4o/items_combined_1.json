@@ -1,0 +1,66 @@
+{
+  "total_luggage": {
+    "count": 8,
+    "confidence": 0.95
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "갈색 종이 상자",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 2": {
+      "object": "검정 하드케이스 PC 본체",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 3": {
+      "object": "회색 플라스틱 의자",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 4": {
+      "object": "빨간 소화기",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 5": {
+      "object": "검정색 백팩",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 6": {
+      "object": "나무 스탠드",
+      "object_confidence": 0.9,
+      "special_note": "긴 길이",
+      "special_note_confidence": 0.8
+    },
+    "luggage 7": {
+      "object": "검은색 모니터",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    },
+    "luggage 8": {
+      "object": "빨간색 매트리스 롤",
+      "object_confidence": 0.9,
+      "special_note": null,
+      "special_note_confidence": null
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "나무 스탠드",
+      "largest_confidence": 0.95
+    },
+    "smallest": {
+      "object": "빨간 소화기",
+      "smallest_confidence": 0.95
+    }
+  }
+}

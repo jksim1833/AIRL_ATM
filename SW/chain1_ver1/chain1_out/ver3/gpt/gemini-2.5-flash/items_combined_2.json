@@ -1,0 +1,64 @@
+{
+  "total_luggage": {
+    "count": 9,
+    "confidence": 1.0
+  },
+  "luggage_details": {
+    "luggage 1": {
+      "object": "직사각형 검은색 금속/플라스틱 PC 케이스, 상단과 하단 전면에 손잡이, 측면에 통풍구 다수, 후면에 포트",
+      "object_confidence": 1.0,
+      "special_note": "부피가 크고 무거워 보이며, 차량 내부 공간을 많이 차지할 수 있음.",
+      "special_note_confidence": 0.95
+    },
+    "luggage 2": {
+      "object": "검은색 패브릭 백팩, 전면에 여러 개의 지퍼 수납공간, 흰색 패치/핀 장식",
+      "object_confidence": 1.0
+    },
+    "luggage 3": {
+      "object": "원통형으로 말린 빨간색 패브릭 침낭 또는 캠핑용 매트, 흰색 'KHEA' 로고와 그래픽",
+      "object_confidence": 0.95
+    },
+    "luggage 4": {
+      "object": "등받이에 수평 슬롯이 있는 회색 플라스틱 의자, 은색 금속 프레임 다리",
+      "object_confidence": 1.0,
+      "special_note": "부피가 크고 형태가 불규칙하여 차량 적재 시 공간 효율이 낮을 수 있음.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 5": {
+      "object": "검은색 플라스틱 프레임의 평면 모니터, 'SAMSUNG' 로고, 하단 베젤에 버튼",
+      "object_confidence": 1.0,
+      "special_note": "깨지기 쉬운 전자제품이며, 부피를 차지함.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 6": {
+      "object": "갈색 골판지 상자, 투명 테이프로 밀봉, 상단에 'Y300M' 텍스트와 'QBLT' 로고, 'WHITE', 'BLACK' 선택 표시",
+      "object_confidence": 1.0
+    },
+    "luggage 7": {
+      "object": "갈색 골판지 상자, 'Ultragear 27GN650' 텍스트와 'LG' 로고, '68.4cm' 표기",
+      "object_confidence": 1.0,
+      "special_note": "부피가 크고 다른 짐의 받침대 역할. 모니터 포장 박스로 추정.",
+      "special_note_confidence": 0.9
+    },
+    "luggage 8": {
+      "object": "원통형 빨간색 금속 소화기, 노란색 노즐과 손잡이, 'SW' 로고",
+      "object_confidence": 1.0
+    },
+    "luggage 9": {
+      "object": "긴 나무 봉과 여러 개의 짧은 나무 못, 곡선형 받침대로 구성된 분해된 나무 옷걸이/행거",
+      "object_confidence": 0.95,
+      "special_note": "매우 길어서 차량 내부 공간 배치에 큰 영향을 줄 수 있음.",
+      "special_note_confidence": 0.95
+    }
+  },
+  "extremes": {
+    "largest": {
+      "object": "긴 나무 봉과 여러 개의 짧은 나무 못, 곡선형 받침대로 구성된 분해된 나무 옷걸이/행거",
+      "largest_confidence": 0.9
+    },
+    "smallest": {
+      "object": "원통형 빨간색 금속 소화기",
+      "smallest_confidence": 1.0
+    }
+  }
+}
