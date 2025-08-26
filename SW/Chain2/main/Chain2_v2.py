@@ -10,6 +10,47 @@ parser.add_argument("--prompt", type=str, default="SW/Chain2/main/source/chain2_
 parser.add_argument("--sysprompt", type=str, default="SW/Chain2/main/source/chain2_system.txt")
 args = parser.parse_args()
 
+def _load_openai_api_key(self):
+    """tetris_secrets.json 파일에서 OpenAI API 키 로드"""
+    # 여러 위치에서 tetris_secrets.json 파일 탐색
+    possible_paths = [
+        Path.home() / "Desktop" / "AIRL_ATM" / "SW" / "tetris_secrets.json",
+        Path.home() / "Desktop" / "AIRL_ATM" / "tetris_secrets.json",
+        Path("C:/Users/User/Desktop/AIRL_ATM/SW/tetris_secrets.json"),
+        Path("C:/Users/User/Desktop/AIRL_ATM/tetris_secrets.json")
+    ]
+    
+    secrets_path = None
+    for path in possible_paths:
+        print(f"🔍 탐색 중: {path}")
+        if path.exists():
+            secrets_path = path
+            print(f"✅ 파일 발견: {secrets_path}")
+            break
+    
+    if not secrets_path:
+        print("❌ 다음 위치에서 tetris_secrets.json 파일을 찾을 수 없습니다:")
+        for path in possible_paths:
+            print(f"  - {path}")
+        raise FileNotFoundError("🚨 tetris_secrets.json 파일을 찾을 수 없습니다.")
+    
+    try:
+        with open(secrets_path, 'r', encoding='utf-8') as f:
+            secrets = json.load(f)
+        
+        # OpenAI API 키만 환경 변수로 설정
+        os.environ["OPENAI_API_KEY"] = secrets["openai"]["OPENAI_API_KEY"]
+        
+        print("🔑 OpenAI API 키 로드 완료")
+        
+    except KeyError as e:
+        raise KeyError(f"🚨 OpenAI API 키를 찾을 수 없습니다: {e}")
+    except json.JSONDecodeError:
+        raise ValueError("🚨 tetris_secrets.json 파일 형식이 올바르지 않습니다")
+
+
+
+
 with open('C:/Users/AIRL/Desktop/Test/AIRL_ATM/SW/tetris_secrets.json') as f:
     credentials = json.load(f)
 
