@@ -143,11 +143,11 @@ def create_divided_square(cell_configs):
 def main():
     # 셀 설정
     cell_configs = {
-        1: ("W", "A", "F"),  # 가로선, 중심, 북쪽
-        2: ("H", "C", "F"),  # 세로선, 시작점, 동쪽
-        3: ("W", "A", "F"),  # 가로선, 종점, 남쪽
-        4: ("H", "C", "F")   # 세로선, 중심, 서쪽
-    }
+        1: ("W", "A", "F"),  # Seat 1: Disk horizontal, position left, facing forward
+        2: ("H", "C", "F"),  # Seat 2: Disk vertical, position bottom, facing forward
+        3: ("W", "C", "F"),  # Seat 3: Disk horizontal, position right, facing forward
+        4: ("H", "A", "F")   # 세로선, 중심, 서쪽
+    }  
     
     # 이미지 생성
     img = create_divided_square(cell_configs)
