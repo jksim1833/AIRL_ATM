@@ -4,6 +4,7 @@ import base64
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
+import time  # ⏱ 추가: 추론 시간 측정용
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
@@ -30,7 +31,7 @@ class LuggageAnalyzer:
         
         # API 키 로드 후 모델 초기화
         print("🤖 모델 초기화 중...")
-        self.model = ChatGoogleGenerativeAI(model="gemini-2.5-pro")
+        self.model = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.2)
         print("✅ 모델 초기화 완료")
     
     def _load_api_keys(self):
@@ -130,8 +131,11 @@ class LuggageAnalyzer:
             # 이미지 인코딩 (원본 그대로)
             image_data = self._encode_image(self.image_path)
             
-            # 분석 실행
+            # ⏱ 추가: 모델 호출~응답 시간 측정
+            t0 = time.perf_counter()
             result = chain.invoke({"image_data": image_data})
+            elapsed = time.perf_counter() - t0
+            print(f"⏱️ 모델 호출~응답 시간: {elapsed:.3f}초")
             
             # AIMessage에서 content 추출
             if hasattr(result, 'content'):
