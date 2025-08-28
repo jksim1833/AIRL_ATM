@@ -1,37 +1,58 @@
-```json
 {
-  "total_count": 9,
+  "people": 3,
+  "total_luggage_count": 9,
   "luggage_details": {
     "luggage_1": {
-      "object": "등받이와 좌석이 있는 의자",
-      "special_note": "크기가 커서 넓은 공간 확보 필요"
+      "object": "나무 행거",
+      "color": "밝은 갈색",
+      "shape": "길고 가느다란 막대 형태에 여러 개의 돌출된 가지가 있는 비정형"
     },
     "luggage_2": {
-      "object": "직육면체 컴퓨터 본체"
+      "object": "PC 본체",
+      "color": "검은색",
+      "shape": "직육면체"
     },
     "luggage_3": {
-      "object": "비정형 직육면체 배낭"
+      "object": "의자",
+      "color": "회색",
+      "shape": "등받이와 좌석이 결합된 비정형 형태",
+      "special_note": "공간 차지 max. 크고 형태가 불규칙하며 접이식이 불가하여 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
     },
     "luggage_4": {
-      "object": "원통형으로 말린 침낭"
+      "object": "모니터",
+      "color": "검은색",
+      "shape": "평평한 직사각형",
+      "text": "SAMSUNG"
     },
     "luggage_5": {
-      "object": "직사각형 평면 모니터"
+      "object": "백팩",
+      "color": "검은색",
+      "shape": "비정형"
     },
     "luggage_6": {
-      "object": "직육면체 골판지 상자"
+      "object": "침낭",
+      "color": "빨간색",
+      "shape": "원통형",
+      "text": "RHEA, 10000"
     },
     "luggage_7": {
-      "object": "직육면체 골판지 상자"
+      "object": "소화기",
+      "color": "빨간색",
+      "shape": "원통형",
+      "text": "SW, 1.3",
+      "special_note": "공간 차지 min"
     },
     "luggage_8": {
-      "object": "원통형 소화기",
-      "special_note": "가장 작은 짐으로, 틈새 공간 활용 가능"
+      "object": "모니터 상자",
+      "color": "갈색",
+      "shape": "직육면체",
+      "text": "UltraGear, 27GN650, LG"
     },
     "luggage_9": {
-      "object": "매우 긴 막대 형태의 나무 옷걸이",
-      "special_note": "가장 큰 짐으로, 얇지만 매우 길어, 충분한 세로 공간 확보 필요"
+      "object": "PC 케이스 상자",
+      "color": "갈색",
+      "shape": "직육면체",
+      "text": "GBLT, Y300M, 절가방"
     }
   }
 }
-```

@@ -1,0 +1,58 @@
+{
+  "people": 3,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "의자",
+      "color": "회색, 은색",
+      "shape": "등받이와 좌석이 곡선으로 결합된 형태"
+    },
+    "luggage_2": {
+      "object": "컴퓨터 본체",
+      "color": "검은색",
+      "shape": "직육면체"
+    },
+    "luggage_3": {
+      "object": "모니터",
+      "color": "검은색",
+      "shape": "직사각형 화면과 사각형 받침대가 결합된 형태",
+      "text": "SAMSUNG"
+    },
+    "luggage_4": {
+      "object": "침낭",
+      "color": "빨간색",
+      "shape": "압축된 원통형",
+      "text": "K2"
+    },
+    "luggage_5": {
+      "object": "백팩",
+      "color": "검은색",
+      "shape": "내용물에 따라 변형 가능한 비정형",
+      "text": "대한민국 공군 ROKAF"
+    },
+    "luggage_6": {
+      "object": "소화기",
+      "color": "빨간색, 노란색",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_7": {
+      "object": "옷걸이 스탠드",
+      "color": "연갈색",
+      "shape": "길고 가는 기둥에 짧은 가지들이 뻗어있는 비정형",
+      "special_note": "공간 차지 max. 길고 튀어나온 가지들이 있어 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_8": {
+      "object": "컴퓨터 케이스 상자",
+      "color": "갈색",
+      "shape": "직육면체",
+      "text": "G.L.T.S, Y300M, 최강박"
+    },
+    "luggage_9": {
+      "object": "모니터 상자",
+      "color": "갈색",
+      "shape": "직육면체",
+      "text": "68.4cm, 144 Hz, NVIDIA G-SYNC Compatible"
+    }
+  }
+}

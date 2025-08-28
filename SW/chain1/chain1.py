@@ -11,16 +11,17 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 
 class LuggageAnalyzer:
-    def __init__(self, scenario_name: str):
+    def __init__(self, scenario_name: str, people_count: Optional[int] = None):
         self.scenario_name = scenario_name
-        
+        self.people_count = people_count  # ← 인원수 보관(후처리에서 JSON에 주입)
+
         # API 키 로드 (모델 초기화 전에 먼저 실행)
         self._load_api_keys()
         
         # 정확한 경로 설정 (Desktop 경로 사용)
         desktop_path = Path.home() / "Desktop"
         self.base_path = desktop_path / "AIRL_ATM" / "SW" / "chain1"
-        self.prompt_path = self.base_path / "chain1_prompt" / "chain1_prompt.txt"
+        self.prompt_path = self.base_path / "chain1_prompt" / "chain1_prompt_ver2.txt"
         self.image_path = self.base_path / "chain1_image" / f"{scenario_name}.jpeg"
         self.output_path = self.base_path / "chain1_out" / f"{scenario_name}.txt"
         
@@ -29,7 +30,7 @@ class LuggageAnalyzer:
         
         # API 키 로드 후 모델 초기화
         print("🤖 모델 초기화 중...")
-        self.model = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+        self.model = ChatGoogleGenerativeAI(model="gemini-2.5-pro")
         print("✅ 모델 초기화 완료")
     
     def _load_api_keys(self):
@@ -141,6 +142,49 @@ class LuggageAnalyzer:
         except Exception as e:
             print(f"❌ 분석 오류: {e}")
             return None
+
+    # ▼▼▼ 추가: LLM JSON 결과에 people을 주입하는 후처리 ▼▼▼
+    def _inject_people(self, result_text: str) -> str:
+        """
+        LLM의 JSON 출력 문자열에 최상위 키로 {"people": <int>}를 주입하여
+        { "people": N, ... } 형태로 반환한다.
+        파싱 실패 시 {"people": N, "raw_model_output": "..."}로 안전 저장.
+        """
+        import re
+
+        text = (result_text or "").strip()
+
+        # ```json ... ``` 코드블록 처리
+        m = re.search(r"```(?:json)?\s*(.*?)```", text, re.S | re.I)
+        if m:
+            text = m.group(1).strip()
+
+        # 주변 텍스트가 있으면 가장 바깥 { ... }만 추출
+        if not (text.startswith("{") and text.endswith("}")):
+            first = text.find("{")
+            last = text.rfind("}")
+            if first != -1 and last != -1 and first < last:
+                text = text[first:last+1]
+
+        try:
+            data = json.loads(text)
+
+            # people을 맨 앞에 두고 나머지 키를 이어 붙임(파이썬 dict는 삽입 순서 보장)
+            out = {"people": int(self.people_count or 0)}
+            if isinstance(data, dict):
+                out.update(data)
+            else:
+                out["model_output"] = data  # dict가 아니면 원본 보존
+
+            return json.dumps(out, ensure_ascii=False, indent=2)
+
+        except Exception:
+            fallback = {
+                "people": int(self.people_count or 0),
+                "raw_model_output": result_text
+            }
+            return json.dumps(fallback, ensure_ascii=False, indent=2)
+    # ▲▲▲ 추가 끝 ▲▲▲
     
     def save_result(self, result: str):
         """결과 저장"""
@@ -148,7 +192,7 @@ class LuggageAnalyzer:
             # 출력 디렉토리 생성
             self.output_path.parent.mkdir(parents=True, exist_ok=True)
             
-            # 저장
+            # JSON 문자열 그대로 저장 (people 주입 완료본)
             with open(self.output_path, 'w', encoding='utf-8') as f:
                 f.write(result)
             
@@ -164,12 +208,14 @@ class LuggageAnalyzer:
         print(f"📸 분석할 이미지: {self.image_path}")
         print(f"📝 프롬프트 파일: {self.prompt_path}")
         print(f"💾 출력 경로: {self.output_path}")
+        print(f"👥 인원수: {self.people_count}명")
         
         # 분석 실행
         result = self.analyze_image()
         
         if result:
-            # 결과 저장
+            # 저장 전: LLM JSON에 people 주입
+            result = self._inject_people(result)
             self.save_result(result)
             print("✅ 분석 및 저장 완료")
         else:
@@ -179,15 +225,42 @@ class LuggageAnalyzer:
 
 # 실행 함수
 def main():
-    """메인 실행 함수"""
     # 시나리오명 입력 받기
     scenario_name = input("시나리오명을 입력하세요: ")
-    
     if not scenario_name.strip():
         print("❌ 시나리오명을 입력해주세요.")
         return
-    
-    analyzer = LuggageAnalyzer(scenario_name.strip())
+
+    # 인원수 입력 + 확인
+    while True:
+        ppl = input("차량 탑승 인원을 알려주세요! : ").strip()
+        try:
+            n = int(ppl)
+            if n <= 0:
+                print("❌ 양수로 입력하세요.")
+                continue
+
+            # 확인 단계
+            confirmed = False
+            while True:
+                confirm = input(f"차량 탑승 인원은 \"{n}명\"이 맞나요? (1) 네 (2) 아니요 : ").strip()
+                if confirm == "1":
+                    people_count = n
+                    confirmed = True
+                    break
+                elif confirm == "2":
+                    # 다시 처음부터 인원수 재입력
+                    break
+                else:
+                    print("❌ 1 또는 2로 입력해주세요.")
+            if confirmed:
+                break  # 외부 루프 탈출(인원수 확정)
+
+        except ValueError:
+            print("❌ 숫자만 입력해주세요.")
+            continue
+
+    analyzer = LuggageAnalyzer(scenario_name.strip(), people_count=people_count)
     analyzer.run_analysis()
 
 if __name__ == "__main__":
