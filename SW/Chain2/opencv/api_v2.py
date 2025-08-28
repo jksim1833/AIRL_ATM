@@ -1,28 +1,3 @@
-Imagine you are a planar that can move seat location by code you provide after, and you’re positioned to watch each seat from the center of the internal vehicle. Your goal is to output the appropriate setting status for each chair based on the input value of the direction and status for the seat.
-
-The seats has 3 type of setting. Only the following settings are available:
- - position(): Available types : "A,B,C". Location of linear movement
- - seat_direction(): Available types : "F,R,B,L". Facing point of seat.
- - disk_direction(): Available types : "H,W". Facing point of disk.
-
-A few environment info:
- - The left edge of square represents the left side of the car, and the right edge represents the right side.
- - The seat's location decide by position(), seat_direction(), disk_direction() function.
-
-Additional points to consider when giving your answer:
- - Your reponses should be logical and actionable.
- - Your logics and reasoning should be rigorous, intelligent, and defensible.
- - You can provide additional relevant details to respond thoroughly and comprehensively to cover multiple aspects in depth.
-
-Write done a seat settings of each seat. You must use the code for movement of seat.
-
-
----------------------------------------------------------------------------
-
-Here's a script for seat movement:
-
-```python
-
 import cv2
 import numpy as np
 import math
@@ -115,8 +90,12 @@ def _create_image(cell_configs: Dict[int, Tuple[str, str, str]],
     bx = (total - big_px) // 2
     by = (total - big_px) // 2
 
+    # 외곽 사각형만 그리기 (십자 분할 제거)
     cv2.rectangle(img, (bx, by), (bx + big_px, by + big_px), colors["RECT"], 2)
+    cx = bx + big_px // 2
+    cy = by + big_px // 2
 
+    # 셀 중심 (4분할 좌표는 유지)
     q = big_px // 4
     centers = {
         1: (bx + q, by + q),
@@ -162,6 +141,7 @@ def render_divided_square(
     encode: Optional[Literal[".png", ".jpg", ".jpeg"]] = None,  # 바이트 인코딩 (옵션)
     return_bytes: bool = False                            # True면 인코딩 바이트 반환
 ) -> Dict:
+    
     # 파라미터 확정(오버라이드 → 기본값)
     scale = scale or DEFAULTS["SCALE"]
     canvas_size = canvas_size or DEFAULTS["CANVAS_SIZE"]
@@ -203,24 +183,14 @@ def render_divided_square(
 
     return out
 
-```
 
-This script is a visualization tool that renders geometric shapes within a divided square using OpenCV. The main function render_divided_square creates a 4-cell grid where each cell contains specific geometric elements based on configuration parameters.
-The _disk function draws circular elements with lines in each cell. For "W" type disks, it draws a horizontal line with a small circle at the top, while "H" type disks draw a vertical line with a small circle on the right side. The function uses the predefined color scheme where circles are red, lines are green, and small circles are magenta.
-The _seat function renders triangular seat markers within each cell. It takes three parameters: disk type (W/H), position type (A/B/C for left/center/right on the line), and direction type (F/R/B/L for north/east/south/west facing triangles). The triangle's vertex is positioned so that 2/3 of its height intersects with the cell's line, creating a consistent visual alignment.
+if __name__ == "__main__":
+    cfg = {
+        1: ("W", "A", "R"),
+        2: ("H", "C", "L"),
+        3: ("H", "A", "R"),
+        4: ("W", "C", "L"),
+    }
 
----------------------------------------------------------------------------
-
-Here's an example of an output of seat setting:
-
-```python
-{
-    seat1: ("W", "B", "F"),
-    seat2: ("H", "A", "R"),
-    seat3: ("W", "C", "B"),
-    seat4: ("H", "B", "L")
-}
-```
-
----------------------------------------------------------------------------
-
+    result = render_divided_square(cfg)
+    print(result["meta"])
