@@ -1,0 +1,13 @@
+{
+  "people": 3,
+  "total_luggage_count": 6,
+  "luggage_details": {
+    "luggage_from_1_to_6": {
+      "object": "중형 우체국 박스",
+      "color": "황토색, 빨간색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "우체국 소포, KOREA POST, 1588-1300"
+    }
+  }
+}

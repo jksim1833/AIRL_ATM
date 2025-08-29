@@ -1,0 +1,13 @@
+{
+  "people": 3,
+  "total_luggage_count": 5,
+  "luggage_details": {
+    "luggage_from_1_to_5": {
+      "object": "4호 우체국 박스",
+      "color": "황토색, 빨간색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "마음까지 전하는 우체국 소포, KOREA POST"
+    }
+  }
+}
