@@ -1,0 +1,15 @@
+```json
+{
+  "total_luggage_count": 1,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "A4 용지 상자",
+      "color": "흰색, 파란색, 초록색",
+      "material": "골판지",
+      "shape": "상단이 개방된 직육면체",
+      "text": "Double A, 1759, กระดาษหมดดก",
+      "special_note": "공간 차지 max. 상단이 개방된 형태로, 적재 시 내용물 보호 및 안정적인 적층에 제약이 있을 수 있음"
+    }
+  }
+}
+```
