@@ -1,21 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-chain1_mobile.py (Hyundai-style, 2단계 알림, 로고 적용, '원본 그대로' 저장)
-- 휴대폰: 사진 촬영/선택 → '이미지 업로드' → 업로드 즉시 토스트(이미지가 업로드 되었습니다!) → 분석 완료 토스트(이미지 분석이 완료되었습니다!)
-- 저장 규칙:
-    * chain1_image/: <scenario>.<원본확장자>   (이미지 1개만, 리사이즈/재인코딩/회전보정 없음 = 원본 바이트 그대로)
-    * chain1_out/  : <scenario>.txt           (텍스트만)
-- 상단 현대 로고(/brand.png), 현대 톤 컬러/타이포, 앱형 레이아웃(앱바/히어로/카드/탭)
-- /qr (풀스크린 QR): '마이현대 앱으로 접속하기' + QR만
-
-필요:
-    pip install flask pillow pillow-heif qrcode[pil]
+chain1_mobile.py (간격 증대 최종본 + people 연동 + 원본 그대로)
 """
 
 from pathlib import Path
 from datetime import datetime
 from io import BytesIO
-from flask import Flask, request, jsonify, make_response, render_template_string
+from flask import Flask, request, jsonify, make_response, render_template_string, send_from_directory, abort
 from PIL import Image, ImageDraw, ImageFont
 import socket, threading, mimetypes
 
@@ -33,8 +24,8 @@ try:
 except Exception:
     QR_AVAILABLE = False
 
-# 분석기
-from chain1 import LuggageAnalyzer
+# ✅ 분석기: chain1_rt 버전으로 교체 (원본 MIME/바이트 그대로 전달)
+from chain1_rt import LuggageAnalyzer
 
 app = Flask(__name__)
 
@@ -51,221 +42,388 @@ BRAND_DIR.mkdir(parents=True, exist_ok=True)
 # 설정
 PORT = 5002
 AUTO_OPEN_BROWSER = True
-AUTO_OPEN_BROWSER_PATH = "/qr"  # PC에서 서버 시작 시 /qr 자동 오픈
+AUTO_OPEN_BROWSER_PATH = "/qr"
 
-# 업로드 → 백그라운드 분석 상태 관리
-JOBS = {}  # scenario -> {"status": "uploaded"/"processing"/"done"/"error", "out_txt": str|None, "error_msg": str|None}
+# 업로드 상태
+JOBS = {}
 
-# ====================== 프론트 (Hyundai-style) ======================
+# woff2 MIME 보정
+mimetypes.add_type("font/woff2", ".woff2")
+
+# ====================== APP ======================
 APP_HTML = """
 <!doctype html>
 <html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>myHyundai · AI TETRIS</title>
+<title>AI TETRIS</title>
 <style>
+  @font-face{
+    font-family:"HyundaiHarmonyM";
+    src:url("/brand/HyundaiHarmonyM.woff2") format("woff2");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"HyundaiHarmonyL";
+    src:url("/brand/HyundaiHarmonyL.woff2") format("woff2");
+    font-weight:300; font-style:normal; font-display:swap;
+  }
+
   :root{
-    --brand:#002C5F; --brand2:#0B2E6B; --ink:#0b1220; --muted:#6b768a;
-    --bg:#f6f7fb; --card:#ffffff; --line:#e9edf3; --tab:#95a0b3;
+    --navy:#002c5f;
+    --black:#000;
+    --white:#fff;
+    --dark:#374151;
+    --light:#E5E7EB;
+    --chipbg:#F3F4F6;
+    --notice-bg: rgba(55,65,81,.9);
+    --indent: 26px;
+    --padX: 16px;
   }
+
   *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--ink);
-            font-family:system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,sans-serif}
-
-  /* AppBar */
-  .appbar{position:sticky;top:0;z-index:20;background:#fff;
-          padding:12px 16px;border-bottom:1px solid var(--line);
-          display:flex;align-items:center;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:10px}
-  .brand img{height:22px}
-  .ab-icons{display:flex;gap:16px;color:#2f3a52;font-size:18px}
-
-  /* Hero */
-  .hero{position:relative; margin:0; height:220px; overflow:hidden; background:linear-gradient(180deg,#e9eef7,#ffffff)}
-  .hero .bg{
-    position:absolute; inset:0;
-    background: radial-gradient(60% 80% at 70% 50%, #eef3fb 0%, #ffffff 60%, #ffffff 100%);
-  }
-  .hero .copy{
-    position:absolute; left:16px; bottom:28px; color:#fff;
-    text-shadow:0 2px 8px rgba(0,0,0,.35);
-  }
-  .hero .title{font-size:28px; font-weight:900; letter-spacing:.2px}
-  .hero .sub{margin-top:6px; font-size:14px; opacity:.9}
-  .hero .car{position:absolute; right:-20px; bottom:-10px; width:65%; max-width:420px; opacity:.95; filter:drop-shadow(0 18px 28px rgba(0,0,0,.22))}
-  .car svg{width:100%; height:auto}
-
-  .wrap{padding:16px}
-
-  /* Upload Card */
-  .card{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px;
-        box-shadow:0 10px 26px rgba(12,18,32,.06); max-width:560px; margin:0 auto 14px auto}
-  .h1{font-size:18px; font-weight:800; margin:4px 2px 4px}
-  .p {font-size:14px; color:var(--muted); margin:0 2px 14px}
-
-  .row{display:flex; gap:10px; align-items:center}
-  .row input[type=text]{
-    flex:1; padding:12px 12px; border:1px solid var(--line); border-radius:12px; background:#fff; outline:none;
+  html,body{
+    margin:0; background:#fff; color:var(--black);
+    font-family:"HyundaiHarmonyM","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
   }
 
-  .filebox{margin-top:12px;border:1.5px dashed #cfd8e3;border-radius:14px;padding:18px;text-align:center;background:#fff}
-  .filebox input{display:none}
-  .filebtn{display:inline-block;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:800;cursor:pointer}
+  .topbar{
+    position:sticky; top:0; z-index:20; background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    padding:10px var(--padX); border-bottom:1px solid var(--light);
+  }
+  .topbar h1{ margin:0; font-size:18px; color:var(--black); letter-spacing:.2px; }
+  .topbar .close{
+    position:absolute; right:16px; top:50%;
+    transform:translateY(-50%) scaleX(1.18);
+    transform-origin:center;
+    font-size:18px; color:var(--dark); text-decoration:none; font-weight:800;
+  }
 
-  .primary{width:100%;margin-top:12px;padding:13px 16px;border:none;border-radius:14px;
-           background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:800;letter-spacing:.2px;cursor:pointer}
-  .primary:disabled{opacity:.5}
+  /* 히어로 */
+  .hero{
+    position:relative; width:100%; height:220px; overflow:hidden; background:#0f172a; margin-top:-4px;
+  }
+  .hero img{ width:100%; height:100%; object-fit:cover; object-position:50% 0%; display:block; }
+  .hero-text{
+    position:absolute; left:16px; bottom:12px; color:var(--white);
+    text-shadow:0 2px 8px rgba(0,0,0,.35); max-width:86%;
+  }
+  .hero-title{ margin:0 0 6px 0; line-height:1.12; font-family:"HyundaiHarmonyM"; }
+  .hero-title .line1,
+  .hero-title .line2{ display:block; font-size:26px; }
+  .hero-sub{ margin:0; font-size:13px; line-height:1.4; font-family:"HyundaiHarmonyL"; }
 
-  /* Bottom Tabs (데모) */
-  .tabs{position:sticky; bottom:0; background:#fff; border-top:1px solid var(--line); display:flex}
-  .tab{flex:1;text-align:center;padding:10px 4px;color:var(--tab);font-size:11px}
-  .tab .ico{display:block; font-size:18px; margin-bottom:2px}
-  .tab.active{color:#1e293b; font-weight:700}
+  .wrap{ padding:8px var(--padX) 16px; }
 
-  /* Toast */
-  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
-         background:rgba(0,0,0,.86);color:#fff;padding:10px 12px;border-radius:12px;font-size:13px;display:none}
+  /* 섹션 헤드(왼쪽 정렬) */
+  .section-head{
+    position:relative;
+    padding-left:var(--indent);
+    display:block;
+    margin:8px 0 4px 0;
+  }
+  .section-head svg{
+    position:absolute; left:0; top:50%; transform:translateY(-50%);
+    width:18px; height:18px;
+  }
+  .section-title{
+    margin:0; font-size:16px; color:var(--black); font-family:"HyundaiHarmonyM";
+  }
 
-  .sr-only{position:absolute;left:-10000px}
+  /* 설명 */
+  .section-head + .section-desc{ margin-bottom:8px; }
+  .section-desc{
+    margin:6px 0 6px var(--indent);
+    color:var(--dark); line-height:1.22; font-family:"HyundaiHarmonyL";
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    font-size:clamp(11.4px, 3.1vw, 12.8px);
+  }
+  .section-desc.tight{ margin:2px 0 2px var(--indent); }
+  .section-head + .section-desc.tight{ margin-bottom:0; }
+  .section-desc.tight + .section-desc.tight{ margin-top:4px; }
+
+  /* 칩: desc와 간격 ↑, 세로 간격 ↑ */
+  .chips{
+    display:grid; grid-template-columns:repeat(2, 1fr);
+    column-gap:10px; row-gap:18px;
+    margin-top:16px;
+  }
+  .chip{
+    display:flex; align-items:center; justify-content:center;
+    height:44px; border-radius:22px;
+    background:var(--chipbg);
+    border:2px solid var(--navy);
+    color:var(--navy); font-size:16px; font-weight:700; cursor:pointer;
+  }
+  .chip.selected{ background:var(--navy); color:#fff; }
+
+  /* 구분선: 풀블리드, 간격 더 증가(위/아래 동일) */
+  .divider{
+    height:3px; background:var(--light);
+    margin:22px calc(-1 * var(--padX));
+  }
+
+  /* 사진 박스 */
+  .photo-box{
+    border:2px solid var(--light); border-radius:16px; padding:12px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    min-height:180px; margin-top:14px;
+  }
+  #photo{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+
+  /* 업로드 전 버튼: 폭 72% */
+  #btnPhotoIn{
+    display:inline-flex; align-items:center; justify-content:center;
+    height:44px; padding:0 18px;
+    border-radius:12px; border:2px solid var(--navy);
+    background:var(--navy); color:#fff; font-size:15px; font-weight:800; cursor:pointer;
+    width:72%; max-width:420px; text-align:center;
+  }
+
+  /* 업로드 후 바깥 버튼: CTA와 동일 폭 */
+  #btnPhotoOut{
+    display:none; margin-top:10px; margin-bottom:4px;
+    width:100%; height:48px; padding:0 18px;
+    border-radius:12px; border:2px solid var(--navy);
+    background:var(--navy); color:#fff; font-size:16px; font-weight:900; cursor:pointer;
+    align-items:center; justify-content:center; text-align:center;
+  }
+
+  /* 미리보기(원본, 라운드 없음) */
+  #photo-preview{
+    display:none; max-width:100%; max-height:220px; border-radius:0; object-fit:contain;
+    image-rendering:auto; image-orientation:from-image;
+  }
+
+  /* CTA: 거의 붙게 */
+  .cta{
+    margin:4px 0 24px;
+    width:100%; height:48px; border-radius:14px;
+    border:2px solid #cbd5e1; background:#e5e7eb; color:#475569; font-size:16px; font-weight:900;
+  }
+  .cta.active{ border-color:var(--navy); background:var(--navy); color:#fff; }
+
+  .sr-only{ position:absolute; left:-10000px; }
+
+  /* 중앙 알림 배너 */
+  .notice{
+    position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+    padding:10px 18px; border-radius:10px; background:var(--notice-bg); color:#fff;
+    box-shadow:0 10px 26px rgba(12,18,32,.18);
+    font-size:13px; z-index:60; white-space:nowrap; text-align:center;
+    min-width:min(80vw, 300px); max-width:90vw;
+    font-family:"HyundaiHarmonyM";
+    opacity:0; pointer-events:none;
+  }
+  .notice.show{ animation:fadeInOut 2.8s ease-in-out forwards; }
+  @keyframes fadeInOut{
+    0%   { opacity:0; transform:translate(-50%,-50%) scale(.98); }
+    12%  { opacity:1; transform:translate(-50%,-50%) scale(1); }
+    80%  { opacity:1; }
+    100% { opacity:0; }
+  }
 </style>
 </head>
 <body>
 
-  <!-- AppBar -->
-  <header class="appbar">
-    <div class="brand"><img src="/brand.png" alt="Hyundai"></div>
-    <div class="ab-icons">☰ 🔔</div>
-  </header>
+  <!-- 상단바 -->
+  <div class="topbar">
+    <h1>AI TETRIS</h1>
+    <a class="close" href="#" aria-label="닫기">X</a>
+  </div>
 
-  <!-- Hero -->
-  <section class="hero" aria-hidden="true">
-    <div class="bg"></div>
-    <div class="copy">
-      <div class="title">The all-new NEXO</div>
-      <div class="sub">당신만이 할 수 있는 일</div>
-    </div>
-    <div class="car">
-      <svg viewBox="0 0 800 300" role="img" aria-label="vehicle">
-        <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#F6F9FD"/><stop offset="100%" stop-color="#E9EEF7"/></linearGradient></defs>
-        <rect x="0" y="200" width="800" height="50" fill="#dfe7f3"/>
-        <path d="M60 210 C120 110, 220 80, 320 80 L520 80 C650 80, 700 140, 740 210 Z" fill="url(#g)" stroke="#c7d2e5"/>
-        <circle cx="260" cy="220" r="36" fill="#0f172a"/><circle cx="260" cy="220" r="18" fill="#334155"/>
-        <circle cx="590" cy="220" r="36" fill="#0f172a"/><circle cx="590" cy="220" r="18" fill="#334155"/>
-      </svg>
+  <!-- 히어로 -->
+  <section class="hero" aria-hidden="false">
+    <img src="/brand/AI_TETRIS.png" alt="AI TETRIS">
+    <div class="hero-text">
+      <h2 class="hero-title">
+        <span class="line1">현대자동차</span>
+        <span class="line2">AI TETRIS 서비스</span>
+      </h2>
+      <p class="hero-sub">단 한 장의 짐 사진으로 최적의 차량 시트 배치를<br>자동으로 완성하는 서비스입니다.</p>
     </div>
   </section>
 
-  <!-- Upload Card -->
   <main class="wrap">
-    <section class="card" aria-labelledby="upload-title">
-      <h2 id="upload-title" class="h1">AI TETRIS</h2>
-      <p class="p">사진 한 장으로 최적의 차량 배치가 완성돼요!</p>
+    <!-- 탑승 인원 -->
+    <div class="section-head">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="#9ca3af"/><rect x="5" y="13" width="14" height="8" rx="4" fill="#9ca3af"/></svg>
+      <h3 class="section-title">탑승 인원</h3>
+    </div>
+    <p class="section-desc">1열을 제외한 차량 탑승 인원을 알려주세요</p>
 
-      <div class="row">
-        <input id="scenario" type="text" placeholder="시나리오명 (비우면 자동)">
-      </div>
+    <div class="chips" role="group" aria-label="탑승 인원 선택">
+      <button class="chip" type="button" data-seats="1">1명</button>
+      <button class="chip" type="button" data-seats="2">2명</button>
+      <button class="chip" type="button" data-seats="3">3명</button>
+      <button class="chip" type="button" data-seats="4">4명</button>
+    </div>
 
-      <div class="filebox">
-        <input id="photo" type="file" accept="image/*" capture="environment">
-        <label class="filebtn" for="photo">📷 사진 촬영/선택</label>
-      </div>
+    <div class="divider" aria-hidden="true"></div>
 
-      <button id="submit" class="primary" disabled>이미지 업로드</button>
-      <p id="note" class="sr-only" aria-live="polite"></p>
-    </section>
+    <!-- 짐 -->
+    <div class="section-head" style="margin-top:0">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4zm0 4l9 4 9-4v7l-9 4-9-4v-7z" fill="#9ca3af"/></svg>
+      <h3 class="section-title">짐</h3>
+    </div>
+    <p class="section-desc tight">대각선 방향에서 짐 이외의 배경은 최대한 보이지 않도록 촬영해주세요</p>
+    <p class="section-desc tight">개별 짐이 가려지는 부분이 없도록 주의하세요!</p>
+
+    <div class="photo-box" aria-label="사진 촬영 영역">
+      <img id="photo-preview" alt="업로드된 사진 미리보기">
+      <input id="photo" type="file" accept="image/*" capture="environment">
+      <label id="btnPhotoIn" for="photo">사진 촬영</label>
+    </div>
+
+    <!-- 업로드 후: 박스 밖 '사진 촬영'(CTA와 동일 폭) -->
+    <label id="btnPhotoOut" for="photo">사진 촬영</label>
+
+    <!-- CTA -->
+    <button id="submit" class="cta" disabled>최적 배치 시작</button>
+    <p id="note" class="sr-only" aria-live="polite"></p>
   </main>
 
-  <!-- Bottom tabs (데모) -->
-  <nav class="tabs" aria-label="탭">
-    <div class="tab active"><span class="ico">🏠</span>홈</div>
-    <div class="tab"><span class="ico">🛒</span>샵</div>
-    <div class="tab"><span class="ico">🚘</span>제어</div>
-    <div class="tab"><span class="ico">🛠️</span>서비스</div>
-    <div class="tab"><span class="ico">👤</span>마이</div>
-  </nav>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <!-- 중앙 알림 배너 -->
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
 
 <script>
 const $ = s=>document.querySelector(s);
-const photo=$('#photo'), submit=$('#submit'), toast=$('#toast'), note=$('#note');
 
-function showToast(t){ toast.textContent=t; toast.style.display='block'; setTimeout(()=>toast.style.display='none', 1700); }
+/* 탑승 인원 선택 */
+const chips = document.querySelectorAll('.chip');
+let seatSelection = null;
+chips.forEach(ch=>{
+  ch.addEventListener('click', ()=>{
+    chips.forEach(c=>c.classList.remove('selected'));
+    ch.classList.add('selected');
+    seatSelection = ch.dataset.seats;
+  });
+});
 
-photo.addEventListener('change', ()=>{ submit.disabled = !photo.files.length; });
+/* 파일/업로드/미리보기 */
+const photo=$('#photo'), submit=$('#submit');
+const notice=$('#notice');
+const preview=$('#photo-preview');
+const btnPhotoIn=$('#btnPhotoIn');
+const btnPhotoOut=$('#btnPhotoOut');
 
-async function pollStatus(scenario){
-  try{
-    const r = await fetch('/api/status?scenario='+encodeURIComponent(scenario));
-    const d = await r.json();
-    if(d.ok && d.status === 'done'){ showToast('이미지 분석이 완료되었습니다!'); note.textContent='분석 완료'; return true; }
-    if(d.ok && d.status === 'error'){ showToast('분석 실패'); note.textContent='분석 실패'; return true; }
-  }catch(e){}
-  return false;
+let previewURL=null, currentScenario=null, pollTimer=null;
+
+function showNotice(msg){
+  notice.textContent = msg;
+  notice.classList.remove('show'); void notice.offsetWidth; notice.classList.add('show');
 }
 
-submit.addEventListener('click', async ()=>{
+/* 촬영 → 미리보기 표시 → 자동 업로드 */
+photo.addEventListener('change', async ()=>{
   if(!photo.files.length) return;
-  submit.disabled=true; note.textContent='업로드 중...';
 
-  // 시나리오명(빈 경우 자동)
-  let scenario = $('#scenario').value.trim();
-  const fd=new FormData();
-  if(scenario) fd.append('scenario', scenario);
-  fd.append('photo', photo.files[0]);
+  // 미리보기(원본 바이트 재인코딩 없이)
+  if(previewURL) URL.revokeObjectURL(previewURL);
+  previewURL = URL.createObjectURL(photo.files[0]);
+  preview.src = previewURL;
+  preview.style.display = 'block';
 
   try{
+    const fd=new FormData();
+    fd.append('photo', photo.files[0]);
+    if (seatSelection) fd.append('people', seatSelection); // ← 탑승 인원 동봉
+
     const r=await fetch('/api/upload',{method:'POST',body:fd});
     const d=await r.json();
-    if(!r.ok||!d.ok){ showToast('업로드 실패'); note.textContent='업로드 실패'; submit.disabled=false; return; }
+    if(!r.ok||!d.ok){ alert('업로드 실패'); return; }
 
-    // 1단계: 업로드 완료 토스트
-    showToast('이미지가 업로드 되었습니다!');
-    note.textContent='업로드 완료';
+    currentScenario = d.scenario;
 
-    scenario = d.scenario; // 서버가 최종 사용한 시나리오명
-    // 2단계: 분석 완료까지 폴링
-    let tries = 0;
-    const timer = setInterval(async ()=>{
-      tries += 1;
-      const done = await pollStatus(scenario);
-      if(done || tries > 120){ clearInterval(timer); submit.disabled=false; photo.value=''; $('#scenario').value=''; }
-    }, 1500);
+    // 업로드 성공: 박스 안 버튼 숨기고, 바깥 버튼 표시(중앙)
+    btnPhotoIn.style.display = 'none';
+    btnPhotoOut.style.display = 'flex';
+
+    // 업로드 안내
+    showNotice('사진이 업로드 되었습니다!');
+
+    // CTA 활성화 + 남색 전환
+    submit.disabled = false;
+    submit.classList.add('active');
 
   }catch(e){
-    showToast('네트워크 오류'); note.textContent='네트워크 오류'; submit.disabled=false;
+    alert('네트워크 오류');
   }
+});
+
+/* CTA 클릭 → 안내 배너 + 폴링 */
+submit.addEventListener('click', ()=>{
+  if(!currentScenario){ return; } // 업로드 전엔 비활성
+  showNotice('최적의 차량 배치 설계를 시작합니다!');
+  let tries=0;
+  clearInterval(pollTimer);
+  pollTimer = setInterval(async ()=>{
+    tries += 1;
+    try{
+      const rs = await fetch('/api/status?scenario='+encodeURIComponent(currentScenario));
+      const dj = await rs.json();
+      if(dj.ok && dj.status === 'done'){
+        clearInterval(pollTimer);
+      }else if(dj.ok && dj.status === 'error'){
+        clearInterval(pollTimer);
+        alert('분석 실패: ' + (dj.error_msg||''));
+      }else if(tries>120){
+        clearInterval(pollTimer);
+        alert('분석 대기 시간이 초과되었습니다.');
+      }
+    }catch(e){
+      clearInterval(pollTimer);
+      alert('네트워크 오류');
+    }
+  }, 1500);
 });
 </script>
 </body>
 </html>
 """
 
-# ====================== QR (초미니멀) ======================
+# ====================== QR ======================
 QR_HTML = """
 <!doctype html>
 <html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#000000">
-<title>마이현대 앱으로 접속하기</title>
+<title>QR · AI TETRIS</title>
 <style>
+  @font-face{
+    font-family:"HyundaiHarmonyM";
+    src:url("/brand/HyundaiHarmonyM.woff2") format("woff2");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  :root{ --qrw: min(70vmin, 520px); }
   html,body{
     height:100%; margin:0;
     background:radial-gradient(1200px 600px at 50% 40%, #0d1117 0%, #0b0e14 45%, #05070b 100%);
-    color:#e6edf3; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,sans-serif
+    color:#e6edf3; font-family:"HyundaiHarmonyM",system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,sans-serif
   }
-  .wrap{height:100%; display:grid; place-items:center}
-  .box{display:flex; flex-direction:column; align-items:center; gap:28px}
-  .h{font-weight:900; letter-spacing:.3px; text-align:center; font-size:min(6vw,36px)}
-  .qr{width:min(70vmin,520px); height:min(70vmin,520px); background:#fff; border-radius:24px; padding:18px; box-shadow:0 22px 70px rgba(0,0,0,.55)}
+  .wrap{height:100%; display:grid; place-items:center; padding:18px}
+  .box{display:flex; flex-direction:column; align-items:center; gap:14px}
+  .label{
+    font-family:"HyundaiHarmonyM";
+    background:#002c5f; color:#fff; padding:14px 18px; border-radius:18px;
+    font-size:min(5.8vw,22px); font-weight:600;
+    text-align:center; box-shadow:0 14px 34px rgba(0,0,0,.38);
+    width:var(--qrw);
+  }
+  .qr{
+    width:var(--qrw); height:var(--qrw);
+    background:#fff; border-radius:24px; padding:18px; box-shadow:0 22px 70px rgba(0,0,0,.55)
+  }
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="box">
-      <div class="h">마이현대 앱으로 접속하기</div>
+      <div class="label">마이현대 앱에서 AI TETRIS를 경험해보세요!</div>
       <img class="qr" src="/qr.png?t={{ts}}" alt="접속 QR">
     </div>
   </div>
@@ -276,9 +434,8 @@ document.addEventListener('click', ()=>{ if (!document.fullscreenElement) docume
 </html>
 """
 
-# ====================== 저장 유틸: '원본 그대로' ======================
+# ====================== 저장 유틸 ======================
 def _ext_from_filename(filename: str) -> str:
-    """원본 파일명에서 확장자 도출(.jpg 등). 없으면 빈 문자열."""
     if not filename:
         return ""
     name = str(filename)
@@ -286,10 +443,6 @@ def _ext_from_filename(filename: str) -> str:
     return name[dot:].lower() if dot != -1 else ""
 
 def _guess_ext_by_content(raw: bytes, fallback_ext: str) -> str:
-    """
-    Pillow로 포맷 감지 → 확장자 추정.
-    fallback_ext가 있으면 우선 사용, 없으면 감지 결과 사용.
-    """
     fmt = None
     try:
         from PIL import Image
@@ -298,7 +451,6 @@ def _guess_ext_by_content(raw: bytes, fallback_ext: str) -> str:
             fmt = (im.format or "").lower()
     except Exception:
         pass
-
     table = {
         "jpeg": ".jpeg",
         "jpg":  ".jpg",
@@ -314,23 +466,16 @@ def _guess_ext_by_content(raw: bytes, fallback_ext: str) -> str:
         return fallback_ext if fallback_ext.startswith(".") else "."+fallback_ext
     if fmt in table:
         return table[fmt]
-    # 마지막 안전망: 바이너리
     return ".bin"
 
 def _save_upload_as_original(file_storage, scenario: str, base_dir: Path) -> Path:
-    """
-    업로드된 파일을 **원본 바이트 그대로** 저장한다.
-    - 확장자: 원본 파일명 유지, 없으면 포맷 감지로 부여
-    - 아무 변환/보정/리사이즈 없음
-    반환: 최종 저장 경로(Path)
-    """
     raw = file_storage.read()
     orig_ext = _ext_from_filename(file_storage.filename or "")
     final_ext = _guess_ext_by_content(raw, orig_ext)
     dst_path = base_dir / f"{scenario}{final_ext}"
     dst_path.parent.mkdir(parents=True, exist_ok=True)
     with open(dst_path, "wb") as f:
-        f.write(raw)  # ✅ 무손실 그대로 저장
+        f.write(raw)  # 원본 바이트 그대로 저장
     return dst_path
 
 # ====================== 서버 유틸 ======================
@@ -345,20 +490,15 @@ def _lan_ip() -> str:
 def _server_url() -> str:
     return f"http://{_lan_ip()}:{PORT}"
 
-# ====================== 로고/아이콘 ======================
+# 브랜드/정적 자산
 @app.route("/brand.png")
 def brand_png():
-    """
-    brand/hyundai_logo.png 가 있으면 그걸 사용.
-    없으면 현대 블루 톤으로 심플한 대체 로고 생성.
-    """
     fs = BRAND_DIR / "hyundai_logo.png"
     if fs.exists():
         with open(fs, "rb") as f:
             data = f.read()
         resp = make_response(data); resp.headers["Content-Type"] = "image/png"; return resp
-    # 대체 로고 생성
-    im = Image.new("RGB", (220, 60), (0, 44, 95))  # #002C5F
+    im = Image.new("RGB", (220, 60), (0, 44, 95))
     d = ImageDraw.Draw(im)
     try:
         font = ImageFont.load_default()
@@ -368,7 +508,14 @@ def brand_png():
     buf = BytesIO(); im.save(buf, format="PNG")
     resp = make_response(buf.getvalue()); resp.headers["Content-Type"] = "image/png"; return resp
 
-# ====================== QR 생성 ======================
+@app.route("/brand/<path:filename>")
+def brand_assets(filename):
+    p = BRAND_DIR / filename
+    if not p.exists():
+        abort(404)
+    return send_from_directory(BRAND_DIR, filename)
+
+# QR 생성
 @app.route("/qr.png")
 def qr_png():
     url = _server_url()
@@ -381,7 +528,7 @@ def qr_png():
     buf = BytesIO(); img.save(buf, format="PNG")
     resp = make_response(buf.getvalue()); resp.headers["Content-Type"] = "image/png"; return resp
 
-# ====================== 라우트: 홈/QR ======================
+# 라우트
 @app.route("/", methods=["GET"])
 def home():
     return APP_HTML
@@ -390,16 +537,27 @@ def home():
 def qr_fullscreen():
     return render_template_string(QR_HTML, ts=datetime.now().timestamp())
 
-# ====================== 업로드 & 상태 ======================
+# 업로드 & 상태
 def _analyze_in_background(scenario: str, img_path: Path):
-    """백그라운드에서 분석 실행 후 상태 업데이트."""
     try:
         JOBS[scenario]["status"] = "processing"
-        analyzer = LuggageAnalyzer(scenario_name=scenario)
-        analyzer.image_path = img_path
-        result = analyzer.analyze_image()
+
+        # people 꺼내기(옵션)
+        people_val = JOBS[scenario].get("people", None)
+        try:
+            people_int = int(people_val) if people_val not in (None, "") else None
+        except Exception:
+            people_int = None
+
+        # ✅ chain1_rt 분석기 사용: 원본 MIME/바이트 그대로 전달 + people 주입 + 저장
+        analyzer = LuggageAnalyzer(
+            scenario_name=scenario,
+            people=people_int,
+            image_path=img_path,
+        )
+        result = analyzer.run_analysis()
+
         if result:
-            analyzer.save_result(result)   # chain1_out/<scenario>.txt
             JOBS[scenario]["status"] = "done"
             JOBS[scenario]["out_txt"] = f"chain1_out/{scenario}.txt"
         else:
@@ -414,21 +572,27 @@ def api_upload():
     scenario = (request.form.get("scenario") or "").strip()
     if not scenario:
         scenario = datetime.now().strftime("items_%Y%m%d_%H%M%S")
-
     file = request.files.get("photo")
     if not file:
         return jsonify(ok=False, error="파일이 없습니다."), 400
 
+    # people 수신(옵션)
+    people_raw = request.form.get("people", "").strip()
     try:
-        # ✅ 원본 그대로 저장 (확장자 유지)
-        img_path = _save_upload_as_original(file, scenario, IMG_DIR)
+        people_int = int(people_raw) if people_raw else None
+    except Exception:
+        people_int = None
 
-        # 상태 등록 + 백그라운드 분석 시작
-        JOBS[scenario] = {"status": "uploaded", "out_txt": None, "error_msg": None}
+    try:
+        img_path = _save_upload_as_original(file, scenario, IMG_DIR)
+        JOBS[scenario] = {
+            "status": "uploaded",
+            "out_txt": None,
+            "error_msg": None,
+            "people": people_int
+        }
         th = threading.Thread(target=_analyze_in_background, args=(scenario, img_path), daemon=True)
         th.start()
-
-        # 업로드 즉시 응답
         return jsonify(ok=True, stage="uploaded", scenario=scenario)
     except Exception as e:
         return jsonify(ok=False, error=f"오류: {e}"), 500
@@ -440,9 +604,12 @@ def api_status():
         return jsonify(ok=False, error="unknown scenario"), 404
     return jsonify(ok=True, status=JOBS[scenario]["status"], out_txt=JOBS[scenario]["out_txt"], error_msg=JOBS[scenario]["error_msg"])
 
-# ====================== Entrypoint ======================
+# Entrypoint
+def _lan_url():
+    return f"http://{_lan_ip()}:{PORT}"
+
 if __name__ == "__main__":
-    url = _server_url()
+    url = _lan_url()
     print(f"\n휴대폰에서 접속:  {url}\n(같은 Wi-Fi 필요)\n")
     if AUTO_OPEN_BROWSER:
         try:
