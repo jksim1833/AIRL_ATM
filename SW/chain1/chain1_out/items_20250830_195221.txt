@@ -1,10 +1,10 @@
 {
-  "people": 1,
+  "people": 2,
   "total_luggage_count": 1,
   "luggage_details": {
     "luggage_1": {
-      "object": "음료수 캔",
-      "color": "흰색, 은색",
+      "object": "에너지 드링크 캔",
+      "color": "흰색, 검은색",
       "material": "알루미늄",
       "shape": "원통형",
       "text": "ZERO SUGAR, MONSTER, ULTRA",
