@@ -33,10 +33,7 @@ class LangChainChatGPT:
         self.llm = ChatOpenAI(
             model="gpt-4o",
             temperature=0.1,
-            max_tokens=1000,
-            top_p=0.5,
-            frequency_penalty=0.0,
-            presence_penalty=0.0
+            max_tokens=8000
         )
         
         # JSON 출력 파서 설정
