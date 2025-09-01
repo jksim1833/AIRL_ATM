@@ -1,23 +1,32 @@
 [user]
-Information about environments and seats are given as python dictionary. Example:
+The cabin is partitioned into 4 independent cells; each cell has one rotating disk and exactly one seat.
+Cells are isolated, so seats in different cells never collide.
+Information about environment and seats is given as a Python dictionary. Example:
 """
 {
   "seats": {
-    "1": { "rail_direction": "W", "seat_position": "B", "seat_direction": "F", "seat_mode": "chair" },
-    "2": { "rail_direction": "W", "seat_position": "B", "seat_direction": "F", "seat_mode": "chair" },
-    "3": { "rail_direction": "W", "seat_position": "B", "seat_direction": "F", "seat_mode": "chair" },
-    "4": { "rail_direction": "W", "seat_position": "B", "seat_direction": "F", "seat_mode": "chair" }
+    "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+    "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+    "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+    "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
   }
 }
 
 """
-Seat states are represented using those state sets:
+Seat states are represented using these sets:
 """
 "SEAT STATE LIST"
-- rail_direction: "W" or "H". Orientation of the rail inside the circular disk. "W" = width/horizontal rail, "H" = height/vertical rail.
-- seat_position: "A", "B", or "C". Physical location of seat along the rail inside the disk. Three fixed positions available on the rail.
-- seat_direction: "F", "R", "B", or "L". Direction the seat is facing. "F" = front (vehicle's forward direction), "R" = right, "B" = backward, "L" = left.
-- seat_mode: "chair" or "storage". Physical form of the seat. "chair" = deployed for sitting, "storage" = folded flat for cargo space.
+- rail_axis: "x" | "y" 
+  (orientation of the linear rail inside the rotating disk; x=lateral, y=longitudinal)
+  
+- position: "A" | "M" | "C" 
+  (three fixed points along the rail: A=negative end, M=center, C=positive end)
+
+- facing: "F" | "R" | "B" | "L" 
+  (absolute vehicle-facing: F=forward, R=right, B=backward, L=left)
+
+- mode: "chair" | "storage" 
+  (seat physical form: chair=deployed, storage=folded)
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]
