@@ -1,0 +1,19 @@
+{
+  "environment_before": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+    }
+  },
+  "instruction": "seats: {\n    1(x, M, F, chair),\n    2(x, M, F, chair),\n    3(x, M, F, chair),\n    4(x, M, F, chair)}",
+  "environment_after": {
+    "seats": {
+      "1": "no change",
+      "2": "no change",
+      "3": "no change",
+      "4": "no change"
+    }
+  }
+}

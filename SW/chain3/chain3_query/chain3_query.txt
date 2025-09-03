@@ -7,20 +7,19 @@ The instruction is as follows:
 {"instruction": [INSTRUCTION]}
 """
 The dictionary that you return should be formatted as valid JSON object (not Python dict), with all keys and string values using double quotes. Follow these rules:
-1. Make sure that each element of the ["step_instructions"] explains corresponding element of the ["task_sequence"]. Refer to the "SEAT CONTROL LIST" to understand the elements of ["task_sequence"].
-2. The length of the ["step_instructions"] list must be the same as the length of the ["task_sequence"] list.
-3. Never left ',' at the end of the list.
-4. Keep track of all items listed in the "objects" section of the "environment_before" field. Please ensure that you fill out both the "objects" and "object_states" sections for all listed items. 
-5. All keys of the dictionary should be double-quoted.
-6. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response, with no other text before or after. Do not include the word "json" after the opening backticks. Only use plain backticks (```).
-7. your seat control sequence must obey the following constraints:
-
-- move(seat_id, x, y) can only be used when the seat is in the "storage" state.
-- rotate(seat_id, degree) must be executed before flip(seat_id).
-- flip(seat_id) must appear at the final stage of the sequence.
-- If the seat's direction is the same in both environment_before and environment_after, do NOT generate a rotate command in the seat control actions.
-- if "direction" changes from A to B or B to C or C to D or D to A, "degree" is 90
-- if "direction" changes from A to D or D to C or C to B or B to A, "degree" is 270
-8. You must output strictly in the same format as the examples in "chain3_prompt_example".
+1. Never left ',' at the end of the list.
+2. Keep track of all items listed in the "seats" section of the "environment_before" field. Please ensure that you fill out the "seats" sections for all listed items. 
+3. All keys of the dictionary should be double-quoted.
+4. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response, with no other text before or after. Do not include the word "json" after the opening backticks. Only use plain backticks (```).
+5. your seat control sequence must obey the following constraints:
+- move_on_rail(id, target) can only be used when the seat is in the "storage" state.
+- seat_rotate(id, degree) must be executed before unfold(id).
+- unfold(id) must appear at the final stage of the sequence.
+- Plan sequentially: after each action, update the working state; decide the next action from that updated state.
+- If the seat's facing is the same in both environment_before and instruction, do NOT generate a seat_rotate command in the seat control actions.
+- If "facing" changes from F to R or R to B or B to L or L to F, "degree" is 90
+- If "facing" changes from F to L or L to B or B to R or R to F, "degree" is -90
+- If "facing" changes from F to B or B to F or R to L or L to R, "degree" is 180
+6. Output exactly one JSON object with no surrounding text and enclose it in triple backticks (``` ... ```). The object must match the examples in “chain3_prompt_example” including literal line breaks and two-space indentation inside string fields. Keep key order exactly as in the examples.
 
 Adhere to the output format I defined above. Follow the eight rules. Think step by step.

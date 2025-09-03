@@ -1,302 +1,261 @@
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.output_parsers import JsonOutputParser
-from langchain_community.callbacks import get_openai_callback
-import tiktoken
-import json
+# -*- coding: utf-8 -*-
+"""
+chain3.py — LangChain (프롬프트-only, 스키마 제거)
+- 시나리오: chain3_scenario/people_1~people_4 의 L/M/S.txt 중 하나
+- TXT 시나리오: 파일 전체를 하나의 instruction 으로 사용
+- 프롬프트 순서: role → image_1 → image_2 → environment → function → output_format → example → query
+- gpt-4o, LangChain 사용 (스키마/구조화출력/검증기 없음)
+- 파싱 전 원문 저장 없음
+- 저장: chain3_out/<people_x>/<베이스파일명>.json
+"""
+
+from __future__ import annotations
 import os
 import re
+import json
 import argparse
-from dotenv import load_dotenv
+import base64
+from pathlib import Path
+from typing import List, Dict, Any, Union
 
-# 환경 변수 로드
-load_dotenv()
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
-# 토크나이저 설정
-enc = tiktoken.get_encoding("cl100k_base")
+# ================== 경로 상수 ( __file__ 기준 ) ==================
+DIR_ROOT = Path(os.path.dirname(__file__)).resolve()
+DIR_SYSTEM = DIR_ROOT / "chain3_system"
+DIR_PROMPT = DIR_ROOT / "chain3_prompt"
+DIR_QUERY = DIR_ROOT / "chain3_query"
+DIR_SCENARIO = DIR_ROOT / "chain3_scenario"
+DIR_OUT = DIR_ROOT / "chain3_out"
 
-# 디렉토리 설정 (langchain_v1 폴더 내의 경로)
-dir_system = './langchain_v1/chain3_system'
-dir_prompt = './langchain_v1/chain3_prompt'
-dir_query = './langchain_v1/chain3_query'
-prompt_load_order = ['chain3_prompt_role',
-                     'chain3_prompt_function',
-                     'chain3_prompt_environment',
-                     'chain3_prompt_output_format',
-                     'chain3_prompt_example']
+# 프롬프트 파일들
+SYSTEM_FILE = DIR_SYSTEM / "chain3_system.txt"
+# 순서: role → (image1, image2) → environment → function → output_format → example
+PROMPT_FILE_ORDER = [
+    "chain3_prompt_role.txt",
+    "chain3_prompt_environment.txt",
+    "chain3_prompt_function.txt",
+    "chain3_prompt_output_format.txt",
+    "chain3_prompt_example.txt",
+]
+IMG1_FILE = DIR_PROMPT / "chain3_prompt_image_3.png"
 
+QUERY_FILE = DIR_QUERY / "chain3_query.txt"
 
-class LangChainChatGPT:
-    def __init__(self, prompt_load_order):
-        # LangChain ChatOpenAI 모델 초기화
-        self.llm = ChatOpenAI(
-            model="gpt-4o",
-            temperature=0.1,
-            max_tokens=8000
-        )
-        
-        # JSON 출력 파서 설정
-        self.output_parser = JsonOutputParser()
-        
-        self.messages = []
-        self.max_token_length = 10000
-        self.max_completion_length = 1000
-        self.last_response = None
-        self.query = ''
-        
-        # 시스템 프롬프트 로드
-        fp_system = os.path.join(dir_system, 'chain3_system.txt')
-        with open(fp_system, encoding='utf-8') as f:
-            system_content = f.read()
-        self.system_message = SystemMessage(content=system_content)
-        
-        # 프롬프트 파일들 로드
-        for prompt_name in prompt_load_order:
-            fp_prompt = os.path.join(dir_prompt, prompt_name + '.txt')
-            with open(fp_prompt, encoding='utf-8') as f:
-                data = f.read()
-            
-            # [user], [assistant] 태그로 분할
-            data_split = re.split(r'\[user\]\n|\[assistant\]\n', data)
-            data_split = [item for item in data_split if len(item) != 0]
-            
-            assert len(data_split) % 2 == 0
-            for i, item in enumerate(data_split):
-                if i % 2 == 0:
-                    self.messages.append(HumanMessage(content=item))
-                else:
-                    self.messages.append(AIMessage(content=item))
-        
-        # 쿼리 파일 로드
-        fp_query = os.path.join(dir_query, 'chain3_query.txt')
-        with open(fp_query, encoding='utf-8') as f:
-            self.query = f.read()
-    
-    def create_prompt_template(self):
-        """ChatPromptTemplate 생성"""
-        # 시스템 메시지와 대화 히스토리, 그리고 현재 질문을 포함한 템플릿
-        template = ChatPromptTemplate.from_messages([
-            self.system_message,
-            MessagesPlaceholder(variable_name="chat_history"),
-            ("human", "{query}")
-        ])
-        return template
-    
-    def calculate_token_length(self, messages):
-        """메시지들의 토큰 길이 계산"""
-        total_content = ""
-        for message in messages:
-            if hasattr(message, 'content'):
-                total_content += message.content
-        return len(enc.encode(total_content))
-    
-    def truncate_messages_if_needed(self):
-        """토큰 길이가 초과되면 오래된 메시지 제거"""
-        current_length = self.calculate_token_length(self.messages)
-        print(f'prompt length: {current_length}')
-        
-        while current_length > self.max_token_length - self.max_completion_length:
-            if len(self.messages) >= 2:
-                print('prompt too long. truncated.')
-                # 가장 오래된 두 메시지 제거 (user-assistant 쌍)
-                self.messages = self.messages[2:]
-                current_length = self.calculate_token_length(self.messages)
-            else:
-                break
-    
-    def extract_json_part(self, text):
-        """GPT 응답에서 JSON 부분만 추출"""
-        if text.find('```') == -1:
-            return text
-        
-        # 첫 번째와 두 번째 ``` 사이의 내용 추출
-        start_idx = text.find('```') + 3
-        end_idx = text.find('```', start_idx)
-        if end_idx != -1:
-            text_json = text[start_idx:end_idx]
+# ================== API 키 로드 ==================
+with open(DIR_ROOT.parent / "tetris_secrets.json", "r", encoding="utf-8") as f:
+    _cred = json.load(f)
+OPENAI_API_KEY = _cred["openai"]["OPENAI_API_KEY"]
+
+# ================== 유틸 ==================
+_SPLIT = re.compile(r"\[user\]\n|\[assistant\]\n", re.MULTILINE)
+
+def read_text(path: Path) -> str:
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
+
+def load_dialogue_messages(text_file: Path) -> List[Union[HumanMessage, AIMessage]]:
+    """
+    프롬프트 txt 내부의 [user]/[assistant] 마커를 파싱해
+    파일 안에서의 대화 순서를 그대로 메시지로 변환한다.
+    """
+    raw = read_text(text_file)
+    parts = [p for p in _SPILT_SAFE_SPLIT(raw) if p.strip()]  # 안전 분리(아래 함수)
+    msgs: List[Union[HumanMessage, AIMessage]] = []
+    # parts는 [user]와 [assistant] 블록이 교대로 온다고 가정하지 않고, 태그 기준으로 매핑
+    for role, chunk in _PAIR_ROLE_CONTENT(parts):
+        if role == "user":
+            msgs.append(HumanMessage(content=chunk))
         else:
-            text_json = text[start_idx:]
-        
-        return text_json.strip()
-    
-    def generate(self, message, environment):
-        """LangChain을 사용하여 응답 생성"""
-        # 쿼리 템플릿에 환경과 명령어 삽입
-        text_base = self.query
-        if text_base.find('[ENVIRONMENT]') != -1:
-            text_base = text_base.replace('[ENVIRONMENT]', json.dumps(environment))
-        
-        if text_base.find('[INSTRUCTION]') != -1:
-            text_base = text_base.replace('[INSTRUCTION]', message)
-        
-        # 토큰 길이 확인 및 조정
-        self.truncate_messages_if_needed()
-        
-        # 프롬프트 템플릿 생성
-        prompt_template = self.create_prompt_template()
-        
-        # LLM 체인 생성
-        chain = prompt_template | self.llm | self.output_parser
-        
-        try:
-            # 토큰 사용량 추적과 함께 실행
-            with get_openai_callback() as cb:
-                # 응답 생성
-                response = chain.invoke({
-                    "chat_history": self.messages,
-                    "query": text_base
-                })
-                
-                print(f"Total Tokens: {cb.total_tokens}")
-                print(f"Prompt Tokens: {cb.prompt_tokens}")
-                print(f"Completion Tokens: {cb.completion_tokens}")
-                print(f"Total Cost (USD): ${cb.total_cost}")
-        
-        except Exception as e:
-            print(f"JSON 파싱 실패, 텍스트 응답으로 처리: {e}")
-            # JSON 파싱 실패 시 텍스트 체인 사용
-            text_chain = prompt_template | self.llm
-            response_message = text_chain.invoke({
-                "chat_history": self.messages,
-                "query": text_base
-            })
-            
-            text = response_message.content
-            print(text)
-            
-            # JSON 부분 추출 및 처리
-            self.last_response = self.extract_json_part(text)
-            self.last_response = self.last_response.replace("'", "\"")
-            
-            # 응답을 파일로 저장
-            with open('chain3_last_response.txt', 'w', encoding='utf-8') as f:
-                f.write(self.last_response)
-            
-            try:
-                response = json.loads(self.last_response, strict=False)
-            except json.JSONDecodeError as json_error:
-                print(f"JSON 파싱 실패: {json_error}")
-                import pdb
-                pdb.set_trace()
-                return None
-        
-        # 응답 저장 및 처리
-        self.last_response = json.dumps(response, ensure_ascii=False, indent=2)
-        
-        # 응답을 파일로 저장
-        with open('chain3_last_response.txt', 'w', encoding='utf-8') as f:
-            f.write(self.last_response)
-        
-        # 대화 히스토리에 추가
-        self.messages.append(HumanMessage(content=text_base))
-        self.messages.append(AIMessage(content=self.last_response))
-        
-        # 환경 업데이트
-        if "environment_after" in response:
-            self.environment = response["environment_after"]
-        
-        return response
-    
-    def dump_json(self, dump_name=None):
-        """JSON 응답을 파일로 저장"""
-        if dump_name is not None and self.last_response is not None:
-            fp = os.path.join(dump_name + '.json')
-            with open(fp, 'w', encoding='utf-8') as f:
-                if isinstance(self.last_response, str):
-                    # 문자열인 경우 그대로 저장
-                    f.write(self.last_response)
-                else:
-                    # 딕셔너리인 경우 JSON으로 변환
-                    json.dump(self.last_response, f, indent=4, ensure_ascii=False)
+            msgs.append(AIMessage(content=chunk))
+    return msgs
 
+def _SPILT_SAFE_SPLIT(s: str) -> List[str]:
+    """[user]/[assistant] 태그를 보존하며 분리하기 위한 헬퍼"""
+    # 태그를 줄 시작 기준으로 강제 정렬
+    s = s.replace("\r\n", "\n")
+    # 태그 앞에 줄바꿈이 없을 수 있으니 보정
+    s = s.replace("[user]\n", "\n[user]\n").replace("[assistant]\n", "\n[assistant]\n")
+    chunks = [c for c in s.split("\n")]
 
-# 시나리오 선택 및 실행
-if __name__ == "__main__":
+    out: List[str] = []
+    cur: List[str] = []
+    cur_role: str | None = None
+
+    for line in chunks:
+        if line.strip() == "[user]":
+            if cur:
+                out.append(f"__role__:{cur_role}\n" + "\n".join(cur).strip())
+                cur = []
+            cur_role = "user"
+            continue
+        if line.strip() == "[assistant]":
+            if cur:
+                out.append(f"__role__:{cur_role}\n" + "\n".join(cur).strip())
+                cur = []
+            cur_role = "assistant"
+            continue
+        cur.append(line)
+
+    if cur:
+        out.append(f"__role__:{cur_role}\n" + "\n".join(cur).strip())
+
+    # out 항목은 "__role__:user\n<내용>" 형태
+    return out
+
+def _PAIR_ROLE_CONTENT(chunks: List[str]) -> List[tuple[str, str]]:
+    paired: List[tuple[str, str]] = []
+    for c in chunks:
+        if not c.strip():
+            continue
+        if not c.startswith("__role__:"):
+            # 태그가 없으면 user로 간주
+            paired.append(("user", c.strip()))
+            continue
+        head, body = c.split("\n", 1) if "\n" in c else (c, "")
+        role = head.replace("__role__:", "").strip() or "user"
+        paired.append((role, body.strip()))
+    return paired
+
+def encode_image_to_data_url(path: Path) -> str:
+    mime = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
+    with open(path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime};base64,{b64}"
+
+def build_messages(instruction: str) -> List[Union[SystemMessage, HumanMessage, AIMessage]]:
+    msgs: List[Union[SystemMessage, HumanMessage, AIMessage]] = []
+    # 1) System — “프롬프트만” 넣기: 시스템 파일 그대로 (추가 문구 없음)
+    msgs.append(SystemMessage(content=read_text(SYSTEM_FILE)))
+    # 2) role
+    msgs += load_dialogue_messages(DIR_PROMPT / PROMPT_FILE_ORDER[0])
+    # 3) images (두 장을 하나의 HumanMessage로)
+    img_parts = []
+    if IMG1_FILE.exists():
+        img_parts.append({"type": "image_url", "image_url": {"url": encode_image_to_data_url(IMG1_FILE)}})
+
+    if img_parts:
+        msgs.append(HumanMessage(content=[{"type": "text", "text": "Reference diagrams."}, *img_parts]))
+    # 4~7) environment, function, output_format, example (각 파일 내 대화 구조를 그대로 반영)
+    for fname in PROMPT_FILE_ORDER[1:]:
+        msgs += load_dialogue_messages(DIR_PROMPT / fname)
+    # 8) query — [INSTRUCTION] 치환, [ENVIRONMENT]는 TXT라서 제거
+    q = read_text(QUERY_FILE)
+    q = q.replace("[ENVIRONMENT]", "")
+    q = q.replace("[INSTRUCTION]", instruction)
+    msgs.append(HumanMessage(content=q))
+    return msgs
+
+def find_scenario_txt(s: str) -> Path:
+    """
+    --scenario 인자로 받은 문자열을 기반으로 TXT 파일을 찾는다.
+    - 슬래시/백슬래시가 있으면 chain3_scenario/ 뒤의 상대경로로 간주 (확장자 보정 .txt)
+    - 없으면 .txt 보정 후 people_1~people_4 폴더에서 탐색, 없으면 루트에서도 확인
+    """
+    rel = s.strip("/\\")
+    if "/" in rel or "\\" in rel:
+        cand = DIR_SCENARIO / rel
+        if cand.suffix.lower() != ".txt":
+            cand = cand.with_suffix(".txt")
+        return cand
+    # 파일명만 주어진 경우 (.txt 보정)
+    if not rel.lower().endswith(".txt"):
+        rel += ".txt"
+    for p in ["people_1", "people_2", "people_3", "people_4"]:
+        cand = DIR_SCENARIO / p / rel
+        if cand.exists():
+            return cand
+    return DIR_SCENARIO / rel
+
+def extract_json_from_text(text: str) -> str:  # dict 대신 str 반환
+    """모델 응답에서 JSON 덩어리만 추출 (원본 형식 보존)"""
+    txt = text.strip()
+    
+    # 코드펜스 우선
+    fence = "```"
+    if fence in txt:
+        first = txt.find(fence)
+        second = txt.find(fence, first + len(fence))
+        if second != -1:
+            inner = txt[first + len(fence):second].strip()
+            if inner.lower().startswith("json"):
+                inner = inner[4:].strip()
+            # 유효성 검사만 하고 원문 반환
+            json.loads(inner)  # 파싱 테스트
+            return inner
+    
+    # 전체 시도
+    try:
+        json.loads(txt)  # 파싱 테스트
+        return txt
+    except:
+        pass
+    
+    # { ... } 추출
+    start = txt.find("{")
+    end = txt.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        candidate = txt[start:end+1]
+        json.loads(candidate)  # 파싱 테스트
+        return candidate
+    
+    raise ValueError("Failed to parse JSON from model output")
+
+    # 3) 가장 바깥 { ... } 범위 추출 (단순 탐색)
+    start = txt.find("{")
+    end = txt.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        candidate = txt[start:end+1]
+        return json.loads(candidate)  # 실패하면 예외 발생
+
+    raise ValueError("Failed to parse JSON from model output")
+
+# ================== 메인 ==================
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '--scenario',
+        "--scenario",
         type=str,
         required=True,
-        help='scenario name (see the code for details)')
+        help="예: L / M / S 또는 people_2/L.txt (people_1~people_4 폴더에서 TXT 탐색)",
+    )
     args = parser.parse_args()
-    scenario_name = args.scenario
 
-    # 시나리오별 환경 및 명령어 설정
-    if scenario_name == 'chain3_1seat':
-        environment = {
-            "objects": ["seat_1"],
-            "object_states": {
-                "seat_1": {
-                    "type": "seat",
-                    "position": [1, 1],
-                    "direction": "A"
-                }
-            }
-        }
-        instructions = [
-            "seat_1(storage, 1, 1, A)",
-            "seat_1(storage, 1, 1, C)",
-            "seat_1(seat, 2, 2, C)",
-            "seat_1(storage, 0, 0, B)"
-        ]
-        
-    elif scenario_name == 'chain3_4seat_compact':
-        environment = {
-            "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
-            "object_states": {
-                "seat_1": {"type": "seat", "position": [1, 1], "direction": "A"},
-                "seat_2": {"type": "seat", "position": [1, 1], "direction": "A"},
-                "seat_3": {"type": "seat", "position": [1, 1], "direction": "A"},
-                "seat_4": {"type": "seat", "position": [1, 1], "direction": "A"}
-            }
-        }
-        instructions = [
-            "seat_1(storage, 0, 0, B), seat_2(storage, 2, 0, D), seat_3(storage, 0, 0, B), seat_4(storage, 2, 0, D)"
-        ]
-        
-    elif scenario_name == 'chain3_4seat_pair_face':
-        environment = {
-            "objects": ["seat_1", "seat_2", "seat_3", "seat_4"],
-            "object_states": {
-                "seat_1": {"type": "storage", "position": [1, 0], "direction": "C"},
-                "seat_2": {"type": "storage", "position": [1, 0], "direction": "C"},
-                "seat_3": {"type": "storage", "position": [0, 1], "direction": "B"},
-                "seat_4": {"type": "storage", "position": [2, 1], "direction": "D"}
-            }
-        }
-        instructions = [
-            "seat_1(seat, 1, 2, B), seat_2(seat, 1, 2, D), seat_3(seat, 1, 0, B), seat_4(seat, 1, 0, D)"
-        ]
-        
-    else:
-        parser.error('Invalid scenario name: ' + scenario_name)
+    # 1) 시나리오 TXT 찾기
+    scenario_path = find_scenario_txt(args.scenario).resolve()
+    if not scenario_path.exists():
+        raise FileNotFoundError(f"scenario file not found: {scenario_path}")
 
-    # AI 모델 초기화
-    aimodel = LangChainChatGPT(prompt_load_order=prompt_load_order)
+    # 2) TXT 파일 전체를 하나의 instruction 으로 사용
+    instruction = read_text(scenario_path).strip()
+    if not instruction:
+        raise ValueError("Scenario TXT is empty")
 
-    # 출력 결과 저장 폴더 생성 (langchain_v1 폴더 내에)
-    if not os.path.exists('./langchain_v1/chain3_out/' + scenario_name):
-        os.makedirs('./langchain_v1/chain3_out/' + scenario_name)
+    # 3) 메시지 구성
+    messages = build_messages(instruction)
 
-    # 각 명령어에 대해 처리
-    for i, instruction in enumerate(instructions):
-        print(f"\n=== Instruction {i+1} ===")
-        print(json.dumps(environment, indent=2, ensure_ascii=False))
-        
-        # GPT에게 instruction과 environment 전달하여 응답 생성
-        response = aimodel.generate(instruction, environment)
-        
-        if response and "environment_after" in response:
-            # 환경 상태 업데이트
-            environment = response["environment_after"]
-            
-            # 응답을 JSON 파일로 저장 (langchain_v1 폴더 내에)
-            aimodel.dump_json(f'./langchain_v1/chain3_out/{scenario_name}/{i}')
-            
-            print(f"✅ Step {i+1} completed successfully")
-        else:
-            print(f"❌ Step {i+1} failed")
-            break
+    # 4) LLM 호출 (LangChain, 스키마 없음)
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.1, max_tokens=8000, api_key=OPENAI_API_KEY)
+    ai_msg = llm.invoke(messages)  # AIMessage
+    output_text = ai_msg.content if isinstance(ai_msg, AIMessage) else str(ai_msg)
 
-    print(f"\n🎉 Scenario '{scenario_name}' completed!")
+    # 5) JSON 추출 (스키마 없이 파싱만)
+    json_text = extract_json_from_text(output_text)
+
+    # 6) 저장 경로: chain3_out/<people_x>/<베이스파일명>.json
+    try:
+        rel_parent = scenario_path.parent.relative_to(DIR_SCENARIO)
+    except ValueError:
+        rel_parent = Path(".")
+    out_dir = DIR_OUT / rel_parent
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_name = scenario_path.stem + ".json"  # L.txt -> L.json
+    out_file = out_dir / out_name
+
+    with open(out_file, "w", encoding="utf-8") as f:
+        f.write(json_text)
+    print(f"Saved: {out_file}")
+
+if __name__ == "__main__":
+    main()

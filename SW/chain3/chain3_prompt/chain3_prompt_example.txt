@@ -3,62 +3,233 @@ I will give you some examples of the input and the output you will generate.
 Example 1:
 """
 - Input:
-{"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "A"}},
-"instruction": "seat_1(chair, 0, 1, B)"}
+{"instruction": "seats: {
+    1(x, M, F, chair),
+    2(x, M, F, chair),
+    3(x, M, F, chair),
+    4(x, M, F, chair)}"}
+
 - Output:
 ```
 {"environment_before": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}}},
-"instruction": "seat_1(chair, 0, 1, B)",
-"task_cohesion": {
-    "task_sequence": [
-       "fold(seat_1)",
-       "rotate(seat_1, 90)",
-       "move(seat_1, 0, 1)",
-       "flip(seat_1)"
-    ],
-    "step_instructions": [
-       "fold the seat_1 to convert it into storage mode",
-       "rotate the seat_1 90 degrees clockwise",
-       "move the seat_1 to position (0, 1)",
-       "flip the seat_1 to convert it into chair mode"
-    ]},
+  "seats": {
+    "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+  }
+},
+"instruction": "seats: {
+    1(x, M, F, chair),
+    2(x, M, F, chair),
+    3(x, M, F, chair),
+    4(x, M, F, chair)
+}",
 "environment_after": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "chair", "position": [0, 1], "direction": "B"}}}}
+  "seats": {
+    "1": "no change",
+    "2": "no change",
+    "3": "no change",
+    "4": "no change"}}}
 ```
 """
 Example 2:
 """
 - Input:
-{"objects": ["seat_1"],
-"object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}},
-"instruction": "seat_1(storage, 0, 0, D)"}
+{"instruction": "seats: {
+    1(x, A, F, chair),
+    2(x, C, F, chair),
+    3(x, A, F, chair),
+    4(x, C, F, chair)}"}
+
 - Output:
 ```
 {"environment_before": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "chair", "position": [1, 1], "direction": "C"}}},
-"instruction": "seat_1(storage, 0, 0, D)",
-"task_cohesion": {
-    "task_sequence": [
-      "fold(seat_1)",
-      "rotate(seat_1, 90)",
-      "move(seat_1, 0, 0)"
+  "seats": {
+    "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+  }
+},
+"instruction": "seats: {
+    1(x, A, F, chair),
+    2(x, C, F, chair),
+    3(x, A, F, chair),
+    4(x, C, F, chair)
+}",
+"task_sequence": {
+    "1": [
+    "fold(1)",
+    "move_on_rail(1, A)",
+    "unfold(1)"
     ],
-    "step_instructions": [
-      "fold the seat_1 to convert it into storage mode",
-      "rotate the seat_1 90 degrees clockwise",
-      "move the seat_1 to position (0, 0)"
+    "2": [
+    "fold(2)",
+    "move_on_rail(2, C)",
+    "unfold(2)"
+    ],
+    "3": [
+    "fold(3)",
+    "move_on_rail(3, A)",
+    "unfold(3)"
+    ],
+    "4": [
+    "fold(4)",
+    "move_on_rail(4, C)",
+    "unfold(4)"
     ]},
-"environment_after": {
-    "objects": ["seat_1"],
-    "object_states": {"seat_1": {"type": "storage", "position": [0, 0], "direction": "D"}}}}
+"environment_after":{
+  "seats": {
+    "1": {"rail_axis": "x", "position": "A", "facing": "F", "mode": "chair"},
+    "2": {"rail_axis": "x", "position": "C", "facing": "F", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "A", "facing": "F", "mode": "chair"},
+    "4": {"rail_axis": "x", "position": "C", "facing": "F", "mode": "chair"}}}}
 ```
 """
-From these examples, learn that some seat control actions have dependencies with the actions before and after them.
+Example 3:
+"""
+- Input:
+{"instruction": "seats: {
+    1(x, M, F, chair),
+    2(x, M, F, chair),
+    3(y, A, F, chair),
+    4(y, A, F, chair)}"}
+
+- Output:
+```
+{"environment_before": {
+  "seats": {
+    "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+  }
+},
+"instruction": "seats: {
+    1(x, M, F, chair),
+    2(x, M, F, chair),
+    3(y, A, F, chair),
+    4(y, A, F, chair)}",
+"task_sequence": {
+    "3": [
+    "disk_rotate(3, 90)",
+    "fold(3)",
+    "seat_rotate(3, -90)",
+    "move_on_rail(3, A)",
+    "unfold(3)
+    ],
+    "4": [
+    "disk_rotate(4, 90)",
+    "fold(4)",
+    "seat_rotate(4, -90)",
+    "move_on_rail(4, A)",
+    "unfold(4)
+    ]},
+"environment_after":{
+  "seats": {
+    "1": "no change",
+    "2": "no change",
+    "3": {"rail_axis": "y", "position": "A", "facing": "F", "mode": "chair"},
+    "4": {"rail_axis": "y", "position": "A", "facing": "F", "mode": "chair"}}}}
+```
+"""
+Example 4:
+"""
+- Input:
+{"instruction": "seats: {
+    1(x, M, F, chair),
+    2(x, M, F, chair),
+    3(x, M, F, chair),
+    4(x, C, L, storage)}"}
+
+- Output:
+```
+{"environment_before": {
+  "seats": {
+    "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+  }
+},
+"instruction": "seats: {
+    1(x, M, F, chair),
+    2(x, M, F, chair),
+    3(x, M, F, chair),
+    4(x, C, L, storage)}",
+"task_sequence": {
+    "4": [
+    "fold(4)",
+    "seat_rotate(4, -90)",
+    "move_on_rail(4, C)"
+    ]},
+"environment_after":{
+  "seats": {
+    "1": "no change",
+    "2": "no change",
+    "3": "no change",
+    "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}}}}
+```
+"""
+Example 5:
+"""
+- Input:
+{"instruction": "seats: {
+    1(x, A, R, chair),
+    2(x, C, L, chair),
+    3(x, A, R, chair),
+    4(x, C, L, storage)}"}
+
+- Output:
+```
+{"environment_before": {
+  "seats": {
+    "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+    "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+  }
+},
+"instruction":"seats: {
+    1(x, A, R, chair),
+    2(x, C, L, chair),
+    3(x, A, R, chair),
+    4(x, C, L, storage)}",
+"task_sequence": {
+    "1": [
+    "fold(1)",
+    "seat_rotate(1, 90)",
+    "move_on_rail(1, A)",
+    "unfold(1)"
+    ],
+    "2": [
+    "fold(2)",
+    "seat_rotate(2, -90)",
+    "move_on_rail(2, C)",
+    "unfold(2)"
+    ],
+    "3": [
+    "fold(3)",
+    "seat_rotate(3, 90)",
+    "move_on_rail(3, A)",
+    "unfold(3)"
+    ],
+    "4": [
+    "fold(4)",
+    "seat_rotate(4, -90)",
+    "move_on_rail(4, C)"
+    ]},
+"environment_after":{
+  "seats": {
+    "1": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "chair"},
+    "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "chair"},
+    "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}}}}
+```
+"""
+Generate the minimal valid sequence from environment_before to the instruction target, strictly obeying action-order dependencies.
+**The "environment_before" is always identical to the initial environment defined in "chain3_prompt_environment".**
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]

@@ -1,0 +1,43 @@
+{
+  "environment_before": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+    }
+  },
+  "instruction": "seats: {\n    1(y, A, B, chair),\n    2(x, C, L, storage),\n    3(x, A, R, storage),\n    4(x, C, L, storage)}",
+  "task_sequence": {
+    "1": [
+      "fold(1)",
+      "disk_rotate(1, 90)",
+      "seat_rotate(1, 180)",
+      "move_on_rail(1, A)",
+      "unfold(1)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(2, -90)",
+      "move_on_rail(2, C)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(3, 90)",
+      "move_on_rail(3, A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(4, -90)",
+      "move_on_rail(4, C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {"rail_axis": "y", "position": "A", "facing": "B", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"},
+      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
+    }
+  }
+}

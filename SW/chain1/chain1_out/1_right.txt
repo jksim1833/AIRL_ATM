@@ -6,10 +6,10 @@
       "object": "의자",
       "color": "회색",
       "material": "플라스틱",
-      "shape": "비정형"
+      "shape": "등받이와 좌석이 결합된 비정형. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함"
     },
     "luggage_2": {
-      "object": "PC 본체",
+      "object": "데스크탑 본체",
       "color": "검은색",
       "material": "금속",
       "shape": "직육면체"
@@ -19,13 +19,13 @@
       "color": "빨간색",
       "material": "폴리에스터",
       "shape": "원통형",
-      "text": "K2, RH+"
+      "text": "K2, R.H.C"
     },
     "luggage_4": {
       "object": "모니터",
       "color": "검은색",
       "material": "플라스틱",
-      "shape": "비정형",
+      "shape": "직사각형 (화면), 비정형 (스탠드 포함)",
       "text": "SAMSUNG"
     },
     "luggage_5": {
@@ -33,21 +33,21 @@
       "color": "검은색",
       "material": "나일론",
       "shape": "비정형",
-      "text": "대한민국 공군, ROXAF",
-      "special_note": "공간 차지 min"
+      "text": "대한민국 공군, ROXAF"
     },
     "luggage_6": {
       "object": "소화기",
       "color": "빨간색, 노란색",
-      "material": "강철",
-      "shape": "원통형"
+      "material": "금속",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
     },
     "luggage_7": {
-      "object": "옷걸이 (분리형)",
+      "object": "나무 옷걸이",
       "color": "황토색",
       "material": "목재",
-      "shape": "비정형",
-      "special_note": "공간 차지 max. 길고 돌출된 부분이 많아 다른 짐과 함께 배치하기 까다로움"
+      "shape": "긴 기둥에 여러 개의 가지가 뻗어있고, 하단에 곡선형 지지대가 있는 비정형. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함",
+      "special_note": "공간 차지 max. 길고 불규칙한 형태와 돌출된 가지들로 인해 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
     },
     "luggage_8": {
       "object": "모니터 상자",
