@@ -9,6 +9,8 @@
   },
   "instruction": "seats: {\n    1(x, M, F, chair),\n    2(x, M, F, chair),\n    3(y, A, F, chair),\n    4(y, A, F, chair)}",
   "task_sequence": {
+    "1": [],
+    "2": [],
     "3": [
       "disk_rotate(3, 90)",
       "fold(3)",

@@ -7,7 +7,7 @@ import base64
 from pathlib import Path
 from typing import List, Dict, Any, Union
 
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from time import perf_counter  # ⬅️ 추가: 고정밀 타이머
 
@@ -21,7 +21,7 @@ DIR_OUT = DIR_ROOT / "chain3_out"
 
 # 프롬프트 파일들
 SYSTEM_FILE = DIR_SYSTEM / "chain3_system.txt"
-# 순서: role → (image1, image2) → environment → function → output_format → example
+# 순서: role → environment → function → output_format → example
 PROMPT_FILE_ORDER = [
     "chain3_prompt_role.txt",
     "chain3_prompt_environment.txt",
@@ -35,7 +35,9 @@ QUERY_FILE = DIR_QUERY / "chain3_query.txt"
 # ================== API 키 로드 ==================
 with open(DIR_ROOT.parent / "tetris_secrets.json", "r", encoding="utf-8") as f:
     _cred = json.load(f)
-OPENAI_API_KEY = _cred["openai"]["OPENAI_API_KEY"]
+GOOGLE_API_KEY = _cred["google"]["GOOGLE_API_KEY"]  # 이 키만 사용
+if not GOOGLE_API_KEY:
+    raise KeyError("Missing google.GOOGLE_API_KEY in tetris_secrets.json")
 
 # ================== 유틸 ==================
 _SPLIT = re.compile(r"\[user\]\n|\[assistant\]\n", re.MULTILINE)
@@ -107,17 +109,36 @@ def _PAIR_ROLE_CONTENT(chunks: List[str]) -> List[tuple[str, str]]:
         paired.append((role, body.strip()))
     return paired
 
+def encode_image_to_data_url(path: Path) -> str:
+    """이미지를 data URL로 인코딩 (image/png 가정)"""
+    mime = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
+    with open(path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime};base64,{b64}"
 
 def build_messages(instruction: str) -> List[Union[SystemMessage, HumanMessage, AIMessage]]:
     msgs: List[Union[SystemMessage, HumanMessage, AIMessage]] = []
-    # 1) System — “프롬프트만” 넣기: 시스템 파일 그대로 (추가 문구 없음)
+    # 1) System — 시스템 파일 그대로
     msgs.append(SystemMessage(content=read_text(SYSTEM_FILE)))
     # 2) role
     msgs += load_dialogue_messages(DIR_PROMPT / PROMPT_FILE_ORDER[0])
 
-    # 4~7) environment, function, output_format, example (각 파일 내 대화 구조를 그대로 반영)
+    # (이미지) — 오직 chain3_prompt_image_3.png 만 추가
+    img3 = DIR_PROMPT / "chain3_prompt_image_3.png"
+    if img3.exists():
+        msgs.append(
+            HumanMessage(
+                content=[
+                    {"type": "text", "text": "Reference diagram."},
+                    {"type": "image_url", "image_url": {"url": encode_image_to_data_url(img3)}},
+                ]
+            )
+        )
+
+    # 4~7) environment, function, output_format, example (각 파일 내 대화 구조 그대로)
     for fname in PROMPT_FILE_ORDER[1:]:
         msgs += load_dialogue_messages(DIR_PROMPT / fname)
+
     # 8) query — [INSTRUCTION] 치환, [ENVIRONMENT]는 TXT라서 제거
     q = read_text(QUERY_FILE)
     q = q.replace("[ENVIRONMENT]", "")
@@ -147,7 +168,7 @@ def find_scenario_txt(s: str) -> Path:
     return DIR_SCENARIO / rel
 
 def extract_json_from_text(text: str) -> str:  # dict 대신 str 반환
-    """모델 응답에서 JSON 덩어리만 추출 (원본 형식 보존)"""
+    """모델 응답에서 JSON 덩어리만 추출 (원본 형식 보존 / 표준 JSON 파싱 검사 포함)"""
     txt = text.strip()
     
     # 코드펜스 우선
@@ -180,15 +201,6 @@ def extract_json_from_text(text: str) -> str:  # dict 대신 str 반환
     
     raise ValueError("Failed to parse JSON from model output")
 
-    # 3) 가장 바깥 { ... } 범위 추출 (단순 탐색)
-    start = txt.find("{")
-    end = txt.rfind("}")
-    if start != -1 and end != -1 and end > start:
-        candidate = txt[start:end+1]
-        return json.loads(candidate)  # 실패하면 예외 발생
-
-    raise ValueError("Failed to parse JSON from model output")
-
 # ================== 메인 ==================
 def main():
     t_total_start = perf_counter()  # ⬅️ 추가: 전체 실행 시작 시각
@@ -215,8 +227,8 @@ def main():
     # 3) 메시지 구성
     messages = build_messages(instruction)
 
-    # 4) LLM 호출 (LangChain, 스키마 없음)
-    llm = ChatOpenAI(model="gpt-4o", temperature=0.1, max_tokens=8000, api_key=OPENAI_API_KEY)
+    # 4) LLM 호출: Gemini 2.5 Flash (추가 파라미터 미지정)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", api_key=GOOGLE_API_KEY)
     t_model_start = perf_counter()  # ⬅️ 추가: 모델 호출 시작 시각
     ai_msg = llm.invoke(messages)  # AIMessage
     t_model_end = perf_counter()    # ⬅️ 추가: 모델 호출 종료 시각
@@ -224,7 +236,7 @@ def main():
 
     output_text = ai_msg.content if isinstance(ai_msg, AIMessage) else str(ai_msg)
 
-    # 5) JSON 추출 (스키마 없이 파싱만)
+    # 5) JSON 추출 (표준 JSON 파싱 확인)
     json_text = extract_json_from_text(output_text)
 
     # 6) 저장 경로: chain3_out/<people_x>/<베이스파일명>.json
@@ -244,7 +256,7 @@ def main():
     t_total_end = perf_counter()  # ⬅️ 추가: 전체 실행 종료 시각
     total_runtime = t_total_end - t_total_start
 
-    # ⬅️ 추가 출력: 시간 측정 결과
+    # 추가 출력: 시간 측정 결과
     print(f"Model latency (invoke→response): {model_latency:.3f} s")
     print(f"Total runtime (start→saved): {total_runtime:.3f} s")
 

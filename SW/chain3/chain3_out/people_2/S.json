@@ -12,12 +12,14 @@
     "1": [
       "disk_rotate(1, 90)",
       "fold(1)",
+      "seat_rotate(1, -90)",
       "move_on_rail(1, C)",
       "unfold(1)"
     ],
     "2": [
       "disk_rotate(2, 90)",
       "fold(2)",
+      "seat_rotate(2, -90)",
       "move_on_rail(2, C)",
       "unfold(2)"
     ],

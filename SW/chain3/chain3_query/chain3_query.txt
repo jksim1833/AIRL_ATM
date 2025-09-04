@@ -13,13 +13,11 @@ The dictionary that you return should be formatted as valid JSON object (not Pyt
 4. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response, with no other text before or after. Do not include the word "json" after the opening backticks. Only use plain backticks (```).
 5. your seat control sequence must obey the following constraints:
 - move_on_rail(id, target) can only be used when the seat is in the "storage" state.
-- seat_rotate(id, degree) must be executed before unfold(id).
-- unfold(id) must appear at the final stage of the sequence.
-- Plan sequentially: after each action, update the working state; decide the next action from that updated state.
-- If the seat's facing is the same in both environment_before and instruction, do NOT generate a seat_rotate command in the seat control actions.
 - If "facing" changes from F to R or R to B or B to L or L to F, "degree" is 90
 - If "facing" changes from F to L or L to B or B to R or R to F, "degree" is -90
 - If "facing" changes from F to B or B to F or R to L or L to R, "degree" is 180
+- **When calling functions, adhere to the prioritized sequence: disk_rotate > fold > rotate > move > unfold.** 
+(This is a rule for the order of operations, not a requirement to use every function.)
 6. Output exactly one JSON object with no surrounding text and enclose it in triple backticks (``` ... ```). The object must match the examples in “chain3_prompt_example” including literal line breaks and two-space indentation inside string fields. Keep key order exactly as in the examples.
 
-Adhere to the output format I defined above. Follow the eight rules. Think step by step.
+**Plan sequentially: after each action, update the working state; decide the next action from that updated state.** Follow the six rules. Think step by step.

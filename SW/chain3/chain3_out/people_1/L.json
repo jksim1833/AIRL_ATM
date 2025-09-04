@@ -10,9 +10,9 @@
   "instruction": "seats: {\n    1(y, A, B, chair),\n    2(x, C, L, storage),\n    3(x, A, R, storage),\n    4(x, C, L, storage)}",
   "task_sequence": {
     "1": [
-      "fold(1)",
       "disk_rotate(1, 90)",
-      "seat_rotate(1, 180)",
+      "fold(1)",
+      "seat_rotate(1, 90)",
       "move_on_rail(1, A)",
       "unfold(1)"
     ],
