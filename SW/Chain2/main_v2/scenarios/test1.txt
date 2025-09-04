@@ -1,0 +1,67 @@
+{
+  "people_count": 3,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "옷걸이 스탠드",
+      "color": "황토색",
+      "material": "목재",
+      "shape": "긴 막대와 여러 개의 돌출된 가지가 결합된 비정형",
+      "special_note": "공간 차지 max. 매우 길고 돌출된 부분이 많아 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_2": {
+      "object": "데스크탑 컴퓨터",
+      "color": "검은색",
+      "material": "금속",
+      "shape": "직육면체"
+    },
+    "luggage_3": {
+      "object": "백팩",
+      "color": "검은색",
+      "material": "나일론",
+      "shape": "비정형"
+    },
+    "luggage_4": {
+      "object": "침낭",
+      "color": "빨간색",
+      "material": "폴리에스터",
+      "shape": "원통형",
+      "text": "RHEA"
+    },
+    "luggage_5": {
+      "object": "PC 케이스 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "GBLT, Y300M, A/S센터: 02-711-4474"
+    },
+    "luggage_6": {
+      "object": "모니터 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "Ultragear, 27GN650, LG"
+    },
+    "luggage_7": {
+      "object": "소화기",
+      "color": "빨간색",
+      "material": "금속",
+      "shape": "원통형",
+      "text": "SW",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_8": {
+      "object": "모니터",
+      "color": "검은색",
+      "material": "플라스틱",
+      "shape": "스탠드가 결합된 비정형",
+      "text": "SAMSUNG, Black Widow"
+    },
+    "luggage_9": {
+      "object": "의자",
+      "color": "회색",
+      "material": "플라스틱",
+      "shape": "등받이와 좌석이 결합된 비정형"
+    }
+  }
+}

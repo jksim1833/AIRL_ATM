@@ -10,7 +10,8 @@
             "2": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"},
             "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
             "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 1
         },
         {
           "luggage_amount": "M",
@@ -19,7 +20,8 @@
             "2": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"},
             "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
             "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 2
         },
         {
           "luggage_amount": "L",
@@ -28,7 +30,8 @@
             "2": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"},
             "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
             "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 3
         }
       ]
     },
@@ -42,7 +45,8 @@
             "2": {"rail": "Y", "pos": "C", "face": "F", "mode": "chair"},
             "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
             "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 4
         },
         {
           "luggage_amount": "M",
@@ -51,7 +55,8 @@
             "2": {"rail": "Y", "pos": "B", "face": "F", "mode": "chair"},
             "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
             "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 5
         },
         {
           "luggage_amount": "L",
@@ -60,7 +65,8 @@
             "2": {"rail": "X", "pos": "C", "face": "L", "mode": "chair"},
             "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
             "4": {"rail": "X", "pos": "C", "face": "L", "mode": "chair"}
-          }
+          },
+          "option_no": 6
         }
       ]
     },
@@ -74,7 +80,8 @@
             "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
             "3": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
             "4": {"rail": "X", "pos": "R", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 7
         },
         {
           "luggage_amount": "M",
@@ -83,7 +90,8 @@
             "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
             "3": {"rail": "Y", "pos": "A", "face": "F", "mode": "chair"},
             "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 8
         },
         {
           "luggage_amount": "L",
@@ -92,7 +100,8 @@
             "2": {"rail": "X", "pos": "C", "face": "L", "mode": "chair"},
             "3": {"rail": "X", "pos": "A", "face": "R", "mode": "chair"},
             "4": {"rail": "Y", "pos": "C", "face": "L", "mode": "storage"}
-          }
+          },
+          "option_no": 9
         }
       ]
     },
@@ -106,7 +115,8 @@
             "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
             "3": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
             "4": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"}
-          }
+          },
+          "option_no": 10
         },
         {
           "luggage_amount": "M",
@@ -115,7 +125,8 @@
             "2": {"rail": "X", "pos": "C", "face": "F", "mode": "chair"},
             "3": {"rail": "Y", "pos": "A", "face": "F", "mode": "chair"},
             "4": {"rail": "Y", "pos": "A", "face": "F", "mode": "chair"}
-          }
+          },
+          "option_no": 11
         },
         {
           "luggage_amount": "L",
@@ -124,7 +135,8 @@
             "2": {"rail": "X", "pos": "C", "face": "F", "mode": "chair"},
             "3": {"rail": "X", "pos": "A", "face": "F", "mode": "chair"},
             "4": {"rail": "X", "pos": "C", "face": "F", "mode": "chair"}
-          }
+          },
+          "option_no": 12
         }
       ]
     }
