@@ -1,0 +1,23 @@
+Start working. Resume from the environment below.
+"""
+{"environment":[ENVIRONMENT]}
+"""
+The instruction is as follows:
+"""
+{"instruction": [INSTRUCTION]}
+"""
+The dictionary that you return should be formatted as valid JSON object (not Python dict), with all keys and string values using double quotes. Follow these rules:
+1. Never left ',' at the end of the list.
+2. Keep track of all items listed in the "seats" section of the "environment_before" field. Please ensure that you fill out the "seats" sections for all listed items. 
+3. All keys of the dictionary should be double-quoted.
+4. Insert ``` at the beginning and the end of the dictionary to separate it from the rest of your response, with no other text before or after. Do not include the word "json" after the opening backticks. Only use plain backticks (```).
+5. your seat control sequence must obey the following constraints:
+- move_on_rail(id, target) can only be used when the seat is in the "storage" state.
+- If "facing" changes from F to R or R to B or B to L or L to F, "degree" is 90
+- If "facing" changes from F to L or L to B or B to R or R to F, "degree" is -90
+- If "facing" changes from F to B or B to F or R to L or L to R, "degree" is 180
+- **When calling functions, adhere to the prioritized sequence: disk_rotate > fold > rotate > move > unfold.** 
+(This is a rule for the order of operations, not a requirement to use every function.)
+6. Output exactly one JSON object with no surrounding text and enclose it in triple backticks (``` ... ```). The object must match the examples in “chain3_prompt_example” including literal line breaks and two-space indentation inside string fields. Keep key order exactly as in the examples.
+
+**Plan sequentially: after each action, update the working state; decide the next action from that updated state.** Follow the six rules. Think step by step.

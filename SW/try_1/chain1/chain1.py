@@ -252,7 +252,7 @@ def main():
                     people_count = n
                     confirmed = True
                     break
-                elif confirm == "2": 
+                elif confirm == "2":
                     # 다시 처음부터 인원수 재입력
                     break
                 else:

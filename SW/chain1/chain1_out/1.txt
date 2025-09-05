@@ -1,0 +1,65 @@
+{
+  "people": 3,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "대형 접이식 캠핑 용품 가방",
+      "color": "어두운 녹색",
+      "material": "나일론",
+      "shape": "납작한 타원형 (유연한 형태)"
+    },
+    "luggage_2": {
+      "object": "접이식 캠핑 테이블",
+      "color": "녹색, 은색",
+      "material": "폴리에스터, 알루미늄",
+      "shape": "직육면체"
+    },
+    "luggage_3": {
+      "object": "대형 아이스박스",
+      "color": "회색, 흰색",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "special_note": "공간 차지 max. 크고 단단한 직육면체 형태로, 고정된 부피를 차지하여 다른 짐과의 유연한 배치가 어려움"
+    },
+    "luggage_4": {
+      "object": "캠핑용 소프트 가방",
+      "color": "하늘색, 갈색",
+      "material": "폴리에스터, 가죽",
+      "shape": "직육면체",
+      "text": "Likino"
+    },
+    "luggage_5": {
+      "object": "캠핑용 소프트 가방",
+      "color": "하늘색, 갈색",
+      "material": "폴리에스터, 가죽",
+      "shape": "직육면체"
+    },
+    "luggage_6": {
+      "object": "백팩",
+      "color": "검은색, 흰색",
+      "material": "나일론",
+      "shape": "비정형 (내용물에 따라 형태가 변할 수 있는 유연한 형태)",
+      "text": "삼선 로고"
+    },
+    "luggage_7": {
+      "object": "장작 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "FIRE WOOD, THE WOOD"
+    },
+    "luggage_8": {
+      "object": "침낭",
+      "color": "베이지색, 갈색",
+      "material": "폴리에스터",
+      "shape": "원통형"
+    },
+    "luggage_9": {
+      "object": "침낭",
+      "color": "갈색, 회색",
+      "material": "폴리에스터",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
+    }
+  }
+}
