@@ -26,7 +26,7 @@ Seat Settings
 Operation process
   - Analyze the script(Identify the role of a functions)
   - Analyze to input data to Infer the type and size information of the stuff.
-  - Decide the luggage_amount by "L"|"M"|"S" by instruction below:
+  - Decide the luggage_amount by "L"|"M"|"S" for SUV by instruction below:
     - "L" : Oversized luggage that exceeds the trunk’s capacity or cannot fit crosswise within the trunk space.
     - "M" : Luggage capacity achievable when the trunk space is fully and efficiently utilized.
     - "S" : Standard luggage capacity that can be accommodated under normal, proper use of the trunk space.

@@ -106,10 +106,37 @@ class SeatControlChatbot:
         genai.configure(api_key=api_key)
         os.environ["GOOGLE_API_KEY"] = api_key
         
-        # 모델 초기화
-        self.model = genai.GenerativeModel('gemini-2.5-flash-exp')
-        
-        print("🔑 Google Gemini 2.0 Flash API 키 로드 및 모델 초기화 완료")
+        try:
+            # Gemini 2.5 Flash 모델 초기화 (정확한 모델명 사용)
+            self.model = genai.GenerativeModel('gemini-2.5-flash')
+            print("🔑 Google Gemini 2.5 Flash API 키 로드 및 모델 초기화 완료")
+            
+            # 모델 정보 확인
+            print(f"📋 사용 중인 모델: {self.model.model_name}")
+            
+        except Exception as e:
+            print(f"⚠️ Gemini 2.5 Flash 초기화 실패, 대체 모델 사용 시도: {e}")
+            try:
+                # 대체 모델들 시도
+                alternative_models = [
+                    'gemini-2.0-flash-exp',
+                    'gemini-1.5-flash',
+                    'gemini-1.5-pro'
+                ]
+                
+                for model_name in alternative_models:
+                    try:
+                        self.model = genai.GenerativeModel(model_name)
+                        print(f"🔄 대체 모델 사용: {model_name}")
+                        break
+                    except:
+                        continue
+                        
+                if not self.model:
+                    raise Exception("사용 가능한 Gemini 모델이 없습니다")
+                    
+            except Exception as fallback_error:
+                raise Exception(f"Gemini 모델 초기화 실패: {fallback_error}")
 
     def load_prompts(self, sysprompt_path, basic_prompt_path, option_list_path):
         """프롬프트 파일들 로드"""
@@ -234,7 +261,7 @@ class SeatControlChatbot:
             return "죄송합니다. 응답을 생성할 수 없습니다."
 
     def _ask_gemini(self, prompt, image=None):
-        """Gemini에게 질문하고 응답 받기"""
+        """Gemini 2.5 Flash에게 질문하고 응답 받기 (개선된 버전)"""
         start_time = time.time()
         
         try:
@@ -243,27 +270,85 @@ class SeatControlChatbot:
             if image:
                 content_parts.append(image)
             
-            response = self.model.generate_content(content_parts)
+            # Gemini 2.5 Flash 최적화된 설정으로 생성
+            generation_config = genai.types.GenerationConfig(
+                candidate_count=1,
+                max_output_tokens=2000,
+                temperature=0.7,
+                top_p=0.8,
+                top_k=40
+            )
+            
+            # 안전 설정 (필요에 따라 조정)
+            safety_settings = [
+                {
+                    "category": "HARM_CATEGORY_HARASSMENT",
+                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    "category": "HARM_CATEGORY_HATE_SPEECH",
+                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+                },
+                {
+                    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+                }
+            ]
+            
+            # API 호출
+            response = self.model.generate_content(
+                content_parts,
+                generation_config=generation_config,
+                safety_settings=safety_settings
+            )
             
             end_time = time.time()
             response_time = end_time - start_time
             
             content = response.text
             
-            # 토큰 사용량 (추정)
-            input_tokens = len(prompt.split())
-            output_tokens = len(content.split())
+            # 토큰 사용량 계산 (Gemini는 정확한 토큰 수를 제공하지 않으므로 추정)
+            # Gemini 2.5 Flash는 더 정확한 토큰 계산을 위해 토큰 카운팅 개선
+            if hasattr(response, 'usage_metadata') and response.usage_metadata:
+                # 실제 토큰 사용량이 있다면 사용
+                input_tokens = response.usage_metadata.prompt_token_count
+                output_tokens = response.usage_metadata.candidates_token_count
+            else:
+                # 추정값 사용 (개선된 계산법)
+                input_tokens = self._estimate_tokens(prompt)
+                output_tokens = self._estimate_tokens(content)
+            
             self.total_input_tokens += input_tokens
             self.total_output_tokens += output_tokens
             
             # 간소화된 토큰 정보 출력
-            print(f"📊 토큰: {input_tokens}→{output_tokens} | 시간: {response_time:.2f}s")
+            print(f"📊 토큰: {input_tokens}→{output_tokens} | 시간: {response_time:.2f}s | 모델: Gemini 2.5 Flash")
             
             return content
             
         except Exception as e:
-            print(f"🚨 Gemini API 호출 중 오류 발생: {e}")
+            print(f"🚨 Gemini 2.5 Flash API 호출 중 오류 발생: {e}")
+            # 더 자세한 오류 정보 출력
+            if hasattr(e, 'message'):
+                print(f"상세 오류: {e.message}")
             return "죄송합니다. 응답을 생성할 수 없습니다."
+
+    def _estimate_tokens(self, text):
+        """토큰 수 추정 함수 (개선된 버전)"""
+        if not text:
+            return 0
+        # 한국어와 영어를 고려한 토큰 추정 (더 정확한 계산)
+        # 일반적으로 한국어 1글자 = 1토큰, 영어 4글자 = 1토큰 정도
+        korean_chars = len(re.findall(r'[가-힣]', text))
+        english_words = len(re.findall(r'[a-zA-Z]+', text))
+        other_chars = len(text) - korean_chars - len(''.join(re.findall(r'[a-zA-Z]+', text)))
+        
+        estimated_tokens = korean_chars + (english_words * 0.75) + (other_chars * 0.25)
+        return int(estimated_tokens)
 
     def run_scenario_test(self, scenario_txt_path, scenario_img_path,
                          sysprompt_path="SW/Chain2/main_v2/source/chain2_system.txt",
@@ -355,7 +440,7 @@ class SeatControlChatbot:
             self.select_api_and_model()
             
             # API 키 로드
-            api_name = "GPT-4o" if self.api_type == 'gpt' else "Gemini 2.0 Flash"
+            api_name = "GPT-4o" if self.api_type == 'gpt' else "Gemini 2.5 Flash"
             print(f"Initializing {api_name}...")
             self.load_api_keys()
             
@@ -401,7 +486,7 @@ class SeatControlChatbot:
                 
                 # API에 질문
                 response = self.ask(full_prompt)
-                api_display = "GPT-4o" if self.api_type == 'gpt' else "Gemini 2.0 Flash"
+                api_display = "GPT-4o" if self.api_type == 'gpt' else "Gemini 2.5 Flash"
                 print(f"\n{api_display}: {response}\n")
                 
                 # Python 코드 추출 및 실행
