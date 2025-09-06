@@ -51,7 +51,7 @@ class LuggageAnalyzer:
         # 경로
         desktop_path = Path.home() / "Desktop"
         self.base_path   = desktop_path / "AIRL_ATM" / "SW" / "chain1"
-        self.prompt_path = self.base_path / "chain1_prompt" / "chain1_prompt_ver2_basic.txt"
+        self.prompt_path = self.base_path / "chain1_prompt" / "chain1_prompt_ver2_plus.txt"
         self.output_path = self.base_path / "chain1_out" / f"{scenario_name}.txt"
 
         # 프롬프트 로드

@@ -22,7 +22,7 @@ class LuggageAnalyzer:
         # 정확한 경로 설정 (Desktop 경로 사용)
         desktop_path = Path.home() / "Desktop"
         self.base_path = desktop_path / "AIRL_ATM" / "SW" / "chain1"
-        self.prompt_path = self.base_path / "chain1_prompt" / "chain1_prompt_ver2_basic.txt"
+        self.prompt_path = self.base_path / "chain1_prompt" / "chain1_prompt_ver2_plus.txt"
         self.image_path = self.base_path / "chain1_image" / f"{scenario_name}.jpg"
         self.output_path = self.base_path / "chain1_out" / f"{scenario_name}.txt"
         
