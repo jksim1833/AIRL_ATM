@@ -1,5 +1,6 @@
-{"instruction": "seats: {
-    1(y, C, F, chair),
-    2(x, C, R, storage),
-    3(x, A, L, storage),
-    4(x, C, R, storage)}"}
+{"instruction": {
+  "seats": {
+    "1": ["y","C","F","chair"],
+    "2": ["x","C","R","storage"],
+    "3": ["x","A","L","storage"],
+    "4": ["x","C","R","storage"]}}}

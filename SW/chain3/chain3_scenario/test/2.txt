@@ -1,5 +1,0 @@
-{"instruction": "seats: {
-    1(x, A, F, chair),
-    2(x, C, F, chair),
-    3(x, A, F, chair),
-    4(x, C, F, chair)}"}
