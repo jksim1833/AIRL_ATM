@@ -1,0 +1,165 @@
+Imagine you are SeatPlanner.
+You observe all seats from the center of the car (top-down view).
+Your task is to output the setting status form option list that if provided.
+
+Function list
+ - rail_axis(): "X" (horizontal) or "Y" (vertical)
+ - seat_position(): "A", "B", "C" (linear location)
+ - seat_facing(): "F" (front), "R" (right), "B" (back), "L" (left)
+ - seat_mode(): "chair" (deployed), "storage" (folded).
+
+Environment
+ - Left edge of the square = left side of car.
+ - Right edge of the square = right side of car.
+ - Seat location is determined only by function list above.
+
+Requirements
+ - Responses must be logical, rigorous, defensible.
+ - Provide concise but actionable seat settings.
+ - Output must strictly follow the JSON schema defined in the System Prompt (cell_layout).
+
+---------------------------------------------------------------------------
+
+Here's a script for seat movement:
+
+'''
+
+import cv2, numpy as np
+
+# BGR 색상
+COL = {"R":(0,0,0),"C":(0,0,255),"L":(0,255,0),"T":(255,0,0),"S":(255,0,255)}
+
+def render_divided_square(cell_cfg,
+                          scale=80, canvas=5, big=8,
+                          circle=3.6, tri=1.2, small=0.24, thickness=3,
+                          save=None, as_bytes=True):
+    """
+    cell_cfg: {1..4: (rail_axis, seat_pos, seat_face, seat_mode)}
+      - rail_axis: "X" | "Y"  (레일 방향)
+      - seat_pos : "A" | "B" | "C"  (레일 기준 위치: 좌/중앙/우 or 상/중앙/하)
+      - seat_face: "F" | "R" | "B" | "L"  (방향)
+      - seat_mode: "chair" | "storage"  (삼각형 의자 / 정사각형 수납)
+    반환: {"meta":..., "bytes":png_bytes or None, "path":save or None}
+    """
+    # 캔버스/큰 사각형 배치
+    total = int(canvas*scale)*2
+    img = np.full((total,total,3), 255, np.uint8)
+    big_px = int(big*scale)
+    bx = by = (total - big_px)//2
+    cv2.rectangle(img, (bx,by), (bx+big_px,by+big_px), COL["R"], 2)
+
+    # 2x2 셀 중심
+    q = big_px//4
+    centers = {1:(bx+q,by+q), 2:(bx+3*q,by+q), 3:(bx+q,by+3*q), 4:(bx+3*q,by+3*q)}
+
+    # 사이즈 파생
+    r = int(circle*scale/2)                 # 원 반지름
+    ts = int(tri*scale)                     # 삼각형 한변
+    th2 = int(ts*0.866025403784)            # ≈ ts*sqrt(3)/2
+    s  = int(small*scale/2)                 # 작은 원 반지름
+
+    # 보조 그리기
+    def disk(cx, cy, axis):
+        cv2.circle(img, (cx,cy), r, COL["C"], 2)
+        if axis=="X":
+            cv2.line(img, (cx-r,cy),(cx+r,cy), COL["L"], thickness)
+            cv2.circle(img, (cx,cy-r), s, COL["S"], -1)
+        else:
+            cv2.line(img, (cx,cy-r),(cx,cy+r), COL["L"], thickness)
+            cv2.circle(img, (cx+r,cy), s, COL["S"], -1)
+
+    def seat(cx, cy, axis, pos, face, mode):
+        # 레일 접점
+        if axis=="X":
+            lx,ly = (cx-r,cy) if pos=="A" else (cx,cy) if pos=="B" else (cx+r,cy)
+        else:
+            lx,ly = (cx,cy-r) if pos=="A" else (cx,cy) if pos=="B" else (cx,cy+r)
+
+        if mode=="chair":
+            if face=="F":
+                pv=(lx,ly-(2*th2//3)); p1=(lx-ts//2,ly-(2*th2//3)+th2); p2=(lx+ts//2,ly-(2*th2//3)+th2)
+            elif face=="R":
+                pv=(lx+(2*th2//3),ly); p1=(lx+(2*th2//3)-th2,ly-ts//2); p2=(lx+(2*th2//3)-th2,ly+ts//2)
+            elif face=="B":
+                pv=(lx,ly+(2*th2//3)); p1=(lx-ts//2,ly+(2*th2//3)-th2); p2=(lx+ts//2,ly+(2*th2//3)-th2)
+            else: # "L"
+                pv=(lx-(2*th2//3),ly); p1=(lx-(2*th2//3)+th2,ly-ts//2); p2=(lx-(2*th2//3)+th2,ly+ts//2)
+            tri_pts = np.array([pv,p1,p2], np.int32).reshape((-1,1,2))
+            cv2.polylines(img, [tri_pts], True, COL["T"], 2)
+            cv2.circle(img, pv, s, COL["S"], -1)
+        else:
+            size = (2*ts)//3; half = size//2
+            cx2, cy2 = lx, ly
+            if face=="F":  circ=(cx2,cy2-half)
+            elif face=="R": circ=(cx2+half,cy2)
+            elif face=="B": circ=(cx2,cy2+half)
+            else:           circ=(cx2-half,cy2)
+            cv2.rectangle(img, (cx2-half,cy2-half), (cx2+half,cy2+half), COL["T"], 2)
+            cv2.circle(img, circ, s, COL["S"], -1)
+
+    # 셀별 그리기
+    for k,(axis,pos,face,mode) in cell_cfg.items():
+        cx,cy = centers[k]
+        disk(cx,cy,axis); seat(cx,cy,axis,pos,face,mode)
+
+    meta = {"image_size":(total,total), "big_rect":(bx,by,big_px), "centers":centers, "r":r, "scale":scale}
+
+    out = {"meta":meta, "bytes":None, "path":None}
+    if save:
+        cv2.imwrite(save, img); out["path"]=save
+        if not as_bytes: return out
+    if as_bytes:
+        ok,buf = cv2.imencode(".png", img, [cv2.IMWRITE_PNG_COMPRESSION,3])
+        if ok: out["bytes"]=buf.tobytes()
+    return out
+
+'''
+
+Main: render_divided_square(cell_cfg) → PNG + meta
+Grid: 4 cells (1–4), each has disk + seat/storage
+Disk (_disk)
+ - "X": horiz line, small circle top
+ - "Y": vert line, small circle right
+Seat (_seat)
+ - Params: axis(X/Y), pos(A/B/C), face(F/R/B/L), mode(chair/storage)
+ - Chair=triangle (vertex small circle)
+ - Storage=square (edge small circle)
+
+---------------------------------------------------------------------------
+
+Here's an example of an output of cell layout:
+
+{
+  "cell_layout": {
+    "1": { "rail": "X", "pos": "A", "face": "F", "mode": "chair" },
+    "2": { "rail": "Y", "pos": "B", "face": "R", "mode": "chair" },
+    "3": { "rail": "X", "pos": "C", "face": "B", "mode": "chair" },
+    "4": { "rail": "Y", "pos": "A", "face": "L", "mode": "storage" }
+  }
+}
+
+---------------------------------------------------------------------------
+
+Here's few outlines for determining luggage_amount:
+
+1. luggage_amount = "L"
+ - Oversized luggage that exceeds the trunk’s capacity or cannot fit crosswise within the trunk space.
+ - Example: Large home appliances such as washing machines and refrigerators, or furniture.
+ - Crucially, items longer than about 130 cm that cannot be placed crosswise inside the trunk, such as a surfboard or long ski plate, fall into this category.
+
+2. luggage_amount = "M"
+ - Luggage capacity achievable when the trunk space is fully and efficiently utilized.
+ - Example: A mix of maximum-sized suitcases, commonly used boxes, camping gear, golf bag, and long but manageable items like snowboards, snow sleds, or folded kickboards.
+ - Note: This category applies when items like skateboards and kickboards are included, as they are long but can be strategically placed to minimize wasted space.
+
+3. luggage_amount = "S"
+ - Standard luggage capacity that can be accommodated under normal, proper use of the trunk space.
+ - Example: Picnic luggage, a proper amount of groceries, or small backpacks.
+
+---------------------------------------------------------------------------
+
+Additional points to consider when giving your answer:
+ - You have to think about putting items of various sizes and shapes together to minimize wasted space, like fitting small backpacks or shoeboxes between large, rectangular suitcases.
+ - Specific Case Analysis: For the luggage in the provided image (kickboard, skateboard, backpacks, helmets), although the kickboard and skateboard are long, they do not exceed the vehicle's total capacity. Instead, they require **efficient packing** by utilizing the space between and around the seats.
+ - Therefore, the correct classification for this particular set of items is "M," not "L," as they fit by maximizing the trunk space, not by exceeding it.
+ - Your final 'cell_layout' should reflect a configuration that accommodates these items without folding any of the four seats.
