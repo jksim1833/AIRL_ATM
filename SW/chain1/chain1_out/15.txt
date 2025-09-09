@@ -1,0 +1,99 @@
+{
+  "people": 3,
+  "total_luggage_count": 13,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "컵라면 묶음 (육개장 사발면)",
+      "color": "흰색, 초록색, 주황색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "육개장 사발면, 농심"
+    },
+    "luggage_2": {
+      "object": "컵라면 묶음 (육개장 사발면)",
+      "color": "흰색, 초록색, 주황색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "육개장 사발면, 농심"
+    },
+    "luggage_3": {
+      "object": "컵라면 묶음 (육개장 사발면)",
+      "color": "흰색, 초록색, 주황색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "육개장 사발면, 농심"
+    },
+    "luggage_4": {
+      "object": "라면 박스 (멀티팩)",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "농심, 멀티팩, 辛",
+      "special_note": "공간 차지 max. 크고 단단한 직육면체 형태로, 다른 짐과 유연하게 배치하기 어려움"
+    },
+    "luggage_5": {
+      "object": "즉석밥 박스 (햇반)",
+      "color": "흰색, 빨간색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "햇반, 언제나 갓 지은 밥!, COOKED WHITE RICE"
+    },
+    "luggage_6": {
+      "object": "소주 박스 (참이슬 fresh)",
+      "color": "흰색, 하늘색",
+      "material": "골판지",
+      "shape": "정육면체에 가까운 직육면체",
+      "text": "참이슬 fresh, HITEJINRO"
+    },
+    "luggage_7": {
+      "object": "소주 박스 (참이슬 original)",
+      "color": "흰색, 회색",
+      "material": "골판지",
+      "shape": "정육면체에 가까운 직육면체",
+      "text": "참이슬 original, SINCE 1924, HITEJINRO"
+    },
+    "luggage_8": {
+      "object": "생수 묶음 (제주 삼다수)",
+      "color": "투명, 초록색",
+      "material": "플라스틱",
+      "shape": "6개의 원통형 병이 비닐로 묶인 직육면체 형태",
+      "text": "제주 삼다수, 1L"
+    },
+    "luggage_9": {
+      "object": "과자 봉지 (꼬깔콘)",
+      "color": "은색, 노란색",
+      "material": "플라스틱",
+      "shape": "비정형 (유연한 봉지 형태)",
+      "text": "꼬깔콘, CORN CHIPS, ORIGINAL"
+    },
+    "luggage_10": {
+      "object": "과자 봉지 (꼬깔콘)",
+      "color": "은색, 노란색",
+      "material": "플라스틱",
+      "shape": "비정형 (유연한 봉지 형태)",
+      "text": "꼬깔콘, CORN CHIPS, ORIGINAL"
+    },
+    "luggage_11": {
+      "object": "과자 봉지 (꼬깔콘)",
+      "color": "흰색, 노란색",
+      "material": "플라스틱",
+      "shape": "비정형 (유연한 봉지 형태)",
+      "text": "꼬깔콘, +15% UP",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_12": {
+      "object": "과자 봉지 (신짱)",
+      "color": "빨간색, 노란색",
+      "material": "플라스틱",
+      "shape": "비정형 (유연한 봉지 형태)",
+      "text": "신짱, CROWN"
+    },
+    "luggage_13": {
+      "object": "과자 봉지 (짱구)",
+      "color": "주황색, 노란색",
+      "material": "플라스틱",
+      "shape": "비정형 (유연한 봉지 형태)",
+      "text": "짱구, CROWN"
+    }
+  }
+}

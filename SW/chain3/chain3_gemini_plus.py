@@ -135,15 +135,6 @@ def coerce_json_object(x: Any) -> Dict[str, Any]:
     return {}
 
 def enforce_conformance(payload: Dict[str, Any], instruction_src: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    - 필수 섹션 기본값
-    - seats 맵 dict 강제
-    - instruction dict → [axis,pos,facing,mode]
-    - before 누락 채움
-    - after 키셋 = before 키셋 (ins 대상만 SeatState, 나머지 "no change")
-    - task_sequence Dict[str, List[str]]로 정규화
-    - instruction.seats는 시나리오 원본(instruction_src)과 동일하게 강제
-    """
     out: Dict[str, Any] = dict(payload or {})
     out.setdefault("environment_before", {"seats": {}})
     out.setdefault("instruction", {"seats": {}})

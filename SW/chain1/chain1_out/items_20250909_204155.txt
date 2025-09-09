@@ -1,0 +1,5 @@
+{
+  "people": 4,
+  "total_luggage_count": 0,
+  "luggage_details": {}
+}

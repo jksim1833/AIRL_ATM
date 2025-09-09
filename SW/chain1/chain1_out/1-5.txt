@@ -1,55 +1,61 @@
 {
   "people": 3,
-  "total_luggage_count": 8,
+  "total_luggage_count": 9,
   "luggage_details": {
     "luggage_1": {
-      "object": "접이식 테이블 가방",
-      "color": "진녹색",
+      "object": "대형 접이식 캠핑용품 가방",
+      "color": "어두운 녹색",
+      "material": "나일론",
+      "shape": "길고 납작한 타원형"
+    },
+    "luggage_2": {
+      "object": "접이식 캠핑 테이블",
+      "color": "녹색, 은색",
       "material": "폴리에스터",
       "shape": "직육면체",
       "text": "TYUMEN"
     },
-    "luggage_2": {
+    "luggage_3": {
       "object": "대형 쿨러",
       "color": "회색, 흰색",
       "material": "플라스틱",
       "shape": "직육면체",
-      "special_note": "공간 차지 max: 크고 단단한 형태로 인해 유연한 적재가 어려움"
-    },
-    "luggage_3": {
-      "object": "캠핑 장비 가방",
-      "color": "하늘색, 갈색",
-      "material": "폴리에스터",
-      "shape": "직육면체",
-      "text": "Likino"
+      "special_note": "공간 차지 max. 크고 단단한 직육면체 형태로, 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
     "luggage_4": {
-      "object": "캠핑 장비 가방",
+      "object": "중형 소프트 쿨러",
       "color": "하늘색, 갈색",
       "material": "폴리에스터",
       "shape": "직육면체"
     },
     "luggage_5": {
-      "object": "백팩",
-      "color": "검은색, 흰색",
+      "object": "중형 소프트 쿨러",
+      "color": "하늘색, 갈색",
       "material": "폴리에스터",
-      "shape": "비정형"
+      "shape": "직육면체",
+      "text": "Likino"
     },
     "luggage_6": {
+      "object": "백팩",
+      "color": "검은색, 흰색",
+      "material": "나일론",
+      "shape": "비정형"
+    },
+    "luggage_7": {
       "object": "장작 상자",
       "color": "갈색",
       "material": "골판지",
       "shape": "직육면체",
-      "text": "FIRE WOOD, THE WOOD"
+      "text": "FIRE WOOD, THE WOOD, 장작"
     },
-    "luggage_7": {
+    "luggage_8": {
       "object": "침낭",
       "color": "베이지색, 갈색",
       "material": "폴리에스터",
       "shape": "원통형",
       "special_note": "공간 차지 min"
     },
-    "luggage_8": {
+    "luggage_9": {
       "object": "침낭",
       "color": "갈색, 회색",
       "material": "폴리에스터",
