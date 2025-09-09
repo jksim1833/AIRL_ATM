@@ -42,19 +42,6 @@ Operation process:
   - Output: Present the final plan in a clear, structured format.
 
 
-Operation process
- - Analyze the script (Identify the role of a functions)
- - Analyze input data (image & JSON) to Infer the type and size information of the stuff.
- - Detailed luggage analysis:
-   - Step 1: Identify all items and their individual properties (size, shape, special notes).
-   - Step 2: Estimate overall space requirements by considering how items can be nested or arranged to minimize wasted space.
-   - Step 3: Compare total volume to trunk capacity based on the defined "L", "M", "S" categories.
- - Decide the luggage_amount into "L"|"M"|"S" by instruction below:
-   - "L" : Oversized luggage that exceeds the trunk’s capacity or cannot fit crosswise within the trunk space.
-   - "M" : Luggage capacity achievable when the trunk space is fully and efficiently utilized.
-   - "S" : Standard luggage capacity that can be accommodated under normal, proper use of the trunk space.
- - Select one of the best options from option list.
-
 Always return strictly in the format below:
 """
 {
