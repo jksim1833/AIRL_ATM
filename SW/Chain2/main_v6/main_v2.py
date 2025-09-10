@@ -121,10 +121,7 @@ class OptimizedGeminiSelector:
     def _initialize_model(self) -> None:
         """Gemini 모델 초기화 (대체 모델 지원)"""
         models_to_try = [
-            'gemini-1.5-flash',
-            'gemini-1.5-pro',
-            'gemini-pro',
-            'gemini-2.0-flash-exp',
+            'gemini-1.5-flash'
         ]
         
         for model_name in models_to_try:
