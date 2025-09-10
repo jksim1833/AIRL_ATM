@@ -1,0 +1,74 @@
+{
+  "people": 4,
+  "total_luggage_count": 10,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "킥보드",
+      "color": "핑크색",
+      "material": "플라스틱",
+      "shape": "T자형 손잡이와 발판, 바퀴가 결합된 비정형",
+      "special_note": "공간 차지 max. 크고 형태가 불규칙하며 돌출된 부분이 많아 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_2": {
+      "object": "백팩",
+      "color": "검은색",
+      "material": "폴리에스터",
+      "shape": "비정형",
+      "text": "아디다스 로고"
+    },
+    "luggage_3": {
+      "object": "소형 백팩",
+      "color": "검은색",
+      "material": "폴리에스터",
+      "shape": "비정형",
+      "text": "20L"
+    },
+    "luggage_4": {
+      "object": "축구공",
+      "color": "흰색, 파란색, 검은색",
+      "material": "합성 가죽",
+      "shape": "구형"
+    },
+    "luggage_5": {
+      "object": "배드민턴 라켓 커버",
+      "color": "빨간색, 검은색",
+      "material": "폴리에스터",
+      "shape": "길고 납작한 비정형",
+      "text": "YONEX"
+    },
+    "luggage_6": {
+      "object": "롱보드",
+      "color": "검은색, 갈색",
+      "material": "목재",
+      "shape": "길고 납작한 비정형",
+      "text": "WIND"
+    },
+    "luggage_7": {
+      "object": "야구 글러브",
+      "color": "빨간색, 검은색",
+      "material": "가죽",
+      "shape": "비정형",
+      "text": "ZETT"
+    },
+    "luggage_8": {
+      "object": "야구 글러브",
+      "color": "빨간색, 검은색",
+      "material": "가죽",
+      "shape": "비정형",
+      "text": "ZETT"
+    },
+    "luggage_9": {
+      "object": "헬멧",
+      "color": "핑크색",
+      "material": "플라스틱",
+      "shape": "반구형",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_10": {
+      "object": "헬멧",
+      "color": "검은색",
+      "material": "플라스틱",
+      "shape": "반구형"
+    }
+  }
+}
