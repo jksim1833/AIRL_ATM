@@ -249,7 +249,7 @@ def main():
             while True:
                 confirm = input(f"차량 탑승 인원은 \"{n}명\"이 맞나요? (1) 네 (2) 아니요 : ").strip()
                 if confirm == "1":
-                    people_count = n
+                    people_count = n 
                     confirmed = True
                     break
                 elif confirm == "2": 

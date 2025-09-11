@@ -1,0 +1,22 @@
+{
+  "people": 1,
+  "total_luggage_count": 2,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "중형 세탁기",
+      "color": "어두운 회색",
+      "material": "금속",
+      "shape": "직육면체",
+      "text": "SAMSUNG, 이제 통버블도 AI 시대, 에너지 소비효율 등급",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_2": {
+      "object": "대형 세탁기",
+      "color": "검은색",
+      "material": "금속",
+      "shape": "직육면체",
+      "text": "SAMSUNG, 10 WARRANTY, 에너지 소비효율 등급",
+      "special_note": "공간 차지 max. 크고 무거운 직육면체 형태로, 차량 내부에 고정 및 운반 시 상당한 공간과 주의가 필요함"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "people": 1,
+  "total_luggage_count": 4,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "게이밍 의자",
+      "color": "검은색, 빨간색, 은색",
+      "material": "인조가죽",
+      "shape": "등받이와 좌석이 결합된 비정형. 바퀴 달린 오발 베이스가 특징.",
+      "special_note": "공간 차지 max. 크고 고정된 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_2": {
+      "object": "게이밍 의자",
+      "color": "검은색, 빨간색, 은색",
+      "material": "인조가죽",
+      "shape": "등받이와 좌석이 결합된 비정형. 바퀴 달린 오발 베이스가 특징."
+    },
+    "luggage_3": {
+      "object": "게이밍 의자",
+      "color": "검은색, 빨간색, 은색",
+      "material": "인조가죽",
+      "shape": "등받이와 좌석이 결합된 비정형. 바퀴 달린 오발 베이스가 특징."
+    },
+    "luggage_4": {
+      "object": "게이밍 의자",
+      "color": "검은색, 빨간색, 은색",
+      "material": "인조가죽",
+      "shape": "등받이와 좌석이 결합된 비정형. 바퀴 달린 오발 베이스가 특징.",
+      "special_note": "공간 차지 min"
+    }
+  }
+}

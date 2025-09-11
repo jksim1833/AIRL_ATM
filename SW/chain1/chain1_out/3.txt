@@ -1,0 +1,21 @@
+{
+  "people": 1,
+  "total_luggage_count": 2,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "대형 김치냉장고",
+      "color": "짙은 회색",
+      "material": "금속",
+      "shape": "직육면체",
+      "text": "CUCKOO, 9가지 스페셜 숙성*보관 과학, 쿠쿠가 만든 김치냉장고!!",
+      "special_note": "공간 차지 max. 크고 견고한 직육면체 형태로, 다른 짐과 함께 배치 시 상당한 공간을 차지함"
+    },
+    "luggage_2": {
+      "object": "대형 골판지 박스",
+      "color": "황토색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "special_note": "공간 차지 min"
+    }
+  }
+}

@@ -41,7 +41,7 @@ Example 2:
     "1": [
     "disk_rotate(1, 90)",
     "fold(1)",
-    "seat_rotate(1, -90)",
+    "seat_rotate(1, 270)",
     "move_on_rail(1, A)",
     "unfold(1)"]
 },
@@ -148,7 +148,7 @@ Example 5:
     ],
     "4": [
     "fold(4)",
-    "seat_rotate(4, -90)",
+    "seat_rotate(4, 270)",
     "move_on_rail(4, C)"]
 },
 "environment_after":{
@@ -206,7 +206,7 @@ Example 6:
     "4": [
     "disk_rotate(4, 90)",
     "fold(4)",
-    "seat_rotate(4, -90)",
+    "seat_rotate(4, 270)",
     "move_on_rail(4, C)"]
 },
 "environment_after":{

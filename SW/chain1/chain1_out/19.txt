@@ -1,0 +1,42 @@
+{
+  "people": 1,
+  "total_luggage_count": 5,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "생수 묶음 (20개입)",
+      "color": "투명, 노란색",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_2": {
+      "object": "생수 묶음 (20개입)",
+      "color": "투명, 노란색",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_3": {
+      "object": "대형 생수 묶음 (360개입)",
+      "color": "투명, 노란색",
+      "material": "플라스틱",
+      "shape": "매우 크고 평평한 직육면체",
+      "text": "MINERAL WATER",
+      "special_note": "공간 차지 max. 매우 크고 단단한 직육면체 형태로, 다른 짐과 함께 배치 시 유연성이 떨어지고 넓은 평면 공간을 요구함"
+    },
+    "luggage_4": {
+      "object": "생수 묶음 (20개입)",
+      "color": "투명, 노란색",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_5": {
+      "object": "소형 생수 묶음 (6개입)",
+      "color": "투명, 파란색",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "special_note": "공간 차지 min"
+    }
+  }
+}

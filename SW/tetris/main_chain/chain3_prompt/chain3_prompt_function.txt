@@ -18,7 +18,7 @@ Necessary and sufficient seat control actions are defined as follows:
 
 - seat_rotate(id, degree):
   Rotate the seat body relative to the vehicle.
-  degree ∈ {90, 180, -90}.
+  degree ∈ {90, 180, 270}.
   Effect: updates facing among {F,R,B,L}; 
           rail_axis and position(A/M/C) do not change.
 

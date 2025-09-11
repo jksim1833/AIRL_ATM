@@ -1,3 +1,5 @@
+# main_chain.py
+
 import os, json
 from pathlib import Path
 from typing import List
@@ -19,16 +21,16 @@ CHAIN2_PROMPT_DIR = ROOT / "chain2_prompt"
 CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt.txt"
 CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 
-# [Chain3 경로] __file__ 기준: ./chain3_prompt/<각 서브폴더>/<파일>
+# [Chain3 경로] __file__ 기준: ./chain3_prompt/<파일>
 CHAIN3_DIR              = ROOT / "chain3_prompt"
-C3_SYSTEM_TXT           = CHAIN3_DIR / "chain3_system"             / "chain3_system.txt"
-C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query"              / "chain3_query.txt"
-C3_ROLE_TXT             = CHAIN3_DIR / "chain3_prompt_role"        / "chain3_prompt_role.txt"
-C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment" / "chain3_prompt_environment.txt"
-C3_FUNC_TXT             = CHAIN3_DIR / "chain3_prompt_function"    / "chain3_prompt_function.txt"
-C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format"/ "chain3_prompt_output_format.txt"
-C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example"     / "chain3_prompt_example.txt"
-C3_IMAGE_PNG            = CHAIN3_DIR / "chain3_prompt_image"       / "chain3_prompt_image.png"
+C3_SYSTEM_TXT           = CHAIN3_DIR / "chain3_system.txt"
+C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query.txt"
+C3_ROLE_TXT             = CHAIN3_DIR / "chain3_prompt_role.txt"
+C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment.txt"
+C3_FUNC_TXT             = CHAIN3_DIR /  "chain3_prompt_function.txt"
+C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format.txt"
+C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example.txt"
+C3_IMAGE_PNG            = CHAIN3_DIR / "chain3_prompt_image.png"
 
 def _read_text(p: Path) -> str:
     return p.read_text(encoding="utf-8")
@@ -36,6 +38,26 @@ def _read_text(p: Path) -> str:
 def _escape_braces(s: str) -> str:
     s = s.replace("{{","__O__").replace("}}","__C__").replace("{","{{").replace("}","}}")
     return s.replace("__O__","{{").replace("__C__","}}")
+
+# === [추가] 리소스 존재 fail-fast ===
+def _require_exists(p: Path, label: str):
+    if not p.exists():
+        raise FileNotFoundError(f"{label} 누락: {p}")
+
+for p, label in [
+    (CHAIN1_PROMPT_TXT, "chain1_prompt.txt"),
+    (CHAIN2_PROMPT_TXT, "chain2_prompt.txt"),
+    (CHAIN2_OPTION_TXT, "chain2_option.txt"),
+    (C3_SYSTEM_TXT, "chain3_system.txt"),
+    (C3_QUERY_TXT, "chain3_query.txt"),
+    (C3_ROLE_TXT, "chain3_prompt_role.txt"),
+    (C3_ENV_TXT, "chain3_prompt_environment.txt"),
+    (C3_FUNC_TXT, "chain3_prompt_function.txt"),
+    (C3_OUTFMT_TXT, "chain3_prompt_output_format.txt"),
+    (C3_EXAMPLE_TXT, "chain3_prompt_example.txt"),
+    (C3_IMAGE_PNG, "chain3_prompt_image.png"),
+]:
+    _require_exists(p, label)
 
 # ---- API 키 로드 ----
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
@@ -45,8 +67,12 @@ if not GOOGLE_API_KEY and SECRETS_JSON.exists():
 if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY가 설정되어야 합니다(환경변수 또는 tetris_secrets.json).")
 
+# === [수정] 모델/온도 환경변수로 오버라이드 가능 ===
+MODEL_NAME  = os.getenv("TETRIS_LLM_MODEL", "gemini-2.5-flash")
+TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.2"))
+
 # [LLM] Gemini 2.5 Flash 초기화
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.2, api_key=GOOGLE_API_KEY)
+llm = ChatGoogleGenerativeAI(model=MODEL_NAME, temperature=TEMPERATURE, api_key=GOOGLE_API_KEY)
 
 # ------------------------------------------------ chain ------------------------------------------------
 # chain 1
@@ -153,9 +179,11 @@ chain_3 = LLMChain(
     output_key="chain3_out",
 )
 
+VERBOSE = os.getenv("TETRIS_VERBOSE", "0") == "1"
+
 seq_chain = SequentialChain(
     chains=[chain_1, prep_chain2_from_user_input, chain_2, prep_chain3_image, chain_3],
     input_variables=["user_input"],                         
     output_variables=["chain1_out", "chain2_out", "chain3_out"],
-    verbose=True,
+    verbose=VERBOSE,
 )

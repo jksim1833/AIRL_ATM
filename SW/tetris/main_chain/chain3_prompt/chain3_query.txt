@@ -12,8 +12,8 @@ Follow these rules:
 4. Your seat control sequence must obey the following constraints:
 - move_on_rail(id, target) can only be used when the seat is in the "storage" state.
 - If "facing" changes from F to R or R to B or B to L or L to F, "degree" is 90
-- If "facing" changes from F to L or L to B or B to R or R to F, "degree" is -90
 - If "facing" changes from F to B or B to F or R to L or L to R, "degree" is 180
+- If "facing" changes from F to L or L to B or B to R or R to F, "degree" is 270
 - **Within each seat's action sequence, follow this order: disk_rotate → fold → seat_rotate → move_on_rail → unfold.**
   (This is a rule for the order of operations, not a requirement to use every function.)
 - task_sequence should include only seats that change and list the minimal valid sequence (no redundant actions).
