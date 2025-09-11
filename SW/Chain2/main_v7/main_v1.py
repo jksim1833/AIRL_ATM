@@ -86,7 +86,7 @@ class Chain2Runner:
         self.dir_chain2_out = self.root / "chain2" / "chain2_out"
         
         # 파일 경로
-        self.path_system = self.dir_source / "sys.txt"
+        self.path_system = self.dir_source / "sys_v3.txt"
         self.path_option = self.dir_source / "chain2_option_list.txt"
 
     def _find_airl_atm_path(self, current_path: Path) -> Path:
@@ -265,8 +265,8 @@ def main():
     TEMPERATURE = 0.2  # 필요시 이 값을 수정하세요 (0.0 ~ 2.0)
     
     # 파일명 입력
-    scenario = input("시나리오 파일명(.jpg 생략 가능, 기본값: test): ").strip() or "test"
-    chain1_txt = input("텍스트 파일명(.txt 생략 가능, 기본값: test): ").strip() or "test"
+    scenario = input("시나리오 파일명(.jpg 생략 가능): ").strip()
+    chain1_txt = input("텍스트 파일명(.txt 생략 가능): ").strip()
 
     # 실행
     runner = Chain2Runner(temperature=TEMPERATURE)

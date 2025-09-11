@@ -1,0 +1,29 @@
+{
+  "people": 4,
+  "total_luggage_count": 3,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "골프백 및 골프채 세트",
+      "color": "검은색, 빨간색",
+      "material": "폴리에스터",
+      "shape": "원통형에 가까운 비정형, 골프채가 돌출되어 높이가 높고 부피가 큼",
+      "text": "Titleist, 135,000",
+      "special_note": "공간 차지 max. 높이가 높고 형태가 불규칙하여 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+    },
+    "luggage_2": {
+      "object": "골프화 한 켤레",
+      "color": "흰색, 검은색",
+      "material": "합성 가죽",
+      "shape": "비정형",
+      "text": "BOA, ZZI",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_3": {
+      "object": "더플백",
+      "color": "검은색, 흰색",
+      "material": "폴리에스터",
+      "shape": "직육면체 (유연함)",
+      "text": "세 개의 흰색 줄무늬"
+    }
+  }
+}
