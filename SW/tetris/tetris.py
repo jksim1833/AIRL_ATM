@@ -43,7 +43,7 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     print("----- chain 실행중 -----")
     t_chain_start = perf_counter()
     try:
-        result = MC.seq_chain.invoke({"user_input": user_msgs})
+        result = MC.seq_chain.invoke({"user_input": user_msgs, "people_count": people_count})
     except Exception as e:
         print("\n[ERROR] main_chain 실행 실패")
         print(f"- 이유: {e}")

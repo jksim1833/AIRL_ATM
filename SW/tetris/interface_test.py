@@ -151,7 +151,7 @@ APP_HTML = """<!doctype html>
     <p class="section-desc">1열을 제외한 차량 탑승 인원을 알려주세요.</p>
 
     <div class="chips" role="group" aria-label="탑승 인원 선택">
-      <button class="chip" type="button" data-seats="0">0명</button> <!-- ⬅︎ 추가 -->
+      <button class="chip" type="button" data-seats="0">0명</button> 
       <button class="chip" type="button" data-seats="1">1명</button>
       <button class="chip" type="button" data-seats="2">2명</button>
       <button class="chip" type="button" data-seats="3">3명</button>

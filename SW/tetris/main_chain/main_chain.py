@@ -1,6 +1,6 @@
 # main_chain.py
 
-import os, json
+import os, json, re
 from pathlib import Path
 from typing import List
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -39,7 +39,7 @@ def _escape_braces(s: str) -> str:
     s = s.replace("{{","__O__").replace("}}","__C__").replace("{","{{").replace("}","}}")
     return s.replace("__O__","{{").replace("__C__","}}")
 
-# === [추가] 리소스 존재 fail-fast ===
+# === 리소스 존재 fail-fast ===
 def _require_exists(p: Path, label: str):
     if not p.exists():
         raise FileNotFoundError(f"{label} 누락: {p}")
@@ -67,7 +67,7 @@ if not GOOGLE_API_KEY and SECRETS_JSON.exists():
 if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY가 설정되어야 합니다(환경변수 또는 tetris_secrets.json).")
 
-# === [수정] 모델/온도 환경변수로 오버라이드 가능 ===
+# === 모델/온도 환경변수로 오버라이드 가능 ===
 MODEL_NAME  = os.getenv("TETRIS_LLM_MODEL", "gemini-2.5-flash")
 TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.2"))
 
@@ -95,7 +95,47 @@ def make_chain1_user_input(people_count: int, image_data_url: str) -> List[Human
 chain_1 = LLMChain(
     llm=llm,
     prompt=chain1_prompt,
-    output_key="chain1_out",
+    output_key="chain1_out_raw",
+)
+
+# [Chain1 출력 수정] chain1_out에 people 주입 
+def _inject_people_into_json(result_text: str, people_count: int) -> str:
+    text = (result_text or "").strip()
+    m = re.search(r"```(?:json)?\s*(.*?)```", text, re.S | re.I)
+    if m:
+        text = m.group(1).strip()
+    if not (text.startswith("{") and text.endswith("}")):
+        first = text.find("{")
+        last = text.rfind("}")
+        if first != -1 and last != -1 and first < last:
+            text = text[first:last+1]
+    try:
+        data = json.loads(text)
+        out = {"people": int(people_count or 0)}
+        if isinstance(data, dict):
+            out.update(data)
+        else:
+            out["model_output"] = data
+        return json.dumps(out, ensure_ascii=False, indent=2)
+    except Exception:
+        return json.dumps(
+            {"people": int(people_count or 0), "raw_model_output": result_text},
+            ensure_ascii=False,
+            indent=2,
+        )
+
+def _inject_people_transform(inputs: dict) -> dict:
+    return {
+        "chain1_out": _inject_people_into_json(
+            inputs.get("chain1_out_raw", ""),
+            int(inputs.get("people_count", 0)),
+        )
+    }
+
+inject_people_chain = TransformChain(
+    input_variables=["chain1_out_raw", "people_count"],
+    output_variables=["chain1_out"],
+    transform=_inject_people_transform,
 )
 
 # chain 2
@@ -182,8 +222,8 @@ chain_3 = LLMChain(
 VERBOSE = os.getenv("TETRIS_VERBOSE", "0") == "1"
 
 seq_chain = SequentialChain(
-    chains=[chain_1, prep_chain2_from_user_input, chain_2, prep_chain3_image, chain_3],
-    input_variables=["user_input"],                         
+    chains=[chain_1, inject_people_chain, prep_chain2_from_user_input, chain_2, prep_chain3_image, chain_3],
+    input_variables=["user_input", "people_count"],
     output_variables=["chain1_out", "chain2_out", "chain3_out"],
     verbose=VERBOSE,
 )

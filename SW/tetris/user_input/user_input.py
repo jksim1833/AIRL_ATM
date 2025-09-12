@@ -239,6 +239,7 @@ def get_user_input_web(
     <p class="section-desc">1열을 제외한 차량 탑승 인원을 알려주세요.</p>
 
     <div class="chips" role="group" aria-label="탑승 인원 선택">
+      <button class="chip" type="button" data-seats="0">0명</button>
       <button class="chip" type="button" data-seats="1">1명</button>
       <button class="chip" type="button" data-seats="2">2명</button>
       <button class="chip" type="button" data-seats="3">3명</button>
@@ -293,7 +294,7 @@ function showNotice(msg){
   notice.textContent = msg;
   notice.classList.remove('show'); void notice.offsetWidth; notice.classList.add('show');
 }
-
+ 
 /* 촬영 → 미리보기 → 자동 업로드 */
 photo.addEventListener('change', async ()=>{
   if(!photo.files.length) return;
@@ -306,7 +307,7 @@ photo.addEventListener('change', async ()=>{
   try{
     const fd=new FormData();
     fd.append('photo', photo.files[0]);
-    if (seatSelection) fd.append('people', seatSelection);
+    if (seatSelection !== null) fd.append('people', seatSelection);
 
     const r=await fetch('/api/upload',{method:'POST',body:fd});
     const d=await r.json();
