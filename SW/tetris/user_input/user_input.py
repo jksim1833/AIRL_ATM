@@ -516,8 +516,10 @@ document.addEventListener('click', ()=>{
 
     if auto_open_browser:
         try:
-            import webbrowser
-            webbrowser.open(f"http://127.0.0.1:{port}/qr")
+            import webbrowser, threading
+            url_qr = f"http://127.0.0.1:{port}/qr"
+            webbrowser.open(url_qr, new=1)                         # 1차
+            threading.Timer(0.5, lambda: webbrowser.open(url_qr, new=1)).start()  # 2차 보강
         except Exception:
             pass
 
