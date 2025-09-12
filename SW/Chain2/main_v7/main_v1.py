@@ -86,7 +86,7 @@ class Chain2Runner:
         self.dir_chain2_out = self.root / "chain2" / "chain2_out"
         
         # 파일 경로
-        self.path_system = self.dir_source / "sys_v3.txt"
+        self.path_system = self.dir_source / "sys_v5.txt"
         self.path_option = self.dir_source / "chain2_option_list.txt"
 
     def _find_airl_atm_path(self, current_path: Path) -> Path:

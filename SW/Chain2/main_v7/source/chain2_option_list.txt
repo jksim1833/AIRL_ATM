@@ -5,31 +5,37 @@
       "cases": [
         {
           "luggage_amount": "S",
-          "cell_layout": {
-            "1": {"rail": "Y", "pos": "C", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"},
-            "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["y","C","F","chair"],
+              "2": ["x","C","L","storage"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
           },
           "option_no": 1
         },
         {
           "luggage_amount": "M",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"},
-            "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["x","B","F","chair"],
+              "2": ["x","C","L","storage"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
           },
           "option_no": 2
         },
         {
           "luggage_amount": "L",
-          "cell_layout": {
-            "1": {"rail": "Y", "pos": "A", "face": "B", "mode": "chair"},
-            "2": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"},
-            "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["y","A","B","chair"],
+              "2": ["x","C","L","storage"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
           },
           "option_no": 3
         }
@@ -40,31 +46,37 @@
       "cases": [
         {
           "luggage_amount": "S",
-          "cell_layout": {
-            "1": {"rail": "Y", "pos": "C", "face": "F", "mode": "chair"},
-            "2": {"rail": "Y", "pos": "C", "face": "F", "mode": "chair"},
-            "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["y,"C","F","chair"],
+              "2": ["y,"C","F","chair"],
+              "3": ["x,"A","R","storage"],
+              "4": ["x,"C","L","storage"]
+            }
           },
           "option_no": 4
         },
         {
           "luggage_amount": "M",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["x","B","F","chair"],
+              "2": ["x","B","F","chair"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
           },
           "option_no": 5
         },
         {
           "luggage_amount": "L",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
-            "2": {"rail": "X", "pos": "C", "face": "L", "mode": "chair"},
-            "3": {"rail": "X", "pos": "A", "face": "R", "mode": "storage"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "chair"}
+          "instruction": {
+            "seats": {
+              "1": ["x","A","R","storage"],
+              "2": ["x","C","L","chair"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","chair"]
+            }
           },
           "option_no": 6
         }
@@ -75,31 +87,37 @@
       "cases": [
         {
           "luggage_amount": "S",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "3": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["x","B","F","chair"],
+              "2": ["x","B","F","chair"],
+              "3": ["x","B","F","chair"],
+              "4": ["x","C","L","storage"]
+            }
           },
           "option_no": 7
         },
         {
           "luggage_amount": "M",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "3": {"rail": "Y", "pos": "A", "face": "F", "mode": "chair"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["x","B","F","chair"],
+              "2": ["x","B","F","chair"],
+              "3": ["y","A","F","chair"],
+              "4": ["x","C","L","storage"]
+            }
           },
           "option_no": 8
         },
         {
           "luggage_amount": "L",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "A", "face": "R", "mode": "chair"},
-            "2": {"rail": "X", "pos": "C", "face": "L", "mode": "chair"},
-            "3": {"rail": "X", "pos": "A", "face": "R", "mode": "chair"},
-            "4": {"rail": "X", "pos": "C", "face": "L", "mode": "storage"}
+          "instruction": {
+            "seats": {
+              "1": ["x","A","R","chair"],
+              "2": ["x","C","L","chair"],
+              "3": ["x","A","R","chair"],
+              "4": ["x","C","L","storage"]
+            }
           },
           "option_no": 9
         }
@@ -110,31 +128,37 @@
       "cases": [
         {
           "luggage_amount": "S",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "3": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "4": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"}
+          "instruction": {
+            "seats": {
+              "1": ["x","B","F","chair"],
+              "2": ["x","B","F","chair"],
+              "3": ["x","B","F","chair"],
+              "4": ["x","B","F","chair"]
+            }
           },
           "option_no": 10
         },
         {
           "luggage_amount": "M",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "B", "face": "F", "mode": "chair"},
-            "3": {"rail": "Y", "pos": "A", "face": "F", "mode": "chair"},
-            "4": {"rail": "Y", "pos": "A", "face": "F", "mode": "chair"}
+          "instruction": {
+            "seats": {
+              "1": ["x","B","F","chair"],
+              "2": ["x","B","F","chair"],
+              "3": ["y","A","F","chair"],
+              "4": ["y","A","F","chair"]
+            }
           },
           "option_no": 11
         },
         {
           "luggage_amount": "L",
-          "cell_layout": {
-            "1": {"rail": "X", "pos": "A", "face": "F", "mode": "chair"},
-            "2": {"rail": "X", "pos": "C", "face": "F", "mode": "chair"},
-            "3": {"rail": "X", "pos": "A", "face": "F", "mode": "chair"},
-            "4": {"rail": "X", "pos": "C", "face": "F", "mode": "chair"}
+          "instruction": {
+            "seats": {
+              "1": ["x","A","F","chair"],
+              "2": ["x","C","F","chair"],
+              "3": ["x","A","F","chair"],
+              "4": ["x","C","F","chair"]
+            }
           },
           "option_no": 12
         }
