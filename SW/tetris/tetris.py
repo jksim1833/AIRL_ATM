@@ -106,20 +106,6 @@ def main():
 
 
 if __name__ == "__main__":
-    import argparse
-    from user_input import get_user_input_web, get_user_input_scenario
+    main()
 
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=["web", "scenario"], default="web")
-    ap.add_argument("--port", type=int, default=5002)
-    ap.add_argument("--no-browser", action="store_true")  # 필요 시만 사용
-    args = ap.parse_args()
-
-    if args.mode == "web":
-        ppl, data_url, scenario = get_user_input_web(
-            port=args.port,
-            auto_open_browser=not args.no_browser  # 기본 True
-        )
-    else:
-        ppl, data_url, scenario = get_user_input_scenario()
 

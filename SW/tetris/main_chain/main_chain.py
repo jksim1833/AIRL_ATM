@@ -69,7 +69,7 @@ if not GOOGLE_API_KEY:
 
 # === 모델/온도 환경변수로 오버라이드 가능 ===
 MODEL_NAME  = os.getenv("TETRIS_LLM_MODEL", "gemini-2.5-flash")
-TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.2"))
+TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.0"))
 
 # [LLM] Gemini 2.5 Flash 초기화
 llm = ChatGoogleGenerativeAI(model=MODEL_NAME, temperature=TEMPERATURE, api_key=GOOGLE_API_KEY)
