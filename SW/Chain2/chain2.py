@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-chain2.py
-
-- System:  ~/Desktop/AIRL_ATM/SW/chain2/chain2_prompt.txt (그대로)
-- Human:   [텍스트] "다음 정보를 활용하여 결과를 생성하라."
-           [텍스트] chain1_out/<입력>.txt (내용 그대로)
-           [텍스트] chain2_option.txt (내용 그대로)
-           [이미지] chain1_image/<시나리오>.jpg
-- Output:  ~/Desktop/AIRL_ATM/SW/chain2/chain2_out/<시나리오>.txt
-"""
-
 import os
 import json
 import base64
@@ -81,15 +69,13 @@ class Chain2Runner:
         self.dir_chain2_out = self.dir_chain2 / "chain2_out"
 
         # 파일 경로
-        self.path_system = self.dir_chain2 / "chain2_prompt.txt"
-        self.path_option = self.dir_chain2 / "chain2_option.txt"
+        self.path_system = self.dir_chain2 / "chain2_prompt_2.txt"
 
         # API 키 로드
         self._load_api_keys()
 
         # 프롬프트 로드
         self.system_prompt = self._load_text_escaped(self.path_system)
-        self.option_text = self._read_text(self.path_option)
 
         # 모델 준비 (안전설정: 버전 호환)
         self.model = self._build_model()
@@ -100,7 +86,6 @@ class Chain2Runner:
             ("human", [
                 {"type": "text", "text": "다음 정보를 활용하여 결과를 생성하라."},
                 {"type": "text", "text": "{chain1_text}"},
-                {"type": "text", "text": "{option_text}"},
                 {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64,{image_b64}"}},
             ]),
         ])
@@ -195,8 +180,7 @@ class Chain2Runner:
         t0 = time.perf_counter()
         result = self.chain.invoke({
             "image_b64": image_b64,
-            "chain1_text": chain1_text,
-            "option_text": self.option_text,
+            "chain1_text": chain1_text
         })
         elapsed = time.perf_counter() - t0
 
