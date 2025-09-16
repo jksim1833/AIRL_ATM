@@ -1,0 +1,168 @@
+{
+  "option_list": [
+    {
+      "people_count": 1,
+      "cases": [
+        {
+          "luggage_amount": "S",
+          "instruction": {
+            "seats": {
+              "1": ["y","C","F","chair"],
+              "2": ["x","C","L","storage"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
+          },
+          "option_no": 1
+        },
+        {
+          "luggage_amount": "M",
+          "instruction": {
+            "seats": {
+              "1": ["x","M","F","chair"],
+              "2": ["x","C","L","storage"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
+          },
+          "option_no": 2
+        },
+        {
+          "luggage_amount": "L",
+          "instruction": {
+            "seats": {
+              "1": ["y","A","B","chair"],
+              "2": ["x","C","L","storage"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
+          },
+          "option_no": 3
+        }
+      ]
+    },
+    {
+      "people_count": 2,
+      "cases": [
+        {
+          "luggage_amount": "S",
+          "instruction": {
+            "seats": {
+              "1": ["y,"C","F","chair"],
+              "2": ["y,"C","F","chair"],
+              "3": ["x,"A","R","storage"],
+              "4": ["x,"C","L","storage"]
+            }
+          },
+          "option_no": 4
+        },
+        {
+          "luggage_amount": "M",
+          "instruction": {
+            "seats": {
+              "1": ["x","M","F","chair"],
+              "2": ["x","M","F","chair"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","storage"]
+            }
+          },
+          "option_no": 5
+        },
+        {
+          "luggage_amount": "L",
+          "instruction": {
+            "seats": {
+              "1": ["x","A","R","storage"],
+              "2": ["x","C","L","chair"],
+              "3": ["x","A","R","storage"],
+              "4": ["x","C","L","chair"]
+            }
+          },
+          "option_no": 6
+        }
+      ]
+    },
+    {
+      "people_count": 3,
+      "cases": [
+        {
+          "luggage_amount": "S",
+          "instruction": {
+            "seats": {
+              "1": ["x","M","F","chair"],
+              "2": ["x","M","F","chair"],
+              "3": ["x","M","F","chair"],
+              "4": ["x","C","L","storage"]
+            }
+          },
+          "option_no": 7
+        },
+        {
+          "luggage_amount": "M",
+          "instruction": {
+            "seats": {
+              "1": ["x","M","F","chair"],
+              "2": ["x","M","F","chair"],
+              "3": ["y","A","F","chair"],
+              "4": ["x","C","L","storage"]
+            }
+          },
+          "option_no": 8
+        },
+        {
+          "luggage_amount": "L",
+          "instruction": {
+            "seats": {
+              "1": ["x","A","R","chair"],
+              "2": ["x","C","L","chair"],
+              "3": ["x","A","R","chair"],
+              "4": ["x","C","L","storage"]
+            }
+          },
+          "option_no": 9
+        }
+      ]
+    },
+    {
+      "people_count": 4,
+      "cases": [
+        {
+          "luggage_amount": "S",
+          "instruction": {
+            "seats": {
+              "1": ["x","M","F","chair"],
+              "2": ["x","M","F","chair"],
+              "3": ["x","M","F","chair"],
+              "4": ["x","M","F","chair"]
+            }
+          },
+          "option_no": 10
+        },
+        {
+          "luggage_amount": "M",
+          "instruction": {
+            "seats": {
+              "1": ["x","M","F","chair"],
+              "2": ["x","M","F","chair"],
+              "3": ["y","A","F","chair"],
+              "4": ["y","A","F","chair"]
+            }
+          },
+          "option_no": 11
+        },
+        {
+          "luggage_amount": "L",
+          "instruction": {
+            "seats": {
+              "1": ["x","A","F","chair"],
+              "2": ["x","C","F","chair"],
+              "3": ["x","A","F","chair"],
+              "4": ["x","C","F","chair"]
+            }
+          },
+          "option_no": 12
+        }
+      ]
+    }
+  ]
+}

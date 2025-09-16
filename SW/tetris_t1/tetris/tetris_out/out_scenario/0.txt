@@ -1,0 +1,137 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "의자",
+      "color": "진회색",
+      "material": "플라스틱",
+      "shape": "등받이와 좌석이 결합된 비정형"
+    },
+    "luggage_2": {
+      "object": "데스크탑 본체",
+      "color": "검은색",
+      "material": "금속",
+      "shape": "직육면체"
+    },
+    "luggage_3": {
+      "object": "침낭",
+      "color": "빨간색",
+      "shape": "원통형",
+      "text": "K2, RH+"
+    },
+    "luggage_4": {
+      "object": "모니터",
+      "color": "검은색",
+      "material": "플라스틱",
+      "shape": "직사각형 화면과 스탠드가 결합된 비정형",
+      "text": "SAMSUNG"
+    },
+    "luggage_5": {
+      "object": "스탠드형 옷걸이",
+      "color": "연갈색",
+      "material": "목재",
+      "shape": "긴 막대에 여러 개의 짧은 가지가 돌출된 비정형. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함",
+      "special_note": "공간 차지 max. 길고 형태가 불규칙하며 돌출된 부분이 많아 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_6": {
+      "object": "소화기",
+      "color": "빨간색, 노란색",
+      "material": "금속",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_7": {
+      "object": "백팩",
+      "color": "검은색",
+      "shape": "비정형",
+      "text": "대한민국 공군, ROXAF"
+    },
+    "luggage_8": {
+      "object": "컴퓨터 케이스 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "Y300M, G-LITE, WHITE"
+    },
+    "luggage_9": {
+      "object": "모니터 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "68.4cm, 144 Hz, NVIDIA G-SYNC Compatible"
+    }
+  }
+}
+
+====================[ chain2_out ]====================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x","A","R","storage"],
+      "2": ["x","C","L","chair"],
+      "3": ["x","A","R","storage"],
+      "4": ["x","C","L","chair"]
+    }
+  }
+}
+```
+
+====================[ chain3_out ]====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x","A","R","storage"],
+      "2": ["x","C","L","chair"],
+      "3": ["x","A","R","storage"],
+      "4": ["x","C","L","chair"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "fold(1)",
+      "seat_rotate(1, 90)",
+      "move_on_rail(1, A)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(2, 270)",
+      "move_on_rail(2, C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(3, 90)",
+      "move_on_rail(3, A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(4, 270)",
+      "move_on_rail(4, C)",
+      "unfold(4)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+      "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "chair"}
+    }
+  }
+}
+```
+[tetris 시스템 실행 완료]
+🕒 chain_run_time: 114.867s
+🕒 tetris_run_time: 119.062s
