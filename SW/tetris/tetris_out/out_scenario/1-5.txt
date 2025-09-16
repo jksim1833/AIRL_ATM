@@ -1,0 +1,96 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "캠핑용 가방",
+      "color": "어두운 녹색",
+      "material": "나일론",
+      "shape": "길고 납작한 비정형"
+    },
+    "luggage_2": {
+      "object": "접이식 캠핑 테이블 가방",
+      "color": "녹색",
+      "material": "폴리에스터",
+      "shape": "길고 납작한 직육면체",
+      "text": "TYUMEN"
+    },
+    "luggage_3": {
+      "object": "대형 아이스박스",
+      "color": "회색, 흰색",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "special_note": "공간 차지 max. 크고 단단한 직육면체 형태로, 다른 짐과 효율적으로 배치하기 위해 주변 공간을 잘 활용해야 함"
+    },
+    "luggage_4": {
+      "object": "캠핑용 수납 가방",
+      "color": "하늘색",
+      "material": "폴리에스터",
+      "shape": "직육면체",
+      "text": "Likino"
+    },
+    "luggage_5": {
+      "object": "캠핑용 수납 가방",
+      "color": "하늘색",
+      "material": "폴리에스터",
+      "shape": "직육면체"
+    },
+    "luggage_6": {
+      "object": "백팩",
+      "color": "검은색",
+      "material": "폴리에스터",
+      "shape": "비정형",
+      "text": "세 개의 흰색 줄무늬"
+    },
+    "luggage_7": {
+      "object": "장작 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "THE WOOD, FIRE WOOD"
+    },
+    "luggage_8": {
+      "object": "침낭",
+      "color": "황토색, 갈색",
+      "material": "폴리에스터",
+      "shape": "원통형"
+    },
+    "luggage_9": {
+      "object": "침낭",
+      "color": "갈색, 회색",
+      "material": "폴리에스터",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
+    }
+  }
+}
+
+====================[ chain2_out ]====================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+
+====================[ chain3_out ]====================
+```json
+{
+  "task_actions": {
+    "1": ["no change"],
+    "2": ["no change"],
+    "3": ["fold(3)", "seat_rotate(3, 90)", "move_on_rail(3, A)"],
+    "4": ["fold(4)", "seat_rotate(4, 270)", "move_on_rail(4, C)"]
+  }
+}
+```
+[tetris 시스템 실행 완료]
+🕒 chain_run_time: 89.984s
+🕒 tetris_run_time: 104.130s

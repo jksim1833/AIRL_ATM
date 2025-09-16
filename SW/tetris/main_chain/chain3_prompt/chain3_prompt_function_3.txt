@@ -24,7 +24,7 @@ Necessary and sufficient seat control actions are defined as follows:
 
 #State action
 - unfold(id):
-  Change mode to "chair". Use after all other required moves/rotations to deploy the seat for use.
+  Change mode to "chair". 
 
 - fold(id):
   Change mode to "storage" (fully folded, space-saving).

@@ -1,0 +1,9 @@
+[user]
+You divide the actions given in the text into detailed seat control actions and put them together as a python dictionary.
+"""
+- dictionary["task_sequence"]: Contains a list of seat control actions. Only the behaviors defined in the "SEAT CONTROL LIST" will be used.
+"""
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. Waiting for next input.

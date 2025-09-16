@@ -58,7 +58,7 @@ def input_scenario_image() -> str:
 
 def input_scenario_people() -> int:
     while True:
-        ppl = input("차량 탑승 인원을 알려주세요! : ").strip()
+        ppl = input("1열을 제외한 차량 탑승 인원을 알려주세요! : ").strip()
         try:
             n = int(ppl)
             if n < 0:

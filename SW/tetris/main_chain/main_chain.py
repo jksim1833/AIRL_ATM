@@ -24,12 +24,12 @@ CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 # [Chain3 경로] __file__ 기준: ./chain3_prompt/<파일>
 CHAIN3_DIR              = ROOT / "chain3_prompt"
 C3_SYSTEM_TXT           = CHAIN3_DIR / "chain3_system.txt"
-C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query.txt"
+C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query_2.txt"
 C3_ROLE_TXT             = CHAIN3_DIR / "chain3_prompt_role.txt"
-C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment.txt"
+C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment_2.txt"
 C3_FUNC_TXT             = CHAIN3_DIR /  "chain3_prompt_function.txt"
-C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format.txt"
-C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example.txt"
+C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format_2.txt"
+C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example_2.txt"
 C3_IMAGE_PNG            = CHAIN3_DIR / "chain3_prompt_image.png"
 
 def _read_text(p: Path) -> str:
@@ -49,12 +49,12 @@ for p, label in [
     (CHAIN2_PROMPT_TXT, "chain2_prompt.txt"),
     (CHAIN2_OPTION_TXT, "chain2_option.txt"),
     (C3_SYSTEM_TXT, "chain3_system.txt"),
-    (C3_QUERY_TXT, "chain3_query.txt"),
+    (C3_QUERY_TXT, "chain3_query_2.txt"),
     (C3_ROLE_TXT, "chain3_prompt_role.txt"),
-    (C3_ENV_TXT, "chain3_prompt_environment.txt"),
+    (C3_ENV_TXT, "chain3_prompt_environment_2.txt"),
     (C3_FUNC_TXT, "chain3_prompt_function.txt"),
-    (C3_OUTFMT_TXT, "chain3_prompt_output_format.txt"),
-    (C3_EXAMPLE_TXT, "chain3_prompt_example.txt"),
+    (C3_OUTFMT_TXT, "chain3_prompt_output_format_2.txt"),
+    (C3_EXAMPLE_TXT, "chain3_prompt_example_2.txt"),
     (C3_IMAGE_PNG, "chain3_prompt_image.png"),
 ]:
     _require_exists(p, label)
@@ -69,7 +69,7 @@ if not GOOGLE_API_KEY:
 
 # === 모델/온도 환경변수로 오버라이드 가능 ===
 MODEL_NAME  = os.getenv("TETRIS_LLM_MODEL", "gemini-2.5-flash")
-TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.0"))
+TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.2"))
 
 # [LLM] Gemini 2.5 Flash 초기화
 llm = ChatGoogleGenerativeAI(model=MODEL_NAME, temperature=TEMPERATURE, api_key=GOOGLE_API_KEY)

@@ -1,0 +1,16 @@
+Start working. The instruction is as follows:
+"""
+{"instruction": [INSTRUCTION]}
+"""
+Follow these rules:
+1. Keep track of all items listed in the "seats" section of the "instruction" field. Please ensure that you fill out the "seats" sections for all listed items.
+2. Return exactly one structured tool call only (no free text / no code fences).
+3. Seats maps must be native JSON objects with outer braces — never strings. Keys must be quoted ("1","2",...). Do not stringify nested objects.
+4. Your seat control actions must obey the following constraints:
+- If "facing" changes from F to R or R to B or B to L or L to F, "degree" is 90
+- If "facing" changes from F to B or B to F or R to L or L to R, "degree" is 180
+- If "facing" changes from F to L or L to B or B to R or R to F, "degree" is 270
+- task_actions should include only seats that change and list the minimal valid sequence (no redundant actions).
+
+**Generate the JSON output listing only the necessary actions, and do so as fast as possible.**
+Follow the rules above. Think step by step.
