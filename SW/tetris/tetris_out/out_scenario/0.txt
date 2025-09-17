@@ -1,16 +1,17 @@
 ====================[ chain1_out ]====================
 {
-  "people": 2,
+  "people": 0,
   "total_luggage_count": 9,
   "luggage_details": {
     "luggage_1": {
       "object": "의자",
-      "color": "회색",
-      "material": "플라스틱",
-      "shape": "등받이와 좌석이 결합된 비정형"
+      "color": "진회색",
+      "material": "플라스틱, 강철",
+      "shape": "등받이와 좌석이 결합된 비정형",
+      "special_note": "공간 차지 max. 등받이와 다리 구조로 인해 부피가 크고 형태가 불규칙하여 다른 짐과 효율적으로 배치하기 어려움"
     },
     "luggage_2": {
-      "object": "데스크톱 PC 본체",
+      "object": "데스크탑 컴퓨터 본체",
       "color": "검은색",
       "material": "금속",
       "shape": "직육면체"
@@ -19,63 +20,66 @@
       "object": "침낭",
       "color": "빨간색",
       "material": "폴리에스터",
-      "shape": "원통형"
+      "shape": "원통형",
+      "text": "K2, RH+"
     },
     "luggage_4": {
-      "object": "모니터",
+      "object": "컴퓨터 모니터",
       "color": "검은색",
-      "material": "플라스틱",
-      "shape": "직사각형 화면과 받침대가 결합된 비정형"
+      "material": "플라스틱, 금속",
+      "shape": "직사각형 패널과 받침대가 결합된 형태",
+      "text": "SAMSUNG, Space Monitor"
     },
     "luggage_5": {
-      "object": "나무 옷걸이 스탠드",
-      "color": "갈색",
+      "object": "옷걸이 스탠드",
+      "color": "황토색",
       "material": "목재",
-      "shape": "중앙 기둥에서 여러 개의 가지가 뻗어 나온 비정형",
-      "special_note": "공간 차지 max. 길고 불규칙한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+      "shape": "중앙 기둥에서 여러 개의 가지가 뻗어 나온 비정형"
     },
     "luggage_6": {
-      "object": "대형 박스",
+      "object": "컴퓨터 케이스 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "GIGABYTE, Y300M, 최강방"
+    },
+    "luggage_7": {
+      "object": "모니터 상자",
       "color": "갈색",
       "material": "골판지",
       "shape": "직육면체",
       "text": "68.4cm, 144 Hz, NVIDIA G-SYNC Compatible"
-    },
-    "luggage_7": {
-      "object": "중형 박스",
-      "color": "갈색",
-      "material": "골판지",
-      "shape": "직육면체",
-      "text": "GIGABYTE, Y300M, WHITE"
     },
     "luggage_8": {
       "object": "백팩",
       "color": "검은색",
       "material": "나일론",
       "shape": "비정형",
-      "text": "대한민국 공군, ROXAF"
+      "text": "대한민국공군, ROXAF"
     },
     "luggage_9": {
       "object": "소화기",
       "color": "빨간색, 노란색",
-      "material": "강철",
-      "shape": "원통형 몸체와 손잡이가 결합된 비정형",
+      "material": "강철, 고무",
+      "shape": "원통형",
       "special_note": "공간 차지 min"
     }
   }
 }
 
 ====================[ chain2_out ]====================
+```json
 {
   "instruction": {
     "seats": {
       "1": ["x", "A", "R", "storage"],
-      "2": ["x", "C", "L", "chair"],
+      "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
-      "4": ["x", "C", "L", "chair"]
+      "4": ["x", "C", "L", "storage"]
     }
   }
 }
+```
 
 ====================[ chain3_out ]====================
 ```json
@@ -89,8 +93,7 @@
     "2": [
       "fold(2)",
       "seat_rotate(2, 270)",
-      "move_on_rail(2, C)",
-      "unfold(2)"
+      "move_on_rail(2, C)"
     ],
     "3": [
       "fold(3)",
@@ -100,12 +103,11 @@
     "4": [
       "fold(4)",
       "seat_rotate(4, 270)",
-      "move_on_rail(4, C)",
-      "unfold(4)"
+      "move_on_rail(4, C)"
     ]
   }
 }
 ```
 [tetris 시스템 실행 완료]
-🕒 chain_run_time: 103.729s
-🕒 tetris_run_time: 118.582s
+🕒 chain_run_time: 129.858s
+🕒 tetris_run_time: 150.093s
