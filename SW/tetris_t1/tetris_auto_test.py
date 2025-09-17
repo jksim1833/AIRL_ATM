@@ -29,8 +29,8 @@ from contextlib import contextmanager
 @dataclass
 class TestConfig:
     """테스트 설정 관리"""
-    people_count: int = 1
-    trials: int = 5
+    people_count: int = 2
+    trials: int = 1
     timeout: float = 120.0
     parallel_workers: int = 1
     save_individual_results: bool = True
@@ -167,8 +167,8 @@ class TetrisTestEngine:
         encoded = base64.b64encode(image_data).decode('utf-8')
         return f"data:{mime_type};base64,{encoded}"
     
-    def execute_single_test(self, image_path: Path, trial: int) -> TestResult:
-        """단일 테스트 실행 (최적화)"""
+    def execute_single_test(self, image_path: Path, trial: int, save_immediately: bool = True) -> TestResult:
+        """단일 테스트 실행 (최적화) - 즉시 파일 저장 옵션 포함"""
         start_time = perf_counter()
         image_name = image_path.stem
         
@@ -190,7 +190,7 @@ class TetrisTestEngine:
             })
             execution_time = perf_counter() - chain_start
             
-            return TestResult(
+            test_result = TestResult(
                 image_name=image_name,
                 trial=trial,
                 success=True,
@@ -200,21 +200,74 @@ class TetrisTestEngine:
                 chain3_out=result.get("chain3_out", "")
             )
             
+            # 즉시 개별 파일 저장
+            if save_immediately and self.config.save_individual_results:
+                self._save_single_result_immediately(test_result)
+            
+            return test_result
+            
         except Exception as e:
             execution_time = perf_counter() - start_time
             self.logger.error(f"테스트 실패 [{image_name}-{trial}]: {str(e)}")
             
-            return TestResult(
+            test_result = TestResult(
                 image_name=image_name,
                 trial=trial,
                 success=False,
                 execution_time=execution_time,
                 error=str(e)
             )
+            
+            # 실패한 경우에도 즉시 저장
+            if save_immediately and self.config.save_individual_results:
+                self._save_single_result_immediately(test_result)
+            
+            return test_result
+    
+    def _save_single_result_immediately(self, result: TestResult) -> None:
+        """단일 결과를 즉시 파일로 저장"""
+        filename = f"{result.image_name}_trial_{result.trial:02d}.txt"
+        filepath = self.paths['results'] / filename
+        
+        try:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                self._write_individual_result_content(f, result)
+            
+            self.logger.debug(f"결과 파일 저장 완료: {filename}")
+            
+        except Exception as e:
+            self.logger.error(f"결과 파일 저장 실패 [{filename}]: {e}")
+    
+    def _write_individual_result_content(self, file, result: TestResult) -> None:
+        """개별 결과 파일 내용 작성 (공통 함수)"""
+        file.write("=" * 60 + "\n")
+        file.write(f"테스트 결과: {result.image_name} - Trial {result.trial}\n")
+        file.write("=" * 60 + "\n")
+        file.write(f"실행 시간: {result.timestamp}\n")
+        file.write(f"이미지 파일: {result.image_name}\n")
+        file.write(f"인원 수: {self.config.people_count}\n")
+        file.write(f"실행 성공: {result.success}\n")
+        file.write(f"실행 시간: {result.execution_time:.3f}초\n\n")
+        
+        if result.success:
+            sections = [
+                ("chain1_out", result.chain1_out),
+                ("chain2_out", result.chain2_out), 
+                ("chain3_out", result.chain3_out)
+            ]
+            
+            for section_name, content in sections:
+                file.write("=" * 20 + f"[ {section_name} ]" + "=" * 20 + "\n")
+                file.write((content or "") + "\n\n")
+        else:
+            file.write("=" * 20 + "[ ERROR ]" + "=" * 20 + "\n")
+            file.write(f"오류 내용: {result.error}\n")
     
     def run_parallel_tests(self, image_files: List[Path]) -> List[TestResult]:
-        """병렬 테스트 실행"""
+        """병렬 테스트 실행 - 각 결과 즉시 저장 및 이미지별 중간 보고서 생성"""
         tasks = []
+        image_results_tracker = {img.stem: [] for img in image_files}
+        completed_images = set()
         
         # 테스트 태스크 생성
         for image_file in image_files:
@@ -226,67 +279,216 @@ class TetrisTestEngine:
         total_tasks = len(tasks)
         
         self.logger.info(f"병렬 테스트 시작: {total_tasks}개 태스크, {self.config.parallel_workers}개 워커")
+        self.logger.info(f"각 테스트 완료 시 개별 파일로 즉시 저장되며, 이미지별 중간 보고서도 생성됩니다.")
         
         with ThreadPoolExecutor(max_workers=self.config.parallel_workers) as executor:
-            # 태스크 제출
+            # 태스크 제출 (즉시 저장 활성화)
             future_to_task = {
-                executor.submit(self.execute_single_test, img, trial): (img.stem, trial)
+                executor.submit(self.execute_single_test, img, trial, True): (img.stem, trial, img)
                 for img, trial in tasks
             }
             
             # 결과 수집
             for future in as_completed(future_to_task):
-                img_name, trial = future_to_task[future]
+                img_name, trial, img_path = future_to_task[future]
                 
                 try:
                     result = future.result(timeout=self.config.timeout)
                     results.append(result)
+                    image_results_tracker[img_name].append(result)
                     completed_count += 1
                     
                     status = "✓" if result.success else "✗"
+                    filename = f"{img_name}_trial_{trial:02d}.txt"
                     self.logger.info(
                         f"[{completed_count:3d}/{total_tasks}] {status} {img_name}-{trial:02d} "
-                        f"({result.execution_time:.2f}s)"
+                        f"({result.execution_time:.2f}s) → 저장: {filename}"
                     )
+                    
+                    # 현재 이미지의 모든 시행이 완료되었는지 확인
+                    if (len(image_results_tracker[img_name]) == self.config.trials and 
+                        img_name not in completed_images):
+                        completed_images.add(img_name)
+                        
+                        # 중간 보고서 생성
+                        if self.config.save_summary:
+                            self._generate_intermediate_summary(img_name, image_results_tracker[img_name])
                     
                 except Exception as e:
                     self.logger.error(f"태스크 실행 오류 [{img_name}-{trial}]: {e}")
-                    results.append(TestResult(
+                    error_result = TestResult(
                         image_name=img_name,
                         trial=trial,
                         success=False,
                         execution_time=0,
                         error=f"Execution timeout or error: {str(e)}"
-                    ))
+                    )
+                    
+                    # 오류 결과도 즉시 저장
+                    if self.config.save_individual_results:
+                        self._save_single_result_immediately(error_result)
+                    
+                    results.append(error_result)
+                    image_results_tracker[img_name].append(error_result)
                     completed_count += 1
+                    
+                    # 오류가 있어도 해당 이미지의 모든 시행이 완료되면 중간 보고서 생성
+                    if (len(image_results_tracker[img_name]) == self.config.trials and 
+                        img_name not in completed_images):
+                        completed_images.add(img_name)
+                        
+                        if self.config.save_summary:
+                            self._generate_intermediate_summary(img_name, image_results_tracker[img_name])
         
+        self.logger.info(f"병렬 테스트 완료: 모든 결과가 개별 파일로 저장되고 이미지별 중간 보고서도 생성되었습니다.")
         return results
     
     def run_sequential_tests(self, image_files: List[Path]) -> List[TestResult]:
-        """순차 테스트 실행"""
+        """순차 테스트 실행 - 각 결과 즉시 저장 및 이미지별 중간 보고서 생성"""
         results = []
         total_tests = len(image_files) * self.config.trials
         current_test = 0
         
         self.logger.info(f"순차 테스트 시작: {total_tests}개 테스트")
+        self.logger.info(f"각 테스트 완료 시 개별 파일로 즉시 저장됩니다.")
         
         for i, image_file in enumerate(image_files, 1):
             image_name = image_file.stem
             self.logger.info(f"[{i}/{len(image_files)}] 이미지: {image_name}")
             
+            # 현재 이미지의 결과를 저장할 리스트
+            current_image_results = []
+            
             for trial in range(1, self.config.trials + 1):
                 current_test += 1
                 
                 with self._progress_context(f"Trial {trial}/{self.config.trials}"):
-                    result = self.execute_single_test(image_file, trial)
+                    # 즉시 저장 활성화
+                    result = self.execute_single_test(image_file, trial, save_immediately=True)
                     results.append(result)
+                    current_image_results.append(result)
                     
                     status = "✓" if result.success else "✗"
+                    filename = f"{image_name}_trial_{trial:02d}.txt"
                     self.logger.info(
-                        f"  {status} Trial {trial:02d} ({result.execution_time:.2f}s)"
+                        f"  {status} Trial {trial:02d} ({result.execution_time:.2f}s) → 저장: {filename}"
                     )
+            
+            # 현재 이미지의 모든 시행이 완료되면 중간 보고서 생성
+            if self.config.save_summary:
+                self._generate_intermediate_summary(image_name, current_image_results)
         
+        self.logger.info(f"순차 테스트 완료: 모든 결과가 개별 파일로 저장되었습니다.")
         return results
+    
+    def _generate_intermediate_summary(self, image_name: str, image_results: List[TestResult]) -> None:
+        """특정 이미지의 중간 보고서 생성"""
+        try:
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            summary_filename = f"summary_{image_name}_{timestamp}.txt"
+            summary_filepath = self.paths['results'] / summary_filename
+            
+            # 통계 계산
+            total_trials = len(image_results)
+            successful_trials = [r for r in image_results if r.success]
+            success_count = len(successful_trials)
+            success_rate = (success_count / total_trials) * 100 if total_trials > 0 else 0
+            
+            execution_times = [r.execution_time for r in successful_trials]
+            avg_time = sum(execution_times) / len(execution_times) if execution_times else 0
+            min_time = min(execution_times) if execution_times else 0
+            max_time = max(execution_times) if execution_times else 0
+            
+            with open(summary_filepath, 'w', encoding='utf-8') as f:
+                f.write("=" * 70 + "\n")
+                f.write(f"이미지별 중간 보고서: {image_name}\n")
+                f.write("=" * 70 + "\n")
+                f.write(f"생성 시간: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write(f"이미지 파일: {image_name}\n")
+                f.write(f"인원 수: {self.config.people_count}명\n\n")
+                
+                # 기본 통계
+                f.write("=" * 30 + "[ 기본 통계 ]" + "=" * 30 + "\n")
+                f.write(f"총 시행 횟수: {total_trials}회\n")
+                f.write(f"성공한 시행: {success_count}회\n")
+                f.write(f"실패한 시행: {total_trials - success_count}회\n")
+                f.write(f"성공률: {success_rate:.1f}%\n\n")
+                
+                # 성능 통계
+                if execution_times:
+                    f.write("=" * 30 + "[ 성능 통계 ]" + "=" * 30 + "\n")
+                    f.write(f"평균 실행 시간: {avg_time:.2f}초\n")
+                    f.write(f"최단 실행 시간: {min_time:.2f}초\n")
+                    f.write(f"최장 실행 시간: {max_time:.2f}초\n")
+                    f.write(f"총 처리 시간: {sum(execution_times):.2f}초\n\n")
+                
+                # 시행별 상세 결과
+                f.write("=" * 30 + "[ 시행별 결과 ]" + "=" * 30 + "\n")
+                for result in image_results:
+                    status = "성공" if result.success else "실패"
+                    f.write(f"Trial {result.trial:02d}: {status} ({result.execution_time:.2f}초)")
+                    if not result.success and result.error:
+                        f.write(f" - {result.error}")
+                    f.write("\n")
+                
+                # 실패 분석
+                failed_results = [r for r in image_results if not r.success]
+                if failed_results:
+                    f.write(f"\n" + "=" * 30 + "[ 실패 분석 ]" + "=" * 30 + "\n")
+                    error_counts = {}
+                    for result in failed_results:
+                        error_type = result.error if result.error else "Unknown"
+                        error_counts[error_type] = error_counts.get(error_type, 0) + 1
+                    
+                    for error, count in error_counts.items():
+                        f.write(f"- {error}: {count}회\n")
+                
+                # 성공한 경우의 결과 요약 (첫 번째 성공 결과만)
+                if successful_trials:
+                    first_success = successful_trials[0]
+                    f.write(f"\n" + "=" * 25 + "[ 첫 번째 성공 결과 샘플 ]" + "=" * 25 + "\n")
+                    f.write(f"Trial {first_success.trial}의 결과:\n\n")
+                    
+                    if first_success.chain1_out:
+                        f.write("Chain1 결과 (요약):\n")
+                        # 첫 200자만 표시
+                        chain1_summary = first_success.chain1_out[:200] + "..." if len(first_success.chain1_out) > 200 else first_success.chain1_out
+                        f.write(f"{chain1_summary}\n\n")
+                    
+                    if first_success.chain2_out:
+                        f.write("Chain2 결과 (요약):\n")
+                        chain2_summary = first_success.chain2_out[:200] + "..." if len(first_success.chain2_out) > 200 else first_success.chain2_out
+                        f.write(f"{chain2_summary}\n\n")
+                    
+                    if first_success.chain3_out:
+                        f.write("Chain3 결과 (요약):\n")
+                        chain3_summary = first_success.chain3_out[:200] + "..." if len(first_success.chain3_out) > 200 else first_success.chain3_out
+                        f.write(f"{chain3_summary}\n\n")
+            
+            self.logger.info(f"  중간 보고서 생성: {summary_filename}")
+            
+        except Exception as e:
+            self.logger.error(f"중간 보고서 생성 실패 [{image_name}]: {e}")
+    
+    def _generate_missing_intermediate_summaries(self, all_results: List[TestResult]) -> None:
+        """누락된 이미지별 중간 보고서 생성 (병렬 모드 보완용)"""
+        # 이미지별로 결과 그룹화
+        results_by_image = {}
+        for result in all_results:
+            if result.image_name not in results_by_image:
+                results_by_image[result.image_name] = []
+            results_by_image[result.image_name].append(result)
+        
+        # 각 이미지별로 중간 보고서가 있는지 확인하고 없으면 생성
+        for image_name, image_results in results_by_image.items():
+            if len(image_results) == self.config.trials:  # 해당 이미지의 모든 시행이 완료된 경우
+                # 기존 중간 보고서 파일 확인
+                pattern = f"summary_{image_name}_*.txt"
+                existing_summaries = list(self.paths['results'].glob(pattern))
+                
+                if not existing_summaries:  # 중간 보고서가 없는 경우만 생성
+                    self.logger.info(f"누락된 중간 보고서 생성: {image_name}")
+                    self._generate_intermediate_summary(image_name, image_results)
     
     @contextmanager
     def _progress_context(self, description: str):
@@ -308,22 +510,41 @@ class ResultsManager:
         self.logger = logging.getLogger('TetrisTest.Results')
     
     def save_individual_results(self, results: List[TestResult]) -> None:
-        """개별 결과 파일 저장"""
-        self.logger.info("개별 결과 파일 저장 중...")
+        """개별 결과 파일 저장 (이미 저장된 경우 스킵)"""
+        if not self.config.save_individual_results:
+            return
+            
+        self.logger.info("개별 결과 파일 저장 상태 확인 중...")
+        
+        saved_count = 0
+        skipped_count = 0
         
         for result in results:
             filename = f"{result.image_name}_trial_{result.trial:02d}.txt"
             filepath = self.results_path / filename
             
-            with open(filepath, 'w', encoding='utf-8') as f:
-                self._write_individual_result(f, result)
+            if filepath.exists():
+                skipped_count += 1
+                self.logger.debug(f"이미 저장됨: {filename}")
+            else:
+                # 파일이 없는 경우에만 저장 (누락된 결과 복구)
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    self._write_individual_result(f, result)
+                saved_count += 1
+                self.logger.debug(f"누락된 결과 저장: {filename}")
+        
+        if saved_count > 0:
+            self.logger.info(f"누락된 개별 결과 파일 {saved_count}개 저장 완료")
+        if skipped_count > 0:
+            self.logger.info(f"이미 저장된 파일 {skipped_count}개 확인")
     
     def _write_individual_result(self, file, result: TestResult) -> None:
-        """개별 결과 파일 내용 작성"""
+        """개별 결과 파일 내용 작성 (ResultsManager용 - TetrisTestEngine과 동일한 형식)"""
         file.write("=" * 60 + "\n")
         file.write(f"테스트 결과: {result.image_name} - Trial {result.trial}\n")
         file.write("=" * 60 + "\n")
         file.write(f"실행 시간: {result.timestamp}\n")
+        file.write(f"이미지 파일: {result.image_name}\n")
         file.write(f"실행 성공: {result.success}\n")
         file.write(f"실행 시간: {result.execution_time:.3f}초\n\n")
         
@@ -336,7 +557,7 @@ class ResultsManager:
             
             for section_name, content in sections:
                 file.write("=" * 20 + f"[ {section_name} ]" + "=" * 20 + "\n")
-                file.write(content or "" + "\n\n")
+                file.write((content or "") + "\n\n")
         else:
             file.write("=" * 20 + "[ ERROR ]" + "=" * 20 + "\n")
             file.write(f"오류 내용: {result.error}\n")
@@ -597,8 +818,13 @@ def main():
         
         total_time = perf_counter() - total_start
         
-        # 결과 저장
+        # 이미지별 중간 보고서 추가 생성 (병렬 모드에서 누락된 경우 대비)
+        if config.save_summary:
+            engine._generate_missing_intermediate_summaries(results)
+        
+        # 결과 저장 - 개별 파일은 이미 저장되었으므로 요약만 저장
         if config.save_individual_results:
+            # 누락된 파일이 있는지 확인하고 복구
             results_manager.save_individual_results(results)
         
         if config.save_summary:
