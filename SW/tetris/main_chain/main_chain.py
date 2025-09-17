@@ -2,7 +2,7 @@
 
 import os, json, re
 from pathlib import Path
-from typing import List
+from typing import List, Dict, Union
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import LLMChain, TransformChain, SequentialChain
@@ -221,9 +221,126 @@ chain_3 = LLMChain(
 
 VERBOSE = os.getenv("TETRIS_VERBOSE", "0") == "1"
 
+# chain 4
+
+# [Chain4 클래스 정의] 
+class chain4:
+    """
+    Task sequence를 16자리 십진수로 변환하는 클래스
+    """
+    def __init__(self):
+        self.encoding_rules = {
+            'disk_rotate': {0: '0000', 90: '0010'},
+            'move_on_rail': {'M': '0000', 'A': '0100', 'C': '0200'},
+            'seat_rotate': {0: '0000', 90: '1000', 180: '2000', 270: '3000'},
+            'unfold': '0000',
+            'fold': '0001'
+        }
+
+    def parse_function_call(self, func_call: str) -> Dict[str, Union[str, int]]:
+        pattern = r'(\w+)\((\d+)(?:,\s*(\w+))?\)'
+        match = re.match(pattern, func_call.strip())
+        if not match:
+            raise ValueError(f"Invalid function call format: {func_call}")
+        function_name = match.group(1)
+        cell_id = int(match.group(2))
+        param = match.group(3) if match.group(3) else None
+        if param and param.isdigit():
+            param = int(param)
+        return {'function': function_name, 'id': cell_id, 'param': param}
+
+    def encode_function(self, function_data: Dict[str, Union[str, int]]) -> str:
+        func_name = function_data['function']
+        param = function_data['param']
+        if func_name == 'disk_rotate':
+            if param not in self.encoding_rules['disk_rotate']:
+                raise ValueError(f"Invalid degree value for disk_rotate: {param}")
+            return self.encoding_rules['disk_rotate'][param]
+        elif func_name == 'move_on_rail':
+            if param not in self.encoding_rules['move_on_rail']:
+                raise ValueError(f"Invalid target value for move_on_rail: {param}")
+            return self.encoding_rules['move_on_rail'][param]
+        elif func_name == 'seat_rotate':
+            if param not in self.encoding_rules['seat_rotate']:
+                raise ValueError(f"Invalid degree value for seat_rotate: {param}")
+            return self.encoding_rules['seat_rotate'][param]
+        elif func_name == 'unfold':
+            return self.encoding_rules['unfold']
+        elif func_name == 'fold':
+            return self.encoding_rules['fold']
+        else:
+            raise ValueError(f"Unknown function: {func_name}")
+
+    def process_cell(self, function_calls: List[str]) -> str:
+        total_sum = 0
+        unfold_count = 0
+        for func_call in function_calls:
+            parsed_func = self.parse_function_call(func_call)
+            encoded_pin = self.encode_function(parsed_func)
+            total_sum += int(encoded_pin)
+            if parsed_func['function'] == 'unfold':
+                unfold_count += 1
+        final_result = total_sum - unfold_count
+        return f"{final_result:04d}"
+
+    def convert_to_16_digit(self, task_sequence: Dict[str, List[str]]) -> str:
+        result_parts = []
+        for cell_id in ['1', '2', '3', '4']:
+            if cell_id in task_sequence:
+                cell_result = self.process_cell(task_sequence[cell_id])
+            else:
+                cell_result = "0000"
+            result_parts.append(cell_result)
+        return ''.join(result_parts)
+
+    def convert_from_json_string(self, json_string: str) -> str:
+        try:
+            data = json.loads(json_string)
+            if 'task_sequence' in data:
+                return self.convert_to_16_digit(data['task_sequence'])
+            else:
+                return self.convert_to_16_digit(data)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON format: {e}")
+
+# chain3_out에서 JSON만 안전 추출
+def _extract_json_str_for_chain4(text: str) -> str:
+    if not text:
+        raise ValueError("chain3_out is empty.")
+    t = text.strip()
+    m = re.search(r"```(?:json)?\s*(.*?)```", t, re.S | re.I)
+    if m:
+        return m.group(1).strip()
+    if not (t.startswith("{") and t.endswith("}")):
+        first = t.find("{"); last = t.rfind("}")
+        if first != -1 and last != -1 and first < last:
+            t = t[first:last+1]
+    return t
+
+_chain4_converter = chain4()
+
+def _run_chain4_transform(inputs: dict) -> dict:
+    raw = inputs.get("chain3_out", "")
+    json_str = _extract_json_str_for_chain4(raw)
+    result16 = _chain4_converter.convert_from_json_string(json_str)
+    result16 = (result16 or "").strip()
+    if not result16.isdigit():
+        raise ValueError(f"chain4 result is not numeric: {result16}")
+    if len(result16) < 16:
+        result16 = result16.rjust(16, "0")
+    elif len(result16) > 16:
+        result16 = result16[:16]
+    return {"chain4_out": result16}
+
+chain_4 = TransformChain(
+    input_variables=["chain3_out"],
+    output_variables=["chain4_out"],
+    transform=_run_chain4_transform,
+)
+
 seq_chain = SequentialChain(
-    chains=[chain_1, inject_people_chain, prep_chain2_from_user_input, chain_2, prep_chain3_image, chain_3],
+    chains=[chain_1, inject_people_chain, prep_chain2_from_user_input, chain_2, prep_chain3_image, chain_3, chain_4],
     input_variables=["user_input", "people_count"],
-    output_variables=["chain1_out", "chain2_out", "chain3_out"],
+    output_variables=["chain1_out", "chain2_out", "chain3_out", "chain4_out"],
     verbose=VERBOSE,
 )

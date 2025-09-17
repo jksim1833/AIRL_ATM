@@ -1,8 +1,10 @@
 [user]
 The cabin is partitioned into 4 independent cells; each cell has one rotating disk and exactly one seat.
 Cells are isolated, so seats in different cells never collide.
-Information about initial environment and seats is given as a Python dictionary. 
+Information about initial environment and seats is given as a Python dictionary.
+**The "initial environment" is always identical.** 
 """
+[Initial environment]
 {
   "seats": {
     "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },

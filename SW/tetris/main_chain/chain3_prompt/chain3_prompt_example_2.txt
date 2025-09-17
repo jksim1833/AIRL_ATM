@@ -10,7 +10,7 @@ Example 1:
 
 - Output:
 {"task_sequence": {
-    "1": "no change"}}
+    "1": "unchanged"}}
 """
 Example 2:
 """
@@ -132,7 +132,6 @@ Example 6:
 }}
 """
 Generate the minimal valid sequence from initial environment to the instruction target, strictly obeying action-order dependencies.
-**The "initial environment" is always identical defined in "chain3_prompt_environment".**
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]

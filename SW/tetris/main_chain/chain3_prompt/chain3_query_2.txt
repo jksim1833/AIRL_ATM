@@ -14,7 +14,8 @@ Follow these rules:
 - If "facing" changes from F to L or L to B or B to R or R to F, "degree" is 270
 - **Within each seat's action sequence, follow this order: disk_rotate → fold → seat_rotate → move_on_rail → unfold.**
   (This is a rule for the order of operations, not a requirement to use every function.)
-- task_sequence should include only seats that change and list the minimal valid sequence (no redundant actions).
+- task_sequence should include only seats that change and list the minimal valid sequence. 
+  (**If the arrangement of the instruction and initial environment is the same, output "unchanged".**)
 
 **Plan sequentially: after each action, update the working state; decide the next action from that updated state.**
 **Print only the complete JSON in a single, fast response.**

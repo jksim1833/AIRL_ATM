@@ -518,8 +518,8 @@ document.addEventListener('click', ()=>{
         try:
             import webbrowser, threading
             url_qr = f"http://127.0.0.1:{port}/qr"
-            webbrowser.open(url_qr, new=1)                         # 1차
-            threading.Timer(0.5, lambda: webbrowser.open(url_qr, new=1)).start()  # 2차 보강
+            webbrowser.open(url_qr, new=1)                         
+            threading.Timer(0.5, lambda: webbrowser.open(url_qr, new=1)).start()  
         except Exception:
             pass
 

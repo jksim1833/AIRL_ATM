@@ -60,6 +60,8 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     print(result.get("chain2_out", ""))
     print("\n====================[ chain3_out ]====================")
     print(result.get("chain3_out", ""))
+    print("\n====================[ chain4_out ]====================")
+    print(result.get("chain4_out", ""))
 
     # 5) 파일 저장 
     lines = []
@@ -71,6 +73,9 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     lines.append("")
     lines.append("====================[ chain3_out ]====================")
     lines.append(result.get("chain3_out", ""))
+    lines.append("")
+    lines.append("====================[ chain4_out ]====================")
+    lines.append(result.get("chain4_out", ""))
 
     out_path.write_text("\n".join(lines), encoding="utf-8")
 
