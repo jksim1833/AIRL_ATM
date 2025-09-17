@@ -17,7 +17,7 @@ for p in (MC_DIR, UI_DIR):
 
 from user_input import get_user_input_web, get_user_input_scenario
 import main_chain as MC
-
+import rpi_controller as RPI   
 
 def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict:
     # 1) 입력 수집
@@ -53,6 +53,22 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     t_chain_end = perf_counter()
     chain_elapsed = t_chain_end - t_chain_start
 
+    # 3-1) chain4_out → 아두이노 전송 
+    chain4_out = result["chain4_out"].strip()
+    print("\n----- Arduino 제어 시작 -----")
+    try:
+        RPI.connect_to_arduinos()
+        if not RPI.arduino_connections:
+            raise SystemExit(2)
+        RPI.send_automated_command(chain4_out)
+    finally:
+        # 한 번만 안전 종료
+        try:
+            RPI.close_all_connections()
+        except Exception:
+            pass
+    print("----- Arduino 제어 종료 -----")
+
     # 4) 최종 출력 
     print("\n====================[ chain1_out ]====================")
     print(result.get("chain1_out", ""))
@@ -61,7 +77,7 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     print("\n====================[ chain3_out ]====================")
     print(result.get("chain3_out", ""))
     print("\n====================[ chain4_out ]====================")
-    print(result.get("chain4_out", ""))
+    print(chain4_out)
 
     # 5) 파일 저장 
     lines = []
@@ -75,7 +91,7 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     lines.append(result.get("chain3_out", ""))
     lines.append("")
     lines.append("====================[ chain4_out ]====================")
-    lines.append(result.get("chain4_out", ""))
+    lines.append(chain4_out)
 
     out_path.write_text("\n".join(lines), encoding="utf-8")
 
@@ -112,6 +128,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

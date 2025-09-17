@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+# rpi_controller.py
+
 import serial
 import time
 import readchar
