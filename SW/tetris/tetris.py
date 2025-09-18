@@ -4,6 +4,7 @@ import sys
 import argparse
 from pathlib import Path
 from time import perf_counter 
+import time
 
 HERE = Path(__file__).resolve().parent
 MC_DIR = HERE / "main_chain"
@@ -67,13 +68,18 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     try:
         RPI.connect_to_arduinos()
 
-        # 연결이 하나도 없으면 DRY-RUN으로 전환 
         connected = getattr(RPI, "arduino_connections", {})
         if not connected:
             print("[WARN] 연결된 아두이노가 없습니다. DRY-RUN 모드로 진행합니다.")
             print(f"[DRY-RUN] 16-digit code: {chain4_out}")
         else:
+            # ★ 추가: 연결 직후 약간 대기 (보드 리셋/초기화 여유)
+            time.sleep(0.3)
+
             RPI.send_automated_command(chain4_out)
+
+            # ★ 추가: 동작할 시간 확보 (필요시 2~3초로)
+            time.sleep(2.0)
 
     except Exception as e:
         # 하드웨어 제어 중 예외가 나도 결과 저장은 계속 진행
