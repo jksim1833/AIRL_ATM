@@ -6,24 +6,25 @@
     "luggage_1": {
       "object": "골프백",
       "color": "검은색, 빨간색",
-      "material": "합성섬유",
+      "material": "합성 섬유",
       "shape": "원통형에 가까운 비정형",
-      "text": "Titleist",
-      "special_note": "공간 차지 max. 높이가 길고 클럽들이 돌출되어 있어 차량 내부에 배치 시 상당한 수직 공간과 불규칙한 형태의 공간을 차지함"
+      "text": "Titleist (스크립트 로고), Titleist",
+      "special_note": "공간 차지 max. 길고 부피가 크며, 골프채가 돌출되어 있어 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
     "luggage_2": {
-      "object": "골프화",
-      "color": "흰색, 검은색, 빨간색",
-      "material": "합성가죽, 고무",
-      "shape": "비정형",
-      "special_note": "공간 차지 min"
-    },
-    "luggage_3": {
       "object": "더플백",
       "color": "검은색",
-      "material": "폴리에스터",
+      "material": "합성 섬유",
       "shape": "직육면체에 가까운 비정형",
-      "text": "세 개의 흰색 줄무늬 로고"
+      "text": "세 개의 흰색 줄무늬"
+    },
+    "luggage_3": {
+      "object": "골프화 한 켤레",
+      "color": "흰색, 검은색, 빨간색",
+      "material": "합성 가죽",
+      "shape": "비정형",
+      "text": "BOA",
+      "special_note": "공간 차지 min"
     }
   }
 }
@@ -47,28 +48,23 @@
 {
   "task_sequence": {
     "1": [
-      "fold(1)",
-      "move_on_rail(1, A)",
-      "unfold(1)"
+      "unchanged"
     ],
     "2": [
-      "fold(2)",
-      "seat_rotate(2, 90)",
-      "move_on_rail(2, C)"
+      "unchanged"
     ],
     "3": [
-      "fold(3)",
-      "move_on_rail(3, A)",
-      "unfold(3)"
+      "unchanged"
     ],
     "4": [
-      "fold(4)",
-      "seat_rotate(4, 270)",
-      "move_on_rail(4, C)"
+      "unchanged"
     ]
   }
 }
 ```
-[tetris 시스템 실행 완료]
-🕒 chain_run_time: 79.959s
-🕒 tetris_run_time: 91.296s
+
+====================[ chain4_out ]====================
+0000000000000000
+====================[ tetris 시스템 실행 완료 ]====================]
+🕒 chain_run_time: 99.614s
+🕒 tetris_run_time: 101.012s

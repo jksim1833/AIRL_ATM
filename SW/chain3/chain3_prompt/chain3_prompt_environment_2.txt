@@ -1,0 +1,40 @@
+[user]
+The cabin is partitioned into 4 independent cells; each cell has one rotating disk and exactly one seat.
+Cells are isolated, so seats in different cells never collide.
+Information about initial environment and seats is given as a Python dictionary.
+**The "initial environment" is always identical.** 
+"""
+[Initial environment]
+{
+  "seats": {
+    "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+    "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+    "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+    "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+  }
+}
+
+"""
+Seat states are represented using these sets:
+"""
+"SEAT STATE LIST"
+- rail_axis: "x" | "y" 
+  (orientation of the linear rail inside the rotating disk; x=lateral, y=longitudinal)
+  
+- position: "A" | "M" | "C" 
+  (three fixed points along the rail: A=negative end, M=center, C=positive end)
+
+- facing: "F" | "R" | "B" | "L" 
+  (absolute vehicle-facing: F=forward, R=right, B=backward, L=left)
+
+- mode: "chair" | "storage" 
+  (seat physical form: chair=deployed, storage=folded)
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. I will wait for further instructions before starting to work.
+
+
+
+
+

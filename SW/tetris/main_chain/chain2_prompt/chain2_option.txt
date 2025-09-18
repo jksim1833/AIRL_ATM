@@ -4,7 +4,7 @@
       "people_count": 0,
       "cases": [
         {
-          "luggage_amount": ["S", "M", "L"],
+          "luggage_amount": "S",
           "instruction": {
             "seats": {
               "1": ["x", "A", "R", "storage"],
@@ -12,8 +12,29 @@
               "3": ["x", "A", "R", "storage"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 0
+          }
+        },
+        {
+          "luggage_amount": "M",
+          "instruction": {
+            "seats": {
+              "1": ["x", "A", "R", "storage"],
+              "2": ["x", "C", "L", "storage"],
+              "3": ["x", "A", "R", "storage"],
+              "4": ["x", "C", "L", "storage"]
+            }
+          }
+        },
+        {
+          "luggage_amount": "L",
+          "instruction": {
+            "seats": {
+              "1": ["x", "A", "R", "storage"],
+              "2": ["x", "C", "L", "storage"],
+              "3": ["x", "A", "R", "storage"],
+              "4": ["x", "C", "L", "storage"]
+            }
+          }
         }
       ]
     },
@@ -29,8 +50,7 @@
               "3": ["x", "A", "R", "storage"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 1
+          }
         },
         {
           "luggage_amount": "M",
@@ -41,8 +61,7 @@
               "3": ["x", "A", "R", "storage"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 2
+          }
         },
         {
           "luggage_amount": "L",
@@ -53,8 +72,7 @@
               "3": ["x", "A", "R", "storage"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 3
+          }
         }
       ]
     },
@@ -70,8 +88,7 @@
               "3": ["x", "A", "R", "storage"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 4
+          }
         },
         {
           "luggage_amount": "M",
@@ -82,8 +99,7 @@
               "3": ["x", "A", "R", "storage"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 5
+          }
         },
         {
           "luggage_amount": "L",
@@ -94,8 +110,7 @@
               "3": ["x", "A", "R", "storage"],
               "4": ["x", "C", "L", "chair"]
             }
-          },
-          "option_no": 6
+          }
         }
       ]
     },
@@ -111,8 +126,7 @@
               "3": ["x", "M", "F", "chair"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 7
+          }
         },
         {
           "luggage_amount": "M",
@@ -123,8 +137,7 @@
               "3": ["y", "A", "F", "chair"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 8
+          }
         },
         {
           "luggage_amount": "L",
@@ -135,8 +148,7 @@
               "3": ["x", "A", "R", "chair"],
               "4": ["x", "C", "L", "storage"]
             }
-          },
-          "option_no": 9
+          }
         }
       ]
     },
@@ -152,8 +164,7 @@
               "3": ["x", "M", "F", "chair"],
               "4": ["x", "M", "F", "chair"]
             }
-          },
-          "option_no": 10
+          }
         },
         {
           "luggage_amount": "M",
@@ -164,8 +175,7 @@
               "3": ["y", "A", "F", "chair"],
               "4": ["y", "A", "F", "chair"]
             }
-          },
-          "option_no": 11
+          }
         },
         {
           "luggage_amount": "L",
@@ -176,8 +186,7 @@
               "3": ["x", "A", "F", "chair"],
               "4": ["x", "C", "F", "chair"]
             }
-          },
-          "option_no": 12
+          }
         }
       ]
     }

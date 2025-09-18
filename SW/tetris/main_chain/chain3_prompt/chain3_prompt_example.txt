@@ -17,9 +17,12 @@ Example 1:
   "seats": {
     "1": ["x","M","F","chair"]}
 },
+"task_sequence": {
+    "1": ["unchanged"]
+},
 "environment_after": {
   "seats": {
-    "1": "no change"}}}
+    "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}}}}
 """
 Example 2:
 """

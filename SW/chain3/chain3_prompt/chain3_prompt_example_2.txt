@@ -10,7 +10,7 @@ Example 1:
 
 - Output:
 {"task_sequence": {
-    "1": ["unchanged"]}}
+    "1": "unchanged"}}
 """
 Example 2:
 """

@@ -24,13 +24,13 @@ SYSTEM_FILE = DIR_SYSTEM / "chain3_system.txt"
 # 순서: role → environment → function → output_format → example
 PROMPT_FILE_ORDER = [
     "chain3_prompt_role.txt",
-    "chain3_prompt_environment.txt",
+    "chain3_prompt_environment_2.txt",
     "chain3_prompt_function.txt",
-    "chain3_prompt_output_format.txt",
-    "chain3_prompt_example.txt",
+    "chain3_prompt_output_format_2.txt",
+    "chain3_prompt_example_2.txt",
 ]
 
-QUERY_FILE = DIR_QUERY / "chain3_query.txt"
+QUERY_FILE = DIR_QUERY / "chain3_query_2.txt"
 
 # ================== API 키 로드 ==================
 with open(DIR_ROOT.parent / "tetris_secrets.json", "r", encoding="utf-8") as f:

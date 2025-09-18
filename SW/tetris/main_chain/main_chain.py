@@ -24,12 +24,12 @@ CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 # [Chain3 경로] __file__ 기준: ./chain3_prompt/<파일>
 CHAIN3_DIR              = ROOT / "chain3_prompt"
 C3_SYSTEM_TXT           = CHAIN3_DIR / "chain3_system.txt"
-C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query_2.txt"
+C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query.txt"
 C3_ROLE_TXT             = CHAIN3_DIR / "chain3_prompt_role.txt"
-C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment_2.txt"
+C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment.txt"
 C3_FUNC_TXT             = CHAIN3_DIR /  "chain3_prompt_function.txt"
-C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format_2.txt"
-C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example_2.txt"
+C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format.txt"
+C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example.txt"
 C3_IMAGE_PNG            = CHAIN3_DIR / "chain3_prompt_image.png"
 
 def _read_text(p: Path) -> str:
@@ -49,12 +49,12 @@ for p, label in [
     (CHAIN2_PROMPT_TXT, "chain2_prompt.txt"),
     (CHAIN2_OPTION_TXT, "chain2_option.txt"),
     (C3_SYSTEM_TXT, "chain3_system.txt"),
-    (C3_QUERY_TXT, "chain3_query_2.txt"),
+    (C3_QUERY_TXT, "chain3_query.txt"),
     (C3_ROLE_TXT, "chain3_prompt_role.txt"),
-    (C3_ENV_TXT, "chain3_prompt_environment_2.txt"),
+    (C3_ENV_TXT, "chain3_prompt_environment.txt"),
     (C3_FUNC_TXT, "chain3_prompt_function.txt"),
-    (C3_OUTFMT_TXT, "chain3_prompt_output_format_2.txt"),
-    (C3_EXAMPLE_TXT, "chain3_prompt_example_2.txt"),
+    (C3_OUTFMT_TXT, "chain3_prompt_output_format.txt"),
+    (C3_EXAMPLE_TXT, "chain3_prompt_example.txt"),
     (C3_IMAGE_PNG, "chain3_prompt_image.png"),
 ]:
     _require_exists(p, label)
@@ -234,62 +234,132 @@ class chain4:
             'move_on_rail': {'M': '0000', 'A': '0100', 'C': '0200'},
             'seat_rotate': {0: '0000', 90: '1000', 180: '2000', 270: '3000'},
             'unfold': '0000',
-            'fold': '0001'
+            'fold': '0001',
+            'unchanged': '0000'
         }
 
-    def parse_function_call(self, func_call: str) -> Dict[str, Union[str, int]]:
-        pattern = r'(\w+)\((\d+)(?:,\s*(\w+))?\)'
-        match = re.match(pattern, func_call.strip())
-        if not match:
+    def parse_function_call(self, func_call: str) -> Dict[str, Union[str, int, None]]:
+    
+        if not func_call or not isinstance(func_call, str):
+            raise ValueError(f"Invalid function call (empty): {func_call}")
+
+        s = func_call.strip()
+        if not s:
+            raise ValueError(f"Invalid function call (blank): {func_call}")
+
+        # 괄호 없는 단일 토큰 (예: 'unchanged')
+        if "(" not in s and ")" not in s:
+            return {"function": s, "param": None}
+
+        m = re.match(r"^\s*(\w+)\s*\(\s*(.*?)\s*\)\s*$", s)
+        if not m:
             raise ValueError(f"Invalid function call format: {func_call}")
-        function_name = match.group(1)
-        cell_id = int(match.group(2))
-        param = match.group(3) if match.group(3) else None
-        if param and param.isdigit():
-            param = int(param)
-        return {'function': function_name, 'id': cell_id, 'param': param}
+
+        func_name, arg_str = m.group(1), m.group(2)
+        if arg_str == "":
+            param = None
+        else:
+            # 단일 인자만 지원: '90' / 'M'
+            param_raw = arg_str.strip().strip('\'"')
+            param = int(param_raw) if param_raw.isdigit() else param_raw
+
+        return {"function": func_name, "param": param}
+
 
     def encode_function(self, function_data: Dict[str, Union[str, int]]) -> str:
         func_name = function_data['function']
         param = function_data['param']
+
         if func_name == 'disk_rotate':
             if param not in self.encoding_rules['disk_rotate']:
                 raise ValueError(f"Invalid degree value for disk_rotate: {param}")
             return self.encoding_rules['disk_rotate'][param]
+        
         elif func_name == 'move_on_rail':
             if param not in self.encoding_rules['move_on_rail']:
                 raise ValueError(f"Invalid target value for move_on_rail: {param}")
             return self.encoding_rules['move_on_rail'][param]
+        
         elif func_name == 'seat_rotate':
             if param not in self.encoding_rules['seat_rotate']:
                 raise ValueError(f"Invalid degree value for seat_rotate: {param}")
             return self.encoding_rules['seat_rotate'][param]
+        
         elif func_name == 'unfold':
             return self.encoding_rules['unfold']
+        
         elif func_name == 'fold':
             return self.encoding_rules['fold']
+        
+        elif func_name == 'unchanged':
+            return self.encoding_rules['unchanged']
+        
         else:
             raise ValueError(f"Unknown function: {func_name}")
 
-    def process_cell(self, function_calls: List[str]) -> str:
+    def process_cell(self, function_calls: Union[str, List[str]]) -> str:
+
+        if function_calls is None:
+            return "0000"
+
+        if isinstance(function_calls, str):
+            raw = function_calls.strip()
+            if not raw:
+                calls = []
+            elif ";" in raw or "\n" in raw:
+                calls = [x.strip() for x in re.split(r"[;\n]", raw) if x.strip()]
+            else:
+                calls = [raw]
+        elif isinstance(function_calls, list):
+            calls = [str(x).strip() for x in function_calls if str(x).strip()]
+        else:
+            raise ValueError(f"Cell actions must be list or str, got: {type(function_calls)}")
+
+        # --- 인코딩 ---
         total_sum = 0
         unfold_count = 0
-        for func_call in function_calls:
-            parsed_func = self.parse_function_call(func_call)
-            encoded_pin = self.encode_function(parsed_func)
-            total_sum += int(encoded_pin)
-            if parsed_func['function'] == 'unfold':
+        for func_call in calls:
+            parsed = self.parse_function_call(func_call)
+            func_name = parsed["function"]
+            param = parsed["param"]
+
+            # unchanged: 무동작. 현재 정책은 '0000' 인코딩과 동일 효과
+            if func_name == "unchanged":
+                encoded_pin = self.encoding_rules["unchanged"]
+            elif func_name == "disk_rotate":
+                if param not in self.encoding_rules["disk_rotate"]:
+                    raise ValueError(f"Invalid degree value for disk_rotate: {param}")
+                encoded_pin = self.encoding_rules["disk_rotate"][param]
+            elif func_name == "move_on_rail":
+                if param not in self.encoding_rules["move_on_rail"]:
+                    raise ValueError(f"Invalid target value for move_on_rail: {param}")
+                encoded_pin = self.encoding_rules["move_on_rail"][param]
+            elif func_name == "seat_rotate":
+                if param not in self.encoding_rules["seat_rotate"]:
+                    raise ValueError(f"Invalid degree value for seat_rotate: {param}")
+                encoded_pin = self.encoding_rules["seat_rotate"][param]
+            elif func_name == "unfold":
+                encoded_pin = self.encoding_rules["unfold"]
                 unfold_count += 1
+            elif func_name == "fold":
+                encoded_pin = self.encoding_rules["fold"]
+            else:
+                raise ValueError(f"Unknown function: {func_name}")
+
+            total_sum += int(encoded_pin)
+
         final_result = total_sum - unfold_count
         return f"{final_result:04d}"
 
-    def convert_to_16_digit(self, task_sequence: Dict[str, List[str]]) -> str:
+    def convert_to_16_digit(self, task_sequence: Dict[str, Union[str, List[str]]]) -> str:
+    
+        if not isinstance(task_sequence, dict):
+            raise ValueError(f"task_sequence must be dict, got: {type(task_sequence)}")
+
         result_parts = []
         for cell_id in ['1', '2', '3', '4']:
-            if cell_id in task_sequence:
-                cell_result = self.process_cell(task_sequence[cell_id])
-            else:
-                cell_result = "0000"
+            seq = task_sequence.get(cell_id, "unchanged")
+            cell_result = self.process_cell(seq)
             result_parts.append(cell_result)
         return ''.join(result_parts)
 
@@ -344,3 +414,5 @@ seq_chain = SequentialChain(
     output_variables=["chain1_out", "chain2_out", "chain3_out", "chain4_out"],
     verbose=VERBOSE,
 )
+
+

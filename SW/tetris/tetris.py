@@ -17,7 +17,15 @@ for p in (MC_DIR, UI_DIR):
 
 from user_input import get_user_input_web, get_user_input_scenario
 import main_chain as MC
-import rpi_controller as RPI   
+
+# rpi_controller 로드 
+RPI_DIR = HERE / "rpi_controller"
+RPI_FILE = RPI_DIR / "rpi_controller.py"
+if not RPI_FILE.exists():
+    raise FileNotFoundError(f"필수 파일이 없습니다: {RPI_FILE}")
+if str(RPI_DIR) not in sys.path:
+    sys.path.insert(0, str(RPI_DIR))
+import rpi_controller as RPI
 
 def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict:
     # 1) 입력 수집
@@ -58,11 +66,22 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     print("\n----- Arduino 제어 시작 -----")
     try:
         RPI.connect_to_arduinos()
-        if not RPI.arduino_connections:
-            raise SystemExit(2)
-        RPI.send_automated_command(chain4_out)
+
+        # 연결이 하나도 없으면 DRY-RUN으로 전환 
+        connected = getattr(RPI, "arduino_connections", {})
+        if not connected:
+            print("[WARN] 연결된 아두이노가 없습니다. DRY-RUN 모드로 진행합니다.")
+            print(f"[DRY-RUN] 16-digit code: {chain4_out}")
+        else:
+            RPI.send_automated_command(chain4_out)
+
+    except Exception as e:
+        # 하드웨어 제어 중 예외가 나도 결과 저장은 계속 진행
+        print(f"[WARN] 하드웨어 제어 중 예외 → DRY-RUN 전환: {e}")
+        print(f"[DRY-RUN] 16-digit code: {chain4_out}")
+
     finally:
-        # 한 번만 안전 종료
+        # 연결 유무와 상관없이 안전 종료 시도
         try:
             RPI.close_all_connections()
         except Exception:
@@ -116,12 +135,12 @@ def main():
     t_total_end = perf_counter()
     total_elapsed = t_total_end - t_total_start
 
-    print("\n[tetris 시스템 실행 완료]")
+    print("\n====================[ tetris 시스템 실행 완료 ]====================]")
     print(f"🕒 chain_run_time: {res['chain_elapsed']:.3f}s")
     print(f"🕒 tetris_run_time: {total_elapsed:.3f}s")
 
     with res["out_path"].open("a", encoding="utf-8") as f:
-        f.write("\n[tetris 시스템 실행 완료]\n")
+        f.write("\n====================[ tetris 시스템 실행 완료 ]====================]\n")
         f.write(f"🕒 chain_run_time: {res['chain_elapsed']:.3f}s\n")
         f.write(f"🕒 tetris_run_time: {total_elapsed:.3f}s\n")
 
