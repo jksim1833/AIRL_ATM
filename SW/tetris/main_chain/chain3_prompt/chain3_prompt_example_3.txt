@@ -10,7 +10,7 @@ Example 1:
 
 - Output:
 {"task_actions": {
-    "1": ["no change"]}}
+    "1": ["unchanged"]}}
 """
 Example 2:
 """
@@ -21,7 +21,7 @@ Example 2:
 
 - Output:
 {"task_actions": {
-    "1": ["disk_rotate(1, 90)", "seat_rotate(1, 270)", "move_on_rail(1, A)"]}}
+    "1": ["disk_rotate(90)", "seat_rotate(270)", "move_on_rail(A)"]}}
 """
 Example 3:
 """
@@ -32,7 +32,7 @@ Example 3:
 
 - Output:
 {"task_actions": {
-    "1": ["disk_rotate(1, 90)", "seat_rotate(1, 180)", "move_on_rail(1, A)"]}}
+    "1": ["disk_rotate(90)", "seat_rotate(180)", "move_on_rail(A)"]}}
 """
 Example 4:
 """
@@ -43,7 +43,7 @@ Example 4:
 
 - Output:
 {"task_actions": {
-    "1": ["disk_rotate(1, 90)", "seat_rotate(1, 90)", "move_on_rail(1, A)"]}}
+    "1": ["disk_rotate(90)", "seat_rotate(90)", "move_on_rail(A)"]}}
 """
 Example 5:
 """
@@ -57,10 +57,10 @@ Example 5:
 
 - Output:
 {"task_actions": {
-    "1": ["no change"],
-    "2": ["fold(2)", "seat_rotate(2, 90)", "move_on_rail(2, C)"],
-    "3": ["move_on_rail(3, A)"],
-    "4": ["fold(4)", "seat_rotate(4, 270)", "move_on_rail(4, C)"]}}
+    "1": ["unchanged"],
+    "2": ["fold(2)", "seat_rotate(90)", "move_on_rail(C)"],
+    "3": ["move_on_rail(A)"],
+    "4": ["fold(4)", "seat_rotate(270)", "move_on_rail(C)"]}}
 """
 Example 6:
 """
@@ -74,12 +74,12 @@ Example 6:
 
 - Output:
 {"task_actions": {
-    "1": ["disk_rotate(1, 90)", "fold(1)", "seat_rotate(1, 90)", "move_on_rail(1, A)"],
-    "2": ["disk_rotate(2, 90)", "seat_rotate(2, 180)", "move_on_rail(2, C)"],
-    "3": ["disk_rotate(3, 90)", "move_on_rail(3, A)"],
-    "4": ["disk_rotate(4, 90)", "fold(4)", "seat_rotate(4, 270)", "move_on_rail(4, C)"]}}
+    "1": ["disk_rotate(90)", "fold(1)", "seat_rotate(90)", "move_on_rail(A)"],
+    "2": ["disk_rotate(90)", "seat_rotate(180)", "move_on_rail(C)"],
+    "3": ["disk_rotate(90)", "move_on_rail(A)"],
+    "4": ["disk_rotate(90)", "fold(4)", "seat_rotate(270)", "move_on_rail(C)"]}}
 """
-**The "initial environment" is always identical defined in "chain3_prompt_environment".**
+**The "initial environment" is always identical.**
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]

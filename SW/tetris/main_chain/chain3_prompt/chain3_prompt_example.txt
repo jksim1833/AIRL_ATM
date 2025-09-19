@@ -220,7 +220,7 @@ Example 6:
     "4": {"rail_axis": "y", "position": "C", "facing": "F", "mode": "storage"}}}}
 """
 Generate the minimal valid sequence from environment_before to the instruction target, strictly obeying action-order dependencies.
-**The "environment_before" is always identical to the initial environment defined in "chain3_prompt_environment".**
+**The "environment_before" is always identical.**
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]
