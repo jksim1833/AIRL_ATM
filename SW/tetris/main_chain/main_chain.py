@@ -5,7 +5,8 @@ from pathlib import Path
 from typing import List, Dict, Union
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.chains import LLMChain, TransformChain, SequentialChain
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.messages import HumanMessage
 
 # [경로/키] __file__ 기준 상대경로와 GOOGLE_API_KEY 확보
@@ -91,13 +92,6 @@ def make_chain1_user_input(people_count: int, image_data_url: str) -> List[Human
         HumanMessage(content=[{"type":"image_url","image_url":{"url":image_data_url}}]),
     ]
 
-# [Chain1 정의] 입력(user_input + system) → 출력(chain1_out: JSON 문자열 기대)
-chain_1 = LLMChain(
-    llm=llm,
-    prompt=chain1_prompt,
-    output_key="chain1_out_raw",
-)
-
 # [Chain1 출력 수정] chain1_out에 people 주입 
 def _inject_people_into_json(result_text: str, people_count: int) -> str:
     text = (result_text or "").strip()
@@ -124,19 +118,11 @@ def _inject_people_into_json(result_text: str, people_count: int) -> str:
             indent=2,
         )
 
-def _inject_people_transform(inputs: dict) -> dict:
-    return {
-        "chain1_out": _inject_people_into_json(
-            inputs.get("chain1_out_raw", ""),
-            int(inputs.get("people_count", 0)),
-        )
-    }
-
-inject_people_chain = TransformChain(
-    input_variables=["chain1_out_raw", "people_count"],
-    output_variables=["chain1_out"],
-    transform=_inject_people_transform,
-)
+def _inject_people_value(inputs: dict) -> str:
+    return _inject_people_into_json(
+        inputs.get("chain1_out_raw", ""),
+        int(inputs.get("people_count", 0)),
+    )
 
 # chain 2
 
@@ -148,11 +134,8 @@ def _extract_chain2_image(inputs: dict) -> dict:
         raise ValueError("user_input에 이미지 메시지가 없습니다.")
     return {"chain2_image": [img_msgs[0]]}
 
-prep_chain2_from_user_input = TransformChain(
-    input_variables=["user_input"],
-    output_variables=["chain2_image"],
-    transform=_extract_chain2_image,
-)
+def _chain2_image_value(inputs: dict):
+    return _extract_chain2_image(inputs)["chain2_image"]
 
 # [Chain2 프롬프트] system=chain2_prompt.txt, human={chain1_out}+이미지+chain2_option.txt
 _chain2_system = _escape_braces(_read_text(CHAIN2_PROMPT_TXT))
@@ -163,13 +146,6 @@ chain2_prompt = ChatPromptTemplate.from_messages([
     MessagesPlaceholder(variable_name="chain2_image"),
     ("human", _chain2_option),
 ])
-
-# [Chain2 정의] 입력(chain1_out + 이미지 + option + system) → 출력(chain2_out)
-chain_2 = LLMChain(
-    llm=llm,
-    prompt=chain2_prompt,
-    output_key="chain2_out",
-)
 
 # chain 3
 
@@ -203,21 +179,8 @@ def make_chain3_image_input() -> List[HumanMessage]:
     return [HumanMessage(content=[{"type":"image_url","image_url":{"url":data_url}}])]
 
 # Chain3는 고정 PNG 이미지를 항상 부착
-def _attach_chain3_image(_: dict) -> dict:
-    return {"chain3_image": make_chain3_image_input()}
-
-prep_chain3_image = TransformChain(
-    input_variables=[],
-    output_variables=["chain3_image"],
-    transform=_attach_chain3_image,
-)
-
-# [Chain3 정의] 입력(chain2_out + 5문서 + query + 이미지 + system) → 출력(chain3_out)
-chain_3 = LLMChain(
-    llm=llm,
-    prompt=chain3_prompt,
-    output_key="chain3_out",
-)
+def _chain3_image_value(_: dict):
+    return make_chain3_image_input()
 
 VERBOSE = os.getenv("TETRIS_VERBOSE", "0") == "1"
 
@@ -239,7 +202,6 @@ class chain4:
         }
 
     def parse_function_call(self, func_call: str) -> Dict[str, Union[str, int, None]]:
-    
         if not func_call or not isinstance(func_call, str):
             raise ValueError(f"Invalid function call (empty): {func_call}")
 
@@ -264,7 +226,6 @@ class chain4:
             param = int(param_raw) if param_raw.isdigit() else param_raw
 
         return {"function": func_name, "param": param}
-
 
     def encode_function(self, function_data: Dict[str, Union[str, int]]) -> str:
         func_name = function_data['function']
@@ -298,7 +259,6 @@ class chain4:
             raise ValueError(f"Unknown function: {func_name}")
 
     def process_cell(self, function_calls: Union[str, List[str]]) -> str:
-
         if function_calls is None:
             return "0000"
 
@@ -352,7 +312,6 @@ class chain4:
         return f"{final_result:04d}"
 
     def convert_to_16_digit(self, task_sequence: Dict[str, Union[str, List[str]]]) -> str:
-    
         if not isinstance(task_sequence, dict):
             raise ValueError(f"task_sequence must be dict, got: {type(task_sequence)}")
 
@@ -402,17 +361,25 @@ def _run_chain4_transform(inputs: dict) -> dict:
         result16 = result16[:16]
     return {"chain4_out": result16}
 
-chain_4 = TransformChain(
-    input_variables=["chain3_out"],
-    output_variables=["chain4_out"],
-    transform=_run_chain4_transform,
+# =============================== LCEL 파이프라인 ===============================
+
+_pipeline = (
+    RunnablePassthrough()
+    .assign(chain1_out_raw=(chain1_prompt | llm | StrOutputParser()))
+    .assign(chain1_out=RunnableLambda(_inject_people_value))
+    .assign(chain2_image=RunnableLambda(_chain2_image_value))
+    .assign(chain2_out=(chain2_prompt | llm | StrOutputParser()))
+    .assign(chain3_image=RunnableLambda(_chain3_image_value))
+    .assign(chain3_out=(chain3_prompt | llm | StrOutputParser()))
+    .assign(chain4_out=RunnableLambda(lambda inputs: _run_chain4_transform(inputs)["chain4_out"]))
 )
 
-seq_chain = SequentialChain(
-    chains=[chain_1, inject_people_chain, prep_chain2_from_user_input, chain_2, prep_chain3_image, chain_3, chain_4],
-    input_variables=["user_input", "people_count"],
-    output_variables=["chain1_out", "chain2_out", "chain3_out", "chain4_out"],
-    verbose=VERBOSE,
-)
+def _select_outputs(d: dict) -> dict:
+    return {
+        "chain1_out": d.get("chain1_out", ""),
+        "chain2_out": d.get("chain2_out", ""),
+        "chain3_out": d.get("chain3_out", ""),
+        "chain4_out": d.get("chain4_out", ""),
+    }
 
-
+tetris_chain = _pipeline | RunnableLambda(_select_outputs)

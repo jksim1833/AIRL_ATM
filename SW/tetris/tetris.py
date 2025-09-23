@@ -52,7 +52,7 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     print("----- chain 실행중 -----")
     t_chain_start = perf_counter()
     try:
-        result = MC.seq_chain.invoke({"user_input": user_msgs, "people_count": people_count})
+        result = MC.tetris_chain.invoke({"user_input": user_msgs, "people_count": people_count})
     except Exception as e:
         print("\n[ERROR] main_chain 실행 실패")
         print(f"- 이유: {e}")
@@ -73,12 +73,10 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
             print("[WARN] 연결된 아두이노가 없습니다. DRY-RUN 모드로 진행합니다.")
             print(f"[DRY-RUN] 16-digit code: {chain4_out}")
         else:
-            # ★ 추가: 연결 직후 약간 대기 (보드 리셋/초기화 여유)
             time.sleep(0.3)
 
             RPI.send_automated_command(chain4_out)
 
-            # ★ 추가: 동작할 시간 확보 (필요시 2~3초로)
             time.sleep(2.0)
 
     except Exception as e:

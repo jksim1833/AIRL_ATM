@@ -1,0 +1,21 @@
+{"task_sequence": {
+    "1": [
+    "fold(1)",
+    "move_on_rail(1, A)",
+    "unfold(1)"
+    ],
+    "2": [
+    "fold(2)",
+    "move_on_rail(2, C)",
+    "unfold(2)"
+    ],
+    "3": [
+    "fold(3)",
+    "move_on_rail(3, A)",
+    "unfold(3)"
+    ],
+    "4": [
+    "fold(4)",
+    "move_on_rail(4, C)",
+    "unfold(4)"]
+}}

@@ -1,70 +1,103 @@
 ====================[ chain1_out ]====================
 {
-  "people": 4,
+  "people": 2,
   "total_luggage_count": 3,
   "luggage_details": {
     "luggage_1": {
-      "object": "골프백",
-      "color": "검은색, 빨간색",
-      "material": "합성 섬유",
-      "shape": "원통형에 가까운 비정형",
-      "text": "Titleist (스크립트 로고), Titleist",
-      "special_note": "공간 차지 max. 길고 부피가 크며, 골프채가 돌출되어 있어 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+      "object": "골프백 (골프채 포함)",
+      "color": "검은색, 빨간색, 흰색",
+      "material": "폴리에스터",
+      "shape": "원통형에 가까운 비정형. 골프채가 꽂혀 있어 상단이 불규칙하며, 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함",
+      "text": "Titleist, YAMAHA, 125000",
+      "special_note": "공간 차지 max. 길고 부피가 크며, 골프채가 꽂혀 있어 상단 형태가 불규칙하여 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
     "luggage_2": {
-      "object": "더플백",
-      "color": "검은색",
-      "material": "합성 섬유",
-      "shape": "직육면체에 가까운 비정형",
-      "text": "세 개의 흰색 줄무늬"
+      "object": "골프화",
+      "color": "흰색, 검은색, 빨간색",
+      "material": "가죽",
+      "shape": "비정형",
+      "text": "ZZI, BOA",
+      "special_note": "공간 차지 min"
     },
     "luggage_3": {
-      "object": "골프화 한 켤레",
-      "color": "흰색, 검은색, 빨간색",
-      "material": "합성 가죽",
-      "shape": "비정형",
-      "text": "BOA",
-      "special_note": "공간 차지 min"
+      "object": "스포츠 더플백",
+      "color": "검은색, 흰색",
+      "material": "폴리에스터",
+      "shape": "직육면체에 가까운 비정형. 내용물에 따라 형태가 유연하게 변형될 수 있음"
     }
   }
 }
 
 ====================[ chain2_out ]====================
-```json
 {
   "instruction": {
     "seats": {
-      "1": ["x", "M", "F", "chair"],
-      "2": ["x", "M", "F", "chair"],
-      "3": ["x", "M", "F", "chair"],
-      "4": ["x", "M", "F", "chair"]
+      "1": ["y", "C", "F", "chair"],
+      "2": ["y", "C", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+
+====================[ chain3_out ]====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["y", "C", "F", "chair"],
+      "2": ["y", "C", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(1)"
+    ],
+    "2": [
+      "disk_rotate(90)",
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
     }
   }
 }
 ```
 
-====================[ chain3_out ]====================
-```json
-{
-  "task_sequence": {
-    "1": [
-      "unchanged"
-    ],
-    "2": [
-      "unchanged"
-    ],
-    "3": [
-      "unchanged"
-    ],
-    "4": [
-      "unchanged"
-    ]
-  }
-}
-```
-
 ====================[ chain4_out ]====================
-0000000000000000
+3210321011013201
 ====================[ tetris 시스템 실행 완료 ]====================]
-🕒 chain_run_time: 99.614s
-🕒 tetris_run_time: 101.012s
+🕒 chain_run_time: 85.896s
+🕒 tetris_run_time: 97.053s
