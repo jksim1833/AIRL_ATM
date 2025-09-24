@@ -10,8 +10,8 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.messages import HumanMessage
 
 # [경로/키] __file__ 기준 상대경로와 GOOGLE_API_KEY 확보
-ROOT = Path(__file__).resolve().parent                        # .../AIRL_ATM/SW/tetris/main_chain
-TETRIS_ROOT = ROOT.parent                                     # .../AIRL_ATM/SW/tetris
+ROOT = Path(__file__).resolve().parent                        # .../SW/tetris/main_chain
+TETRIS_ROOT = ROOT.parent                                     # .../SW/tetris
 SECRETS_JSON = TETRIS_ROOT / "tetris_secrets.json"            # tetris_secrets.json
 
 #[Chain1 경로]
@@ -209,7 +209,6 @@ class chain4:
         if not s:
             raise ValueError(f"Invalid function call (blank): {func_call}")
 
-        # 괄호 없는 단일 토큰 (예: 'unchanged')
         if "(" not in s and ")" not in s:
             return {"function": s, "param": None}
 
@@ -221,7 +220,7 @@ class chain4:
         if arg_str == "":
             param = None
         else:
-            # 단일 인자만 지원: '90' / 'M'
+            
             param_raw = arg_str.strip().strip('\'"')
             param = int(param_raw) if param_raw.isdigit() else param_raw
 
@@ -361,8 +360,7 @@ def _run_chain4_transform(inputs: dict) -> dict:
         result16 = result16[:16]
     return {"chain4_out": result16}
 
-# =============================== LCEL 파이프라인 ===============================
-
+# =============================== LCEL 파이프라인 (기본; 호환 유지) ===============================
 _pipeline = (
     RunnablePassthrough()
     .assign(chain1_out_raw=(chain1_prompt | llm | StrOutputParser()))
@@ -383,3 +381,54 @@ def _select_outputs(d: dict) -> dict:
     }
 
 tetris_chain = _pipeline | RunnableLambda(_select_outputs)
+
+# =============================== LCEL 파이프라인 (태그/런네임 부착 버전) ===============================
+def _tags_for(chain_label: str, meta_tags: list[str], prompt_path: Path) -> dict:
+    prompt_name = prompt_path.name  # 프롬프트 파일명을 태그로
+    tags = (meta_tags or []) + [chain_label, f"prompt_name:{prompt_name}"]
+    return {
+        "run_name": f"{chain_label}_out",  # chain1_out 등
+        "tags": tags,
+        "metadata": {"prompt_name": prompt_name, "chain": chain_label},
+    }
+
+def build_pipeline_with_tags(meta_tags: list[str] | None = None):
+    meta_tags = meta_tags or []
+    return (
+        RunnablePassthrough()
+        # chain1
+        .assign(
+            chain1_out_raw=(chain1_prompt | llm | StrOutputParser())
+            .with_config(_tags_for("chain1", meta_tags, CHAIN1_PROMPT_TXT))
+        )
+        .assign(
+            chain1_out=RunnableLambda(_inject_people_value)
+            .with_config(_tags_for("chain1", meta_tags, CHAIN1_PROMPT_TXT))
+        )
+        # chain2
+        .assign(
+            chain2_image=RunnableLambda(_chain2_image_value)
+            .with_config(_tags_for("chain2", meta_tags, CHAIN2_PROMPT_TXT))
+        )
+        .assign(
+            chain2_out=(chain2_prompt | llm | StrOutputParser())
+            .with_config(_tags_for("chain2", meta_tags, CHAIN2_PROMPT_TXT))
+        )
+        # chain3
+        .assign(
+            chain3_image=RunnableLambda(_chain3_image_value)
+            .with_config(_tags_for("chain3", meta_tags, C3_SYSTEM_TXT))
+        )
+        .assign(
+            chain3_out=(chain3_prompt | llm | StrOutputParser())
+            .with_config(_tags_for("chain3", meta_tags, C3_SYSTEM_TXT))
+        )
+        # chain4
+        .assign(
+            chain4_out=RunnableLambda(lambda inputs: _run_chain4_transform(inputs)["chain4_out"])
+            .with_config(_tags_for("chain4", meta_tags, C3_SYSTEM_TXT))
+        )
+    )
+
+def tetris_chain_with(meta_tags: list[str] | None = None):
+    return build_pipeline_with_tags(meta_tags) | RunnableLambda(_select_outputs)
