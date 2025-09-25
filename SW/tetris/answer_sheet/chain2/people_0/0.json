@@ -1,8 +1,8 @@
 {
   "instruction": {
     "seats": {
-      "1": ["x", "M", "F", "chair"],
-      "2": ["x", "M", "F", "chair"],
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
     }

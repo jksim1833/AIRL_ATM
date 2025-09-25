@@ -1,0 +1,94 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 2,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "안마의자",
+      "color": "아이보리색, 베이지색, 검은색",
+      "material": "인조가죽",
+      "shape": "인체공학적 곡선이 많은 비정형",
+      "special_note": "공간 차지 max. 매우 크고 복잡한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_2": {
+      "object": "바닥 매트",
+      "color": "회색",
+      "material": "직물",
+      "shape": "타원형",
+      "text": "ZEPPA",
+      "special_note": "공간 차지 min"
+    }
+  }
+}
+
+====================[ chain2_out ]====================
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "chair"]
+    }
+  }
+}
+
+====================[ chain3_out ]====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "chair"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(4)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "chair" }
+    }
+  }
+}
+```
+
+====================[ chain4_out ]====================
+1101320011013200
+====================[ tetris 시스템 실행 완료 ]====================]
+🕒 chain_run_time: 67.727s
+🕒 tetris_run_time: 75.431s

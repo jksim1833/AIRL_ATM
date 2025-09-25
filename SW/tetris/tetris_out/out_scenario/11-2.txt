@@ -1,0 +1,181 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 7,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "대형 수납 상자",
+      "color": "회백색",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "text": "STORMAX",
+      "special_note": "공간 차지 max. 길고 납작한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+    },
+    "luggage_2": {
+      "object": "대형 수납 상자",
+      "color": "회백색",
+      "material": "플라스틱",
+      "shape": "직육면체"
+    },
+    "luggage_3": {
+      "object": "중형 수납 상자",
+      "color": "크림색",
+      "material": "플라스틱",
+      "shape": "정육면체",
+      "text": "Blandning"
+    },
+    "luggage_4": {
+      "object": "중형 수납 상자",
+      "color": "크림색",
+      "material": "플라스틱",
+      "shape": "정육면체"
+    },
+    "luggage_5": {
+      "object": "서랍형 수납 상자",
+      "color": "흰색, 투명",
+      "material": "플라스틱",
+      "shape": "직육면체",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_6": {
+      "object": "서랍형 수납 상자",
+      "color": "흰색, 투명",
+      "material": "플라스틱",
+      "shape": "직육면체"
+    },
+    "luggage_7": {
+      "object": "서랍형 수납 상자",
+      "color": "흰색, 투명",
+      "material": "플라스틱",
+      "shape": "직육면체"
+    }
+  }
+}
+
+====================[ chain2_out ]====================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+
+====================[ chain3_out ]====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": [
+        "x",
+        "M",
+        "F",
+        "chair"
+      ],
+      "2": [
+        "x",
+        "M",
+        "F",
+        "chair"
+      ],
+      "3": [
+        "x",
+        "A",
+        "R",
+        "storage"
+      ],
+      "4": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "unchanged"
+    ],
+    "2": [
+      "unchanged"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "A",
+        "facing": "R",
+        "mode": "storage"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      }
+    }
+  }
+}
+```
+
+====================[ chain4_out ]====================
+0000000011013201
+====================[ tetris 시스템 실행 완료 ]====================]
+🕒 chain_run_time: 77.035s
+🕒 tetris_run_time: 90.613s

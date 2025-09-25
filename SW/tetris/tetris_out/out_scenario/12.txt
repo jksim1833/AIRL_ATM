@@ -1,0 +1,87 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 1,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "전신거울 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "Floor Mirror, 라운드 전신거울 30*150 화이트, 표면재 PVC",
+      "special_note": "공간 차지 max. 매우 길고 평평한 형태로, 차량 내부에 배치 시 다른 짐과의 조합이 제한적이며 긴 공간을 필요로 함"
+    }
+  }
+}
+
+====================[ chain2_out ]====================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "chair"]
+    }
+  }
+}
+```
+
+====================[ chain3_out ]====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "chair"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(4)"
+    ]
+  },
+  "environment_after": {
+    "1": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+    "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "chair"},
+    "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+    "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "chair"}
+  }
+}
+```
+
+====================[ chain4_out ]====================
+1101320011013200
+====================[ tetris 시스템 실행 완료 ]====================]
+🕒 chain_run_time: 116.375s
+🕒 tetris_run_time: 120.812s

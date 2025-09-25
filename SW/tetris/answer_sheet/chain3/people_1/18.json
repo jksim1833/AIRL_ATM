@@ -1,0 +1,24 @@
+{"task_sequence": { 
+    "1": [ 
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(90)",
+    "move_on_rail(A)",
+    "unfold(1)"
+    ],
+    "2": [ 
+    "fold(2)",
+    "seat_rotate(270)",
+    "move_on_rail(C)"
+    ],
+    "3": [ 
+    "fold(3)",
+    "seat_rotate(90)",
+    "move_on_rail(A)"
+    ],
+    "4": [ 
+    "fold(4)",
+    "seat_rotate(270)",
+    "move_on_rail(C)"
+    ]
+}}

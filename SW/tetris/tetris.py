@@ -103,7 +103,7 @@ def _load_chain3_gold(scenario: str, people_count: int) -> dict | None:
     return None
 
 def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True,
-                 run_type: str = "operate", trace_on: bool = True,
+                 run_type: str = "operate", trace_on: bool | None = None,
                  model_override: str | None = None, temp_override: float | None = None) -> dict:
     # === 정책 강제: 평가모드는 scenario 전용 + tracing ON ===
     if run_type == "eval":
@@ -112,10 +112,11 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True,
         trace_on = True  # 강제
 
     # 0) 트레이싱 on/off
-    if trace_on:
+    if trace_on is True:
         os.environ["LANGCHAIN_TRACING_V2"] = "true"
-    else:
+    elif trace_on is False:
         os.environ.pop("LANGCHAIN_TRACING_V2", None)
+    # trace_on is None → 운영모드에서 .env 그대로 유지
 
     # 0-1) 모델/온도 오버라이드
     if model_override: os.environ["TETRIS_LLM_MODEL"] = model_override
@@ -307,7 +308,6 @@ def main():
 
     # 운영/평가, 추적, 모델/온도
     ap.add_argument("--run", choices=["operate","eval"], default="operate")
-    ap.add_argument("--trace", choices=["on","off"], default="on")
     ap.add_argument("--model", default=None)
     ap.add_argument("--temp", type=float, default=None)
     args = ap.parse_args()
@@ -317,12 +317,11 @@ def main():
         if args.mode != "scenario":
             print("❌ 평가모드는 'scenario' 모드에서만 가능합니다. (--mode scenario)")
             raise SystemExit(2)
-        args.trace = "on"  # 평가모드는 트레이싱 무조건 ON
 
     t_total_start = perf_counter()
     res = run_pipeline(
         mode=args.mode, port=args.port, open_browser=(not args.no_browser),
-        run_type=args.run, trace_on=(args.trace=="on"),
+        run_type=args.run,
         model_override=args.model, temp_override=args.temp
     )
     t_total_end = perf_counter()

@@ -1,0 +1,10 @@
+{"task_sequence": { 
+    "1": ["unchanged"],
+    "2": ["unchanged"],
+    "3": ["unchanged"],
+    "4": [ 
+    "fold(4)",
+    "seat_rotate(270)",
+    "move_on_rail(C)"
+    ]
+}}

@@ -1,0 +1,155 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 3,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "리얼 텐셀 사계절 누비이불",
+      "color": "어두운 회색, 흰색",
+      "material": "폴리에스터",
+      "shape": "직육면체",
+      "text": "S, 리얼 텐셀 사계절 누비이불, TENCEL"
+    },
+    "luggage_2": {
+      "object": "프렌치 린넨 워싱 차렵이불",
+      "color": "밝은 회색, 흰색",
+      "material": "폴리에스터",
+      "shape": "직육면체",
+      "text": "SS, 프렌치 린넨 워싱 차렵이불, 슈퍼싱글",
+      "special_note": "공간 차지 max. 크고 부피가 있는 직육면체 형태로, 차량 내부에 배치 시 상당한 공간을 차지함"
+    },
+    "luggage_3": {
+      "object": "벨리곰 순면 차렵이불",
+      "color": "분홍색, 흰색",
+      "material": "폴리에스터",
+      "shape": "직육면체",
+      "text": "S, 벨리곰 순면 차렵이불, 싱글",
+      "special_note": "공간 차지 min"
+    }
+  }
+}
+
+====================[ chain2_out ]====================
+meta_data.step_1
+- **입력 데이터 분석**:
+    - `people`: 2명
+    - `total_luggage_count`: 3개
+    - `luggage_details`:
+        - `luggage_1`: "리얼 텐셀 사계절 누비이불" (직육면체, S)
+        - `luggage_2`: "프렌치 린넨 워싱 차렵이불" (직육면체, SS, 공간 차지 max)
+        - `luggage_3`: "벨리곰 순면 차렵이불" (직육면체, S, 공간 차지 min)
+- **치수 및 부피 추정 (이미지 및 텍스트 기반)**:
+    - `luggage_1` (어두운 회색): 이미지상 중간 크기. 대략 70cm(가로) x 50cm(세로) x 30cm(높이)로 추정.
+    - `luggage_2` (밝은 회색): "공간 차지 max" 언급 및 이미지상 가장 큰 크기. 대략 80cm(가로) x 60cm(세로) x 35cm(높이)로 추정.
+    - `luggage_3` (분홍색): "공간 차지 min" 언급 및 이미지상 가장 작은 크기. 대략 60cm(가로) x 45cm(세로) x 25cm(높이)로 추정.
+- **각 품목 부피 계산**:
+    - `luggage_1`: (70 * 50 * 30) / 1000 = 105 L
+    - `luggage_2`: (80 * 60 * 35) / 1000 = 168 L
+    - `luggage_3`: (60 * 45 * 25) / 1000 = 67.5 L
+- **총 부피 합산**: 105 L + 168 L + 67.5 L = 340.5 L
+
+meta_data.step_2
+- **PV5 트렁크 기준**: 기본 용량 600L.
+- **총 짐 부피**: 340.5 L.
+- **수납 방법 제안**:
+    1.  가장 큰 `luggage_2` (168L)를 트렁크 바닥에 평평하게 배치합니다.
+    2.  그 위에 `luggage_1` (105L)을 쌓거나, 트렁크의 남은 공간(폭 또는 깊이)을 활용하여 배치합니다.
+    3.  가장 작은 `luggage_3` (67.5L)는 남은 틈새 공간이나 다른 짐 위에 올려놓아 공간 활용을 극대화합니다.
+- **유연성**: 모든 짐은 이불류로, 직육면체 형태이나 어느 정도의 압축 및 형태 변형이 가능하여 트렁크 공간에 효율적으로 수납될 수 있습니다.
+- **초과 여부**: 총 부피 340.5L는 PV5 트렁크 기본 용량 600L를 초과하지 않으며, 모든 짐의 최대 한 변 길이(80cm)가 150cm를 넘지 않아 트렁크 문이 닫히지 않거나 좌석을 접어야 하는 상황은 발생하지 않습니다. 따라서 트렁크 용량을 초과하지 않습니다.
+
+meta_data.step_3
+- **짐의 전체 용량 분류 규칙**:
+    - 소형(S): 총 부피 ≤ 300L
+    - 중형(M): 300L < 총 부피 ≤ 600L
+    - 대형(L): 총 부피 > 600L 또는 한 변의 길이 ≥ 150cm
+- **분류 결과**:
+    - 총 부피 340.5 L는 300L < 340.5L ≤ 600L 범위에 해당합니다.
+    - 따라서 짐의 전체 용량은 **중형(M)**으로 분류됩니다.
+    - 트렁크 용량을 초과하지 않습니다.
+
+meta_data.step_4
+- **점검 항목 확인**:
+    - (a) 부피 계산이 수행되었는가? 예 (총 340.5L).
+    - (b) 분류 규칙과 논리적으로 일치하는가? 예 (340.5L는 M).
+    - (c) 트렁크 초과 여부가 명시되었는가? 예 (초과하지 않음).
+- 모든 조건이 만족됩니다.
+
+meta_data.step_5
+- **인원수**: 2명
+- **분류된 짐의 전체 용량**: M
+- `chain2_option_list`에서 `people_count: 2`와 `luggage_amount: "M"`에 해당하는 `instruction`을 선택합니다.
+- 선택된 `instruction`은 다음과 같습니다:
+  ```json
+  {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+  ```
+
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+
+====================[ chain3_out ]====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  },
+  "task_sequence": {
+    "1": ["unchanged"],
+    "2": ["unchanged"],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
+    }
+  }
+}
+```
+
+====================[ chain4_out ]====================
+0000000011013201
+====================[ tetris 시스템 실행 완료 ]====================]
+🕒 chain_run_time: 75.100s
+🕒 tetris_run_time: 87.116s

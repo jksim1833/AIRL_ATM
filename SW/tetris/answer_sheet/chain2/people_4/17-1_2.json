@@ -1,0 +1,10 @@
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "M", "F", "chair"],
+      "4": ["x", "M", "F", "chair"]
+    }
+  }
+}

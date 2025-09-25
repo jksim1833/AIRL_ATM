@@ -1,0 +1,111 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 4,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "이불세트 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "MADE IN GERMANY, 푹림 FAN COMFORT FILL 이불세트 3P, 취급주의"
+    },
+    "luggage_2": {
+      "object": "이불세트 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "MADE IN GERMANY, 푹림 FAN COMFORT FILL 이불세트 3P"
+    },
+    "luggage_3": {
+      "object": "이불세트 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "MADE IN GERMANY, 취급주의, SS"
+    },
+    "luggage_4": {
+      "object": "이불세트 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "MADE IN GERMANY, 푹림 FAN COMFORT FILL 이불세트 3P"
+    }
+  }
+}
+
+====================[ chain2_out ]====================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["y", "C", "F", "chair"],
+      "2": ["y", "C", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+
+====================[ chain3_out ]====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["y", "C", "F", "chair"],
+      "2": ["y", "C", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(1)"
+    ],
+    "2": [
+      "disk_rotate(90)",
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
+    }
+  }
+}
+```
+
+====================[ chain4_out ]====================
+3210321011013201
+====================[ tetris 시스템 실행 완료 ]====================]
+🕒 chain_run_time: 66.859s
+🕒 tetris_run_time: 129.017s
