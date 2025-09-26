@@ -1,82 +1,49 @@
-=====================chain1_out =====================
+====================[ chain1_out ]====================
 {
   "people": 1,
-  "total_luggage_count": 5,
+  "total_luggage_count": 3,
   "luggage_details": {
     "luggage_1": {
-      "object": "의자",
-      "color": "회색",
-      "material": "패브릭",
-      "shape": "등받이와 좌석이 있는 직사각형 형태의 비정형"
+      "object": "싱글 사이즈 이불 세트",
+      "color": "어두운 회색, 흰색",
+      "material": "부직포, 비닐",
+      "shape": "직육면체",
+      "text": "S, 리얼 뱀부 사계절 누비이불, REAL BAMBOO"
     },
     "luggage_2": {
-      "object": "의자",
-      "color": "회색",
-      "material": "패브릭",
-      "shape": "등받이와 좌석이 있는 직사각형 형태의 비정형"
+      "object": "슈퍼싱글 사이즈 이불 세트",
+      "color": "회색, 흰색",
+      "material": "부직포, 비닐",
+      "shape": "직육면체",
+      "text": "SS, 모던 뱀부 사계절 누비이불, REAL BAMBOO",
+      "special_note": "공간 차지 max. 부피가 커서 차량 내부에 배치 시 상당한 공간을 차지함"
     },
     "luggage_3": {
-      "object": "테이블",
-      "color": "흰색, 옅은 회색",
-      "material": "금속",
-      "shape": "직사각형 상판과 X자형 다리 구조를 가진 비정형",
-      "special_note": "공간 차지 max. 복잡한 다리 구조와 고정된 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
-    },
-    "luggage_4": {
-      "object": "의자",
-      "color": "베이지색",
-      "material": "인조가죽",
-      "shape": "등받이와 좌석이 곡선으로 연결된 비정형"
-    },
-    "luggage_5": {
-      "object": "의자",
-      "color": "짙은 회색",
-      "material": "패브릭",
-      "shape": "등받이와 좌석이 있는 직사각형 형태의 비정형",
+      "object": "싱글 사이즈 아동용 이불",
+      "color": "분홍색, 흰색",
+      "material": "부직포, 비닐",
+      "shape": "직육면체",
+      "text": "S, BELLIE",
       "special_note": "공간 차지 min"
     }
   }
 }
-
-🕒 chain1_run_time: 18.988s
-
-=====================chain2_out =====================
+🕒 [chain1_out 생성 시간]: 23.426초
+================================[ chain2_out ]==================================
 ```json
 {
   "instruction": {
     "seats": {
-      "1": [
-        "y",
-        "A",
-        "B",
-        "chair"
-      ],
-      "2": [
-        "x",
-        "C",
-        "L",
-        "storage"
-      ],
-      "3": [
-        "x",
-        "A",
-        "R",
-        "storage"
-      ],
-      "4": [
-        "x",
-        "C",
-        "L",
-        "storage"
-      ]
+      "1": ["y", "C", "F", "chair"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
     }
   }
 }
 ```
-
-🕒 chain2_run_time: 23.651s
-
-=====================chain3_out =====================
+🕒 [chain2_out 생성 시간]: 16.231초
+================================[ chain3_out ]==================================
 ```json
 {
   "environment_before": {
@@ -111,8 +78,8 @@
     "seats": {
       "1": [
         "y",
-        "A",
-        "B",
+        "C",
+        "F",
         "chair"
       ],
       "2": [
@@ -139,8 +106,8 @@
     "1": [
       "disk_rotate(90)",
       "fold(1)",
-      "seat_rotate(90)",
-      "move_on_rail(A)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
       "unfold(1)"
     ],
     "2": [
@@ -163,8 +130,8 @@
     "seats": {
       "1": {
         "rail_axis": "y",
-        "position": "A",
-        "facing": "B",
+        "position": "C",
+        "facing": "F",
         "mode": "chair"
       },
       "2": {
@@ -189,10 +156,12 @@
   }
 }
 ```
+🕒 [chain3_out 생성 시간]: 52.716초
+================================[ chain4_out ]==================================
+3210320111013201
+🕒 [chain4_out 생성 시간]: 0.000초
 
-🕒 chain3_run_time: 33.175s
-
-=====================chain4_out =====================
-1110320111013201
-🕒 chain_run_time: 75.821s
-🕒 tetris_run_time: 78.697s
+🕒 [chain_run_time]: 92.374s
+====================[ tetris 시스템 실행 완료 ]====================
+🕒 [chain_run_time]: 92.374s
+🕒 [tetris_run_time]: 106.334s

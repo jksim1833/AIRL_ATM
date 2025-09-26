@@ -16,11 +16,11 @@ TETRIS_ROOT = ROOT.parent                                     # .../AIRL_ATM/SW/
 SECRETS_JSON = TETRIS_ROOT / "tetris_secrets.json"            # tetris_secrets.json
 
 #[Chain1 경로]
-CHAIN1_PROMPT_TXT = ROOT / "chain1_prompt" / "chain1_prompt.txt"
+CHAIN1_PROMPT_TXT = ROOT / "chain1_prompt" / "chain1_prompt_2.txt"
 
 # [Chain2 경로] __file__ 기준: ./chain2_prompt/{chain2_prompt.txt, chain2_option.txt}
 CHAIN2_PROMPT_DIR = ROOT / "chain2_prompt"
-CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt.txt"
+CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_2.txt"
 CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 
 # [Chain3 경로] __file__ 기준: ./chain3_prompt/<파일>
@@ -28,7 +28,7 @@ CHAIN3_DIR              = ROOT / "chain3_prompt"
 C3_SYSTEM_TXT           = CHAIN3_DIR / "chain3_system.txt"
 C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query.txt"
 C3_ROLE_TXT             = CHAIN3_DIR / "chain3_prompt_role.txt"
-C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment.txt"
+C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment_2.txt"
 C3_FUNC_TXT             = CHAIN3_DIR /  "chain3_prompt_function.txt"
 C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format.txt"
 C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example.txt"
@@ -47,13 +47,13 @@ def _require_exists(p: Path, label: str):
         raise FileNotFoundError(f"{label} 누락: {p}")
 
 for p, label in [
-    (CHAIN1_PROMPT_TXT, "chain1_prompt.txt"),
-    (CHAIN2_PROMPT_TXT, "chain2_prompt.txt"),
+    (CHAIN1_PROMPT_TXT, "chain1_prompt_2.txt"),
+    (CHAIN2_PROMPT_TXT, "chain2_prompt_2.txt"),
     (CHAIN2_OPTION_TXT, "chain2_option.txt"),
     (C3_SYSTEM_TXT, "chain3_system.txt"),
     (C3_QUERY_TXT, "chain3_query.txt"),
     (C3_ROLE_TXT, "chain3_prompt_role.txt"),
-    (C3_ENV_TXT, "chain3_prompt_environment.txt"),
+    (C3_ENV_TXT, "chain3_prompt_environment_2.txt"),
     (C3_FUNC_TXT, "chain3_prompt_function.txt"),
     (C3_OUTFMT_TXT, "chain3_prompt_output_format.txt"),
     (C3_EXAMPLE_TXT, "chain3_prompt_example.txt"),
@@ -180,8 +180,8 @@ chain3_prompt = ChatPromptTemplate.from_messages([
 #     return [HumanMessage(content=[{"type":"image_url","image_url":{"url":data_url}}])]
 
 # Chain3는 고정 PNG 이미지를 항상 부착
-def _chain3_image_value(_: dict):
-    return make_chain3_image_input()
+# def _chain3_image_value(_: dict):
+#     return make_chain3_image_input()
 
 VERBOSE = os.getenv("TETRIS_VERBOSE", "0") == "1"
 

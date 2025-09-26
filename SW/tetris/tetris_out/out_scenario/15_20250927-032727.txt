@@ -1,0 +1,165 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 11,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "컵라면 6개 묶음 (육개장 사발면)",
+      "color": "흰색, 빨간색, 초록색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "농심, 육개장 사발면"
+    },
+    "luggage_2": {
+      "object": "컵라면 6개 묶음 (육개장 사발면)",
+      "color": "흰색, 빨간색, 초록색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "농심, 육개장 사발면"
+    },
+    "luggage_3": {
+      "object": "라면 박스 (멀티팩)",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "농심, 멀티팩, 辛",
+      "special_note": "공간 차지 max. 크고 견고한 직육면체 형태로, 차량 내부에 배치 시 다른 짐의 적재 공간을 제약할 수 있음"
+    },
+    "luggage_4": {
+      "object": "즉석밥 박스 (햇반)",
+      "color": "흰색, 빨간색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "햇반, 210g X12개입, 언제나 갓 지은 밥!"
+    },
+    "luggage_5": {
+      "object": "소주 박스 (참이슬 fresh)",
+      "color": "흰색, 하늘색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "참이슬 fresh"
+    },
+    "luggage_6": {
+      "object": "소주 박스 (참이슬 original)",
+      "color": "흰색, 회색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "참이슬 original, SINCE 1924"
+    },
+    "luggage_7": {
+      "object": "생수 6개 묶음 (제주 삼다수)",
+      "color": "투명, 파란색, 초록색",
+      "material": "플라스틱",
+      "shape": "6개의 원통형 병이 결합된 직육면체 형태",
+      "text": "제주 삼다수, 2L"
+    },
+    "luggage_8": {
+      "object": "과자 봉지 (꼬깔콘 오리지널)",
+      "color": "노란색, 빨간색, 은색",
+      "material": "비닐",
+      "shape": "비정형",
+      "text": "꼬깔콘, CORN CHIPS, ORIGINAL"
+    },
+    "luggage_9": {
+      "object": "과자 봉지 (꼬깔콘 군옥수수맛)",
+      "color": "노란색, 빨간색, 은색",
+      "material": "비닐",
+      "shape": "비정형",
+      "text": "꼬깔콘, CORN CHIPS, +15% UP"
+    },
+    "luggage_10": {
+      "object": "과자 봉지 (신짱)",
+      "color": "빨간색, 노란색",
+      "material": "비닐",
+      "shape": "비정형",
+      "text": "신짱, 달콤한",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_11": {
+      "object": "과자 봉지 (오징어집)",
+      "color": "주황색, 노란색",
+      "material": "비닐",
+      "shape": "비정형",
+      "text": "오징어집, 고소한"
+    }
+  }
+}
+🕒 [chain1_out 생성 시간]: 40.303초
+================================[ chain2_out ]==================================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["y", "C", "F", "chair"],
+      "2": ["y", "C", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+🕒 [chain2_out 생성 시간]: 19.873초
+================================[ chain3_out ]==================================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["y", "C", "F", "chair"],
+      "2": ["y", "C", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(1)"
+    ],
+    "2": [
+      "disk_rotate(90)",
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
+    }
+  }
+}
+```
+🕒 [chain3_out 생성 시간]: 45.228초
+================================[ chain4_out ]==================================
+3210321011013201
+🕒 [chain4_out 생성 시간]: 0.000초
+
+🕒 [chain_run_time]: 105.404s
+====================[ tetris 시스템 실행 완료 ]====================
+🕒 [chain_run_time]: 105.404s
+🕒 [tetris_run_time]: 151.438s

@@ -1,0 +1,205 @@
+====================[ chain1_out ]====================
+{
+  "people": 1,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "의자",
+      "color": "회색, 은색",
+      "material": "플라스틱, 금속",
+      "shape": "등받이와 좌석이 결합된 비정형",
+      "special_note": "공간 차지 max. 접이식이 불가한 형태로, 부피가 크고 불규칙하여 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_2": {
+      "object": "데스크탑 컴퓨터 본체",
+      "color": "검은색",
+      "material": "금속, 플라스틱",
+      "shape": "직육면체"
+    },
+    "luggage_3": {
+      "object": "침낭",
+      "color": "빨간색",
+      "material": "폴리에스터",
+      "shape": "원통형",
+      "text": "K-HIKER, CAMPING GEAR"
+    },
+    "luggage_4": {
+      "object": "모니터",
+      "color": "검은색",
+      "material": "플라스틱, 금속",
+      "shape": "스탠드가 결합된 비정형",
+      "text": "SAMSUNG"
+    },
+    "luggage_5": {
+      "object": "옷걸이 스탠드",
+      "color": "황토색",
+      "material": "목재",
+      "shape": "긴 기둥에 여러 개의 돌출된 가지가 있는 비정형"
+    },
+    "luggage_6": {
+      "object": "백팩",
+      "color": "검은색",
+      "material": "나일론",
+      "shape": "비정형",
+      "text": "대한민국공군, ROKAF, A&U"
+    },
+    "luggage_7": {
+      "object": "소화기",
+      "color": "빨간색, 노란색",
+      "material": "금속",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_8": {
+      "object": "컴퓨터 케이스 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "Y300M, WHITE, BLACK, GELID"
+    },
+    "luggage_9": {
+      "object": "모니터 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "68.4cm, 144 Hz, NVIDIA G-SYNC Compatible"
+    }
+  }
+}
+🕒 [chain1_out 생성 시간]: 31.424초
+================================[ chain2_out ]==================================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+🕒 [chain2_out 생성 시간]: 51.153초
+================================[ chain3_out ]==================================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": [
+        "y",
+        "A",
+        "B",
+        "chair"
+      ],
+      "2": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ],
+      "3": [
+        "x",
+        "A",
+        "R",
+        "storage"
+      ],
+      "4": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)",
+      "unfold(1)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {
+        "rail_axis": "y",
+        "position": "A",
+        "facing": "B",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "A",
+        "facing": "R",
+        "mode": "storage"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      }
+    }
+  }
+}
+```
+🕒 [chain3_out 생성 시간]: 31.362초
+================================[ chain4_out ]==================================
+1110320111013201
+🕒 [chain4_out 생성 시간]: 0.000초
+
+🕒 [chain_run_time]: 113.939s
+====================[ tetris 시스템 실행 완료 ]====================
+🕒 [chain_run_time]: 113.939s
+🕒 [tetris_run_time]: 125.155s

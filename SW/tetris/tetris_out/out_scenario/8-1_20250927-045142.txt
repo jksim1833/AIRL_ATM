@@ -1,51 +1,49 @@
-=====================chain1_out =====================
+====================[ chain1_out ]====================
 {
-  "people": 1,
+  "people": 0,
   "total_luggage_count": 5,
   "luggage_details": {
     "luggage_1": {
       "object": "의자",
       "color": "회색",
       "material": "폴리에스터",
-      "shape": "등받이와 좌석이 있는 비정형",
+      "shape": "등받이와 좌석이 있는 직사각형 형태",
       "special_note": "공간 차지 min"
     },
     "luggage_2": {
       "object": "의자",
       "color": "회색",
       "material": "폴리에스터",
-      "shape": "등받이와 좌석이 있는 비정형"
+      "shape": "등받이와 좌석이 있는 직사각형 형태"
     },
     "luggage_3": {
-      "object": "의자",
-      "color": "진회색",
-      "material": "폴리에스터",
-      "shape": "등받이와 좌석이 있는 비정형"
+      "object": "테이블",
+      "color": "흰색, 연회색",
+      "material": "강철",
+      "shape": "직사각형 상판과 X자형 다리 구조의 비정형",
+      "special_note": "공간 차지 max. 견고하고 복잡한 다리 구조와 분리되지 않는 상판으로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
     "luggage_4": {
       "object": "의자",
-      "color": "황토색",
+      "color": "베이지색",
       "material": "인조가죽",
       "shape": "등받이와 좌석이 있는 비정형"
     },
     "luggage_5": {
-      "object": "테이블",
-      "color": "흰색, 연두색",
-      "material": "강철",
-      "shape": "직사각형",
-      "special_note": "공간 차지 max. 크고 견고한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+      "object": "의자",
+      "color": "진회색",
+      "material": "폴리에스터",
+      "shape": "등받이와 좌석이 있는 직사각형 형태"
     }
   }
 }
-
-🕒 chain1_run_time: 26.151s
-
-=====================chain2_out =====================
+🕒 [chain1_out 생성 시간]: 23.151초
+================================[ chain2_out ]==================================
 ```json
 {
   "instruction": {
     "seats": {
-      "1": ["y", "A", "B", "chair"],
+      "1": ["x", "A", "R", "storage"],
       "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
@@ -53,10 +51,8 @@
   }
 }
 ```
-
-🕒 chain2_run_time: 20.273s
-
-=====================chain3_out =====================
+🕒 [chain2_out 생성 시간]: 24.376초
+================================[ chain3_out ]==================================
 ```json
 {
   "environment_before": {
@@ -69,7 +65,7 @@
   },
   "instruction": {
     "seats": {
-      "1": ["y", "A", "B", "chair"],
+      "1": ["x", "A", "R", "storage"],
       "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
@@ -77,11 +73,9 @@
   },
   "task_sequence": {
     "1": [
-      "disk_rotate(90)",
       "fold(1)",
       "seat_rotate(90)",
-      "move_on_rail(A)",
-      "unfold(1)"
+      "move_on_rail(A)"
     ],
     "2": [
       "fold(2)",
@@ -101,7 +95,7 @@
   },
   "environment_after": {
     "seats": {
-      "1": {"rail_axis": "y", "position": "A", "facing": "B", "mode": "chair"},
+      "1": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
       "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"},
       "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
       "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
@@ -109,10 +103,12 @@
   }
 }
 ```
+🕒 [chain3_out 생성 시간]: 53.768초
+================================[ chain4_out ]==================================
+1101320111013201
+🕒 [chain4_out 생성 시간]: 0.000초
 
-🕒 chain3_run_time: 56.933s
-
-=====================chain4_out =====================
-1110320111013201
-🕒 chain_run_time: 103.362s
-🕒 tetris_run_time: 108.448s
+🕒 [chain_run_time]: 101.295s
+====================[ tetris 시스템 실행 완료 ]====================
+🕒 [chain_run_time]: 101.295s
+🕒 [tetris_run_time]: 109.046s

@@ -29,6 +29,11 @@ Necessary and sufficient seat control actions are defined as follows:
 - fold(id):
   Change mode to "storage" (fully folded, space-saving).
 
+#Meta action
+- unchanged: 
+  It is a non-physical placeholder, mandatory if no action is required.
+  **Used when Initial environment state == instruction state.**
+
 """
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:

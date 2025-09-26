@@ -1,0 +1,256 @@
+====================[ chain1_out ]====================
+{
+  "people": 0,
+  "total_luggage_count": 16,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER",
+      "special_note": "공간 차지 max. 직육면체 형태로 비교적 효율적인 적재가 가능하나, 단일 개체로 부피가 커서 많은 공간을 차지함"
+    },
+    "luggage_2": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_3": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_4": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_5": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_6": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_7": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_8": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_9": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_10": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_11": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_12": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_13": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_14": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_15": {
+      "object": "생수 24개 묶음",
+      "color": "투명, 노란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER"
+    },
+    "luggage_16": {
+      "object": "생수 4개 묶음",
+      "color": "투명, 파란색",
+      "material": "플라스틱, 비닐",
+      "shape": "직육면체",
+      "text": "MINERAL WATER",
+      "special_note": "공간 차지 min"
+    }
+  }
+}
+🕒 [chain1_out 생성 시간]: 36.031초
+================================[ chain2_out ]==================================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+🕒 [chain2_out 생성 시간]: 21.562초
+================================[ chain3_out ]==================================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": [
+        "x",
+        "A",
+        "R",
+        "storage"
+      ],
+      "2": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ],
+      "3": [
+        "x",
+        "A",
+        "R",
+        "storage"
+      ],
+      "4": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {
+        "rail_axis": "x",
+        "position": "A",
+        "facing": "R",
+        "mode": "storage"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "A",
+        "facing": "R",
+        "mode": "storage"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      }
+    }
+  }
+}
+```
+🕒 [chain3_out 생성 시간]: 24.543초
+================================[ chain4_out ]==================================
+1101320111013201
+🕒 [chain4_out 생성 시간]: 0.000초
+
+🕒 [chain_run_time]: 82.136s
+====================[ tetris 시스템 실행 완료 ]====================
+🕒 [chain_run_time]: 82.136s
+🕒 [tetris_run_time]: 97.136s

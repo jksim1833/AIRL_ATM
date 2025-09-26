@@ -1,43 +1,40 @@
 =====================chain1_out =====================
 {
-  "people": 2,
+  "people": 3,
   "total_luggage_count": 2,
   "luggage_details": {
     "luggage_1": {
-      "object": "자동차 타이어",
+      "object": "타이어",
       "color": "검은색",
       "material": "고무",
-      "shape": "원형",
-      "special_note": "공간 차지 max. 속이 비어있는 원형 형태로, 차량 내 직사각형 공간에 배치 시 비효율적인 빈 공간을 많이 발생시킴"
+      "shape": "원통형",
+      "text": "CONTINENTAL, PROCONTACT TX, 225/60R18 100H"
     },
     "luggage_2": {
-      "object": "자동차 타이어",
+      "object": "타이어",
       "color": "검은색",
       "material": "고무",
-      "shape": "원형",
-      "text": "ROADMATES S, 225/65R17",
-      "special_note": "공간 차지 min"
+      "shape": "원통형",
+      "text": "ROADMATES S"
     }
   }
 }
 
-🕒 chain1_run_time: 13.690s
+🕒 chain1_run_time: 12.011s
 
 =====================chain2_out =====================
-```json
 {
   "instruction": {
     "seats": {
-      "1": ["y", "C", "F", "chair"],
-      "2": ["y", "C", "F", "chair"],
-      "3": ["x", "A", "R", "storage"],
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "M", "F", "chair"],
       "4": ["x", "C", "L", "storage"]
     }
   }
 }
-```
 
-🕒 chain2_run_time: 18.346s
+🕒 chain2_run_time: 20.580s
 
 =====================chain3_out =====================
 ```json
@@ -52,32 +49,16 @@
   },
   "instruction": {
     "seats": {
-      "1": ["y", "C", "F", "chair"],
-      "2": ["y", "C", "F", "chair"],
-      "3": ["x", "A", "R", "storage"],
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "M", "F", "chair"],
       "4": ["x", "C", "L", "storage"]
     }
   },
   "task_sequence": {
-    "1": [
-      "disk_rotate(90)",
-      "fold(1)",
-      "seat_rotate(270)",
-      "move_on_rail(C)",
-      "unfold(1)"
-    ],
-    "2": [
-      "disk_rotate(90)",
-      "fold(2)",
-      "seat_rotate(270)",
-      "move_on_rail(C)",
-      "unfold(2)"
-    ],
-    "3": [
-      "fold(3)",
-      "seat_rotate(90)",
-      "move_on_rail(A)"
-    ],
+    "1": ["unchanged"],
+    "2": ["unchanged"],
+    "3": ["unchanged"],
     "4": [
       "fold(4)",
       "seat_rotate(270)",
@@ -86,18 +67,18 @@
   },
   "environment_after": {
     "seats": {
-      "1": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
-      "2": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
-      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
       "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
     }
   }
 }
 ```
 
-🕒 chain3_run_time: 28.190s
+🕒 chain3_run_time: 17.567s
 
 =====================chain4_out =====================
-3210321011013201
-🕒 chain_run_time: 60.233s
-🕒 tetris_run_time: 65.351s
+0000000000003201
+🕒 chain_run_time: 50.182s
+🕒 tetris_run_time: 54.061s

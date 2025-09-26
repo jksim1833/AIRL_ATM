@@ -4,7 +4,7 @@ The dictionary has four keys.
 """
 - dictionary["environment_before"]: The initial seat configuration environment, which remains constant as the predefined starting state.
 - dictionary["instruction"]: description of the seat arrangement.
-- dictionary["task_sequence"]: Contains a list of seat control actions. Only the behaviors defined in the "SEAT CONTROL LIST" will be used.
+- dictionary["task_sequence"]: Contains a list of seat control actions. Only the behaviors defined in the "SEAT CONTROL LIST" will be used. The keys of task_sequence match the keys in instruction.seats.
 - dictionary["environment_after"]: The state of the environment after the manipulation.
 """
 -------------------------------------------------------
