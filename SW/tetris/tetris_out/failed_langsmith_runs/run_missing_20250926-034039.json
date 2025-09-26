@@ -1,0 +1,12 @@
+{
+  "chain1_out": "",
+  "chain2_out": "",
+  "chain3_out": "",
+  "chain4_out": "",
+  "chain_elapsed_sec": 4194.071418499996,
+  "error": "Timeout of 600.0s exceeded, last exception: 503 IOCP/Socket: Connection aborted (An established connection was aborted by the software in your host machine.\r\n -- 10053)",
+  "metrics_chain1": {
+    "success": 0.0,
+    "error": "parse-error: Expecting value: line 1 column 1 (char 0)"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "chain1_out": "{\n  \"people\": 2,\n  \"total_luggage_count\": 9,\n  \"luggage_details\": {\n    \"luggage_1\": {\n      \"object\": \"의자\",\n      \"color\": \"회색\",\n      \"material\": \"플라스틱\",\n      \"shape\": \"등받이와 좌석이 결합된 비정형\",\n      \"special_note\": \"공간 차지 max. 고정된 비정형 형태로, 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움\"\n    },\n    \"luggage_2\": {\n      \"object\": \"데스크탑 PC 본체\",\n      \"color\": \"검은색\",\n      \"material\": \"금속\",\n      \"shape\": \"직육면체\"\n    },\n    \"luggage_3\": {\n      \"object\": \"침낭\",\n      \"color\": \"빨간색\",\n      \"shape\": \"원통형\",\n      \"text\": \"K.H.A, CAMPING\"\n    },\n    \"luggage_4\": {\n      \"object\": \"모니터\",\n      \"color\": \"검은색\",\n      \"material\": \"플라스틱\",\n      \"shape\": \"직사각형 화면과 받침대가 결합된 비정형\",\n      \"text\": \"SAMSUNG, Space Monitor\"\n    },\n    \"luggage_5\": {\n      \"object\": \"나무 옷걸이\",\n      \"color\": \"밝은 갈색\",\n      \"material\": \"목재\",\n      \"shape\": \"긴 막대 형태에 여러 개의 짧은 돌기가 붙어있는 비정형\"\n    },\n    \"luggage_6\": {\n      \"object\": \"소화기\",\n      \"color\": \"빨간색, 노란색\",\n      \"material\": \"강철\",\n      \"shape\": \"원통형\",\n      \"special_note\": \"공간 차지 min\"\n    },\n    \"luggage_7\": {\n      \"object\": \"백팩\",\n      \"color\": \"검은색\",\n      \"shape\": \"비정형\",\n      \"text\": \"대한민국 공군, ROXAF\"\n    },\n    \"luggage_8\": {\n      \"object\": \"대형 박스\",\n      \"color\": \"갈색\",\n      \"material\": \"골판지\",\n      \"shape\": \"직육면체\",\n      \"text\": \"68.4cm, 144Hz, IPS | HDR, NVIDIA G-SYNC Compatible\"\n    },\n    \"luggage_9\": {\n      \"object\": \"PC 케이스 상자\",\n      \"color\": \"갈색\",\n      \"material\": \"골판지\",\n      \"shape\": \"직육면체\",\n      \"text\": \"Y300M, WHITE, BLACK, GIGABYTE\"\n    }\n  }\n}",
+  "chain2_out": "```json\n{\n  \"instruction\": {\n    \"seats\": {\n      \"1\": [\"x\", \"M\", \"F\", \"chair\"],\n      \"2\": [\"x\", \"M\", \"F\", \"chair\"],\n      \"3\": [\"x\", \"A\", \"R\", \"storage\"],\n      \"4\": [\"x\", \"C\", \"L\", \"storage\"]\n    }\n  }\n}\n```",
+  "chain3_out": "```json\n{\n  \"environment_before\": {\n    \"seats\": {\n      \"1\": { \"rail_axis\": \"x\", \"position\": \"M\", \"facing\": \"F\", \"mode\": \"chair\" },\n      \"2\": { \"rail_axis\": \"x\", \"position\": \"M\", \"facing\": \"F\", \"mode\": \"chair\" },\n      \"3\": { \"rail_axis\": \"x\", \"position\": \"M\", \"facing\": \"F\", \"mode\": \"chair\" },\n      \"4\": { \"rail_axis\": \"x\", \"position\": \"M\", \"facing\": \"F\", \"mode\": \"chair\" }\n    }\n  },\n  \"instruction\": {\n    \"seats\": {\n      \"1\": [\"x\", \"M\", \"F\", \"chair\"],\n      \"2\": [\"x\", \"M\", \"F\", \"chair\"],\n      \"3\": [\"x\", \"A\", \"R\", \"storage\"],\n      \"4\": [\"x\", \"C\", \"L\", \"storage\"]\n    }\n  },\n  \"task_sequence\": {\n    \"1\": [\"unchanged\"],\n    \"2\": [\"unchanged\"],\n    \"3\": [\n      \"fold(3)\",\n      \"seat_rotate(90)\",\n      \"move_on_rail(A)\"\n    ],\n    \"4\": [\n      \"fold(4)\",\n      \"seat_rotate(270)\",\n      \"move_on_rail(C)\"\n    ]\n  },\n  \"environment_after\": {\n    \"seats\": {\n      \"1\": { \"rail_axis\": \"x\", \"position\": \"M\", \"facing\": \"F\", \"mode\": \"chair\" },\n      \"2\": { \"rail_axis\": \"x\", \"position\": \"M\", \"facing\": \"F\", \"mode\": \"chair\" },\n      \"3\": { \"rail_axis\": \"x\", \"position\": \"A\", \"facing\": \"R\", \"mode\": \"storage\" },\n      \"4\": { \"rail_axis\": \"x\", \"position\": \"C\", \"facing\": \"L\", \"mode\": \"storage\" }\n    }\n  }\n}\n```",
+  "chain4_out": "0000000011013201",
+  "chain_elapsed_sec": 145.09807469999942,
+  "error": null,
+  "metrics_chain1": {
+    "success": 1.0,
+    "count_pred": 9,
+    "count_accuracy": 1.0
+  },
+  "metrics_chain2": {
+    "accuracy": 0.0,
+    "matched_label": null
+  },
+  "metrics_chain3": {
+    "precision": 0.75,
+    "recall": 0.42857142857142855,
+    "f1": 0.5454545454545454,
+    "matched_label": "0",
+    "mode": "max-of-two"
+  }
+}

@@ -1,0 +1,130 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "의자",
+      "color": "회색",
+      "material": "플라스틱",
+      "shape": "등받이와 좌석이 결합된 비정형",
+      "special_note": "공간 차지 max. 고정된 비정형 형태로, 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
+    },
+    "luggage_2": {
+      "object": "데스크탑 PC 본체",
+      "color": "검은색",
+      "material": "금속",
+      "shape": "직육면체"
+    },
+    "luggage_3": {
+      "object": "침낭",
+      "color": "빨간색",
+      "shape": "원통형",
+      "text": "K.H.A, CAMPING"
+    },
+    "luggage_4": {
+      "object": "모니터",
+      "color": "검은색",
+      "material": "플라스틱",
+      "shape": "직사각형 화면과 받침대가 결합된 비정형",
+      "text": "SAMSUNG, Space Monitor"
+    },
+    "luggage_5": {
+      "object": "나무 옷걸이",
+      "color": "밝은 갈색",
+      "material": "목재",
+      "shape": "긴 막대 형태에 여러 개의 짧은 돌기가 붙어있는 비정형"
+    },
+    "luggage_6": {
+      "object": "소화기",
+      "color": "빨간색, 노란색",
+      "material": "강철",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_7": {
+      "object": "백팩",
+      "color": "검은색",
+      "shape": "비정형",
+      "text": "대한민국 공군, ROXAF"
+    },
+    "luggage_8": {
+      "object": "대형 박스",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "68.4cm, 144Hz, IPS | HDR, NVIDIA G-SYNC Compatible"
+    },
+    "luggage_9": {
+      "object": "PC 케이스 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "Y300M, WHITE, BLACK, GIGABYTE"
+    }
+  }
+}
+🕒 [chain1_out 생성 시간]: 54.563초
+================================[ chain2_out ]==================================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+🕒 [chain2_out 생성 시간]: 70.590초
+================================[ chain3_out ]==================================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  },
+  "task_sequence": {
+    "1": ["unchanged"],
+    "2": ["unchanged"],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
+    }
+  }
+}
+```
+🕒 [chain3_out 생성 시간]: 19.927초
+================================[ chain4_out ]==================================
+0000000011013201
+🕒 [chain4_out 생성 시간]: 0.001초
+
+🕒 [chain_run_time]: 145.080s

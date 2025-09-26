@@ -8,30 +8,32 @@ from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.messages import HumanMessage
+import base64, mimetypes
+from time import perf_counter  # 체인별 시간 측정용
 
-# [경로/키] __file__ 기준 상대경로와 GOOGLE_API_KEY 확보
-ROOT = Path(__file__).resolve().parent                        # .../SW/tetris/main_chain
-TETRIS_ROOT = ROOT.parent                                     # .../SW/tetris
-SECRETS_JSON = TETRIS_ROOT / "tetris_secrets.json"            # tetris_secrets.json
+# [경로/키]
+ROOT = Path(__file__).resolve().parent
+TETRIS_ROOT = ROOT.parent
+SECRETS_JSON = TETRIS_ROOT / "tetris_secrets.json"
 
-#[Chain1 경로]
+# [Chain1 경로]
 CHAIN1_PROMPT_TXT = ROOT / "chain1_prompt" / "chain1_prompt.txt"
 
-# [Chain2 경로] __file__ 기준: ./chain2_prompt/{chain2_prompt.txt, chain2_option.txt}
+# [Chain2 경로]
 CHAIN2_PROMPT_DIR = ROOT / "chain2_prompt"
 CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt.txt"
 CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 
-# [Chain3 경로] __file__ 기준: ./chain3_prompt/<파일>
-CHAIN3_DIR              = ROOT / "chain3_prompt"
-C3_SYSTEM_TXT           = CHAIN3_DIR / "chain3_system.txt"
-C3_QUERY_TXT            = CHAIN3_DIR / "chain3_query.txt"
-C3_ROLE_TXT             = CHAIN3_DIR / "chain3_prompt_role.txt"
-C3_ENV_TXT              = CHAIN3_DIR / "chain3_prompt_environment.txt"
-C3_FUNC_TXT             = CHAIN3_DIR /  "chain3_prompt_function.txt"
-C3_OUTFMT_TXT           = CHAIN3_DIR / "chain3_prompt_output_format.txt"
-C3_EXAMPLE_TXT          = CHAIN3_DIR / "chain3_prompt_example.txt"
-C3_IMAGE_PNG            = CHAIN3_DIR / "chain3_prompt_image.png"
+# [Chain3 경로]
+CHAIN3_DIR = ROOT / "chain3_prompt"
+C3_SYSTEM_TXT = CHAIN3_DIR / "chain3_system.txt"
+C3_QUERY_TXT = CHAIN3_DIR / "chain3_query.txt"
+C3_ROLE_TXT = CHAIN3_DIR / "chain3_prompt_role.txt"
+C3_ENV_TXT = CHAIN3_DIR / "chain3_prompt_environment.txt"
+C3_FUNC_TXT = CHAIN3_DIR / "chain3_prompt_function.txt"
+C3_OUTFMT_TXT = CHAIN3_DIR / "chain3_prompt_output_format.txt"
+C3_EXAMPLE_TXT = CHAIN3_DIR / "chain3_prompt_example.txt"
+# NOTE: chain3_prompt_image.png 사용을 의도적으로 제거했습니다.
 
 def _read_text(p: Path) -> str:
     return p.read_text(encoding="utf-8")
@@ -40,7 +42,7 @@ def _escape_braces(s: str) -> str:
     s = s.replace("{{","__O__").replace("}}","__C__").replace("{","{{").replace("}","}}")
     return s.replace("__O__","{{").replace("__C__","}}")
 
-# === 리소스 존재 fail-fast ===
+# 리소스 존재 검사 (이미지 파일 항목 제거)
 def _require_exists(p: Path, label: str):
     if not p.exists():
         raise FileNotFoundError(f"{label} 누락: {p}")
@@ -56,7 +58,6 @@ for p, label in [
     (C3_FUNC_TXT, "chain3_prompt_function.txt"),
     (C3_OUTFMT_TXT, "chain3_prompt_output_format.txt"),
     (C3_EXAMPLE_TXT, "chain3_prompt_example.txt"),
-    (C3_IMAGE_PNG, "chain3_prompt_image.png"),
 ]:
     _require_exists(p, label)
 
@@ -68,31 +69,26 @@ if not GOOGLE_API_KEY and SECRETS_JSON.exists():
 if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY가 설정되어야 합니다(환경변수 또는 tetris_secrets.json).")
 
-# === 모델/온도 환경변수로 오버라이드 가능 ===
+# 모델/온도
 MODEL_NAME  = os.getenv("TETRIS_LLM_MODEL", "gemini-2.5-flash")
 TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.2"))
 
-# [LLM] Gemini 2.5 Flash 초기화
+# LLM 초기화
 llm = ChatGoogleGenerativeAI(model=MODEL_NAME, temperature=TEMPERATURE, api_key=GOOGLE_API_KEY)
 
-# ------------------------------------------------ chain ------------------------------------------------
-# chain 1
-
-# [Chain1 프롬프트] chain1_prompt.txt를 SystemMessage로 그대로 사용(중괄호 이스케이프)
+# chain1
 _chain1_system = _escape_braces(_read_text(CHAIN1_PROMPT_TXT))
 chain1_prompt = ChatPromptTemplate.from_messages([
     ("system", _chain1_system),
-    MessagesPlaceholder(variable_name="user_input"),  # user_input: [사람수 텍스트, 이미지 메시지]
+    MessagesPlaceholder(variable_name="user_input"),
 ])
 
-# [Chain1 입력 헬퍼] 사람수/이미지를 별도의 HumanMessage 2개로 구성(이미지는 data URL 그대로 전달)
 def make_chain1_user_input(people_count: int, image_data_url: str) -> List[HumanMessage]:
     return [
         HumanMessage(content=f"people_count = {people_count}"),
         HumanMessage(content=[{"type":"image_url","image_url":{"url":image_data_url}}]),
     ]
 
-# [Chain1 출력 수정] chain1_out에 people 주입 
 def _inject_people_into_json(result_text: str, people_count: int) -> str:
     text = (result_text or "").strip()
     m = re.search(r"```(?:json)?\s*(.*?)```", text, re.S | re.I)
@@ -124,9 +120,7 @@ def _inject_people_value(inputs: dict) -> str:
         int(inputs.get("people_count", 0)),
     )
 
-# chain 2
-
-# user_input(List[HumanMessage])에서 이미지 메시지 추출 → chain2_image에 전달
+# chain2
 def _extract_chain2_image(inputs: dict) -> dict:
     msgs = inputs["user_input"]
     img_msgs = [m for m in msgs if isinstance(m.content, list)]
@@ -137,7 +131,6 @@ def _extract_chain2_image(inputs: dict) -> dict:
 def _chain2_image_value(inputs: dict):
     return _extract_chain2_image(inputs)["chain2_image"]
 
-# [Chain2 프롬프트] system=chain2_prompt.txt, human={chain1_out}+이미지+chain2_option.txt
 _chain2_system = _escape_braces(_read_text(CHAIN2_PROMPT_TXT))
 _chain2_option = _escape_braces(_read_text(CHAIN2_OPTION_TXT))
 chain2_prompt = ChatPromptTemplate.from_messages([
@@ -147,9 +140,7 @@ chain2_prompt = ChatPromptTemplate.from_messages([
     ("human", _chain2_option),
 ])
 
-# chain 3
-
-# [Chain3 프롬프트] system=chain3_system.txt, human=role/env/func/output_format/example + {chain2_out} + query + 이미지
+# chain3 (이미지 placeholder 제거)
 _chain3_system   = _escape_braces(_read_text(C3_SYSTEM_TXT))
 _chain3_role     = _escape_braces(_read_text(C3_ROLE_TXT))
 _chain3_env      = _escape_braces(_read_text(C3_ENV_TXT))
@@ -158,39 +149,22 @@ _chain3_outfmt   = _escape_braces(_read_text(C3_OUTFMT_TXT))
 _chain3_example  = _escape_braces(_read_text(C3_EXAMPLE_TXT))
 _chain3_query    = _escape_braces(_read_text(C3_QUERY_TXT))
 
+# chain3_prompt: chain3_image 관련 placeholder 제거 (이미지 사용 안 함)
 chain3_prompt = ChatPromptTemplate.from_messages([
-    ("system", _chain3_system),      # 시스템: 체인3 전역 규칙
-    ("human",  _chain3_role),        # 휴먼: 역할 설명
-    ("human",  _chain3_env),         # 휴먼: 환경 정의
-    ("human",  _chain3_func),        # 휴먼: 기능/규칙
-    ("human",  _chain3_outfmt),      # 휴먼: 출력 포맷
-    ("human",  _chain3_example),     # 휴먼: 예시
-    ("human",  "{chain2_out}"),      # 휴먼: 체인2 출력(instruction JSON)
-    ("human",  _chain3_query),       # 휴먼: 체인3 쿼리
-    MessagesPlaceholder(variable_name="chain3_image"),  # 휴먼: 체인3 레퍼런스 이미지
+    ("system", _chain3_system),
+    ("human",  _chain3_role),
+    ("human",  _chain3_env),
+    ("human",  _chain3_func),
+    ("human",  _chain3_outfmt),
+    ("human",  _chain3_example),
+    ("human",  "{chain2_out}"),
+    ("human",  _chain3_query),
 ])
-
-# [Chain3 이미지 입력 헬퍼] chain3_prompt_image.png를 data URL로 읽어 HumanMessage 생성
-def make_chain3_image_input() -> List[HumanMessage]:
-    import base64, mimetypes
-    mime, _ = mimetypes.guess_type(str(C3_IMAGE_PNG))
-    if not mime: mime = "image/png"
-    data_url = "data:{};base64,{}".format(mime, base64.b64encode(C3_IMAGE_PNG.read_bytes()).decode("utf-8"))
-    return [HumanMessage(content=[{"type":"image_url","image_url":{"url":data_url}}])]
-
-# Chain3는 고정 PNG 이미지를 항상 부착
-def _chain3_image_value(_: dict):
-    return make_chain3_image_input()
 
 VERBOSE = os.getenv("TETRIS_VERBOSE", "0") == "1"
 
-# chain 4
-
-# [Chain4 클래스 정의] 
+# chain4 class (unchanged logic)
 class chain4:
-    """
-    Task sequence를 16자리 십진수로 변환하는 클래스
-    """
     def __init__(self):
         self.encoding_rules = {
             'disk_rotate': {0: '0000', 90: '0010'},
@@ -200,67 +174,49 @@ class chain4:
             'fold': '0001',
             'unchanged': '0000'
         }
-
-    def parse_function_call(self, func_call: str) -> Dict[str, Union[str, int, None]]:
+    def parse_function_call(self, func_call: str):
         if not func_call or not isinstance(func_call, str):
             raise ValueError(f"Invalid function call (empty): {func_call}")
-
         s = func_call.strip()
         if not s:
             raise ValueError(f"Invalid function call (blank): {func_call}")
-
         if "(" not in s and ")" not in s:
             return {"function": s, "param": None}
-
         m = re.match(r"^\s*(\w+)\s*\(\s*(.*?)\s*\)\s*$", s)
         if not m:
             raise ValueError(f"Invalid function call format: {func_call}")
-
         func_name, arg_str = m.group(1), m.group(2)
         if arg_str == "":
             param = None
         else:
-            
             param_raw = arg_str.strip().strip('\'"')
             param = int(param_raw) if param_raw.isdigit() else param_raw
-
         return {"function": func_name, "param": param}
-
-    def encode_function(self, function_data: Dict[str, Union[str, int]]) -> str:
-        func_name = function_data['function']
-        param = function_data['param']
-
+    def encode_function(self, function_data):
+        func_name = function_data['function']; param = function_data['param']
         if func_name == 'disk_rotate':
             if param not in self.encoding_rules['disk_rotate']:
                 raise ValueError(f"Invalid degree value for disk_rotate: {param}")
             return self.encoding_rules['disk_rotate'][param]
-        
         elif func_name == 'move_on_rail':
             if param not in self.encoding_rules['move_on_rail']:
                 raise ValueError(f"Invalid target value for move_on_rail: {param}")
             return self.encoding_rules['move_on_rail'][param]
-        
         elif func_name == 'seat_rotate':
             if param not in self.encoding_rules['seat_rotate']:
                 raise ValueError(f"Invalid degree value for seat_rotate: {param}")
             return self.encoding_rules['seat_rotate'][param]
-        
         elif func_name == 'unfold':
             return self.encoding_rules['unfold']
-        
         elif func_name == 'fold':
             return self.encoding_rules['fold']
-        
         elif func_name == 'unchanged':
             return self.encoding_rules['unchanged']
-        
         else:
             raise ValueError(f"Unknown function: {func_name}")
-
-    def process_cell(self, function_calls: Union[str, List[str]]) -> str:
+    def process_cell(self, function_calls):
         if function_calls is None:
             return "0000"
-
         if isinstance(function_calls, str):
             raw = function_calls.strip()
             if not raw:
@@ -273,54 +229,44 @@ class chain4:
             calls = [str(x).strip() for x in function_calls if str(x).strip()]
         else:
             raise ValueError(f"Cell actions must be list or str, got: {type(function_calls)}")
-
-        # --- 인코딩 ---
         total_sum = 0
         unfold_count = 0
         for func_call in calls:
             parsed = self.parse_function_call(func_call)
-            func_name = parsed["function"]
-            param = parsed["param"]
-
-            # unchanged: 무동작. 현재 정책은 '0000' 인코딩과 동일 효과
+            func_name = parsed["function"]; param = parsed["param"]
             if func_name == "unchanged":
                 encoded_pin = self.encoding_rules["unchanged"]
             elif func_name == "disk_rotate":
                 if param not in self.encoding_rules["disk_rotate"]:
                     raise ValueError(f"Invalid degree value for disk_rotate: {param}")
-                encoded_pin = self.encoding_rules["disk_rotate"][param]
+                encoded_pin = self.encoding_rules['disk_rotate'][param]
             elif func_name == "move_on_rail":
-                if param not in self.encoding_rules["move_on_rail"]:
+                if param not in self.encoding_rules['move_on_rail']:
                     raise ValueError(f"Invalid target value for move_on_rail: {param}")
-                encoded_pin = self.encoding_rules["move_on_rail"][param]
+                encoded_pin = self.encoding_rules['move_on_rail'][param]
             elif func_name == "seat_rotate":
-                if param not in self.encoding_rules["seat_rotate"]:
+                if param not in self.encoding_rules['seat_rotate']:
                     raise ValueError(f"Invalid degree value for seat_rotate: {param}")
-                encoded_pin = self.encoding_rules["seat_rotate"][param]
+                encoded_pin = self.encoding_rules['seat_rotate'][param]
             elif func_name == "unfold":
-                encoded_pin = self.encoding_rules["unfold"]
+                encoded_pin = self.encoding_rules['unfold']
                 unfold_count += 1
             elif func_name == "fold":
-                encoded_pin = self.encoding_rules["fold"]
+                encoded_pin = self.encoding_rules['fold']
             else:
                 raise ValueError(f"Unknown function: {func_name}")
-
             total_sum += int(encoded_pin)
-
         final_result = total_sum - unfold_count
         return f"{final_result:04d}"
-
-    def convert_to_16_digit(self, task_sequence: Dict[str, Union[str, List[str]]]) -> str:
+    def convert_to_16_digit(self, task_sequence):
         if not isinstance(task_sequence, dict):
             raise ValueError(f"task_sequence must be dict, got: {type(task_sequence)}")
-
         result_parts = []
         for cell_id in ['1', '2', '3', '4']:
             seq = task_sequence.get(cell_id, "unchanged")
             cell_result = self.process_cell(seq)
             result_parts.append(cell_result)
         return ''.join(result_parts)
-
     def convert_from_json_string(self, json_string: str) -> str:
         try:
             data = json.loads(json_string)
@@ -331,7 +277,6 @@ class chain4:
         except json.JSONDecodeError as e:
             raise ValueError(f"Invalid JSON format: {e}")
 
-# chain3_out에서 JSON만 안전 추출
 def _extract_json_str_for_chain4(text: str) -> str:
     if not text:
         raise ValueError("chain3_out is empty.")
@@ -360,14 +305,13 @@ def _run_chain4_transform(inputs: dict) -> dict:
         result16 = result16[:16]
     return {"chain4_out": result16}
 
-# =============================== LCEL 파이프라인 (기본; 호환 유지) ===============================
+# pipeline (chain3 no image)
 _pipeline = (
     RunnablePassthrough()
     .assign(chain1_out_raw=(chain1_prompt | llm | StrOutputParser()))
     .assign(chain1_out=RunnableLambda(_inject_people_value))
     .assign(chain2_image=RunnableLambda(_chain2_image_value))
     .assign(chain2_out=(chain2_prompt | llm | StrOutputParser()))
-    .assign(chain3_image=RunnableLambda(_chain3_image_value))
     .assign(chain3_out=(chain3_prompt | llm | StrOutputParser()))
     .assign(chain4_out=RunnableLambda(lambda inputs: _run_chain4_transform(inputs)["chain4_out"]))
 )
@@ -382,53 +326,43 @@ def _select_outputs(d: dict) -> dict:
 
 tetris_chain = _pipeline | RunnableLambda(_select_outputs)
 
-# =============================== LCEL 파이프라인 (태그/런네임 부착 버전) ===============================
-def _tags_for(chain_label: str, meta_tags: list[str], prompt_path: Path) -> dict:
-    prompt_name = prompt_path.name  # 프롬프트 파일명을 태그로
-    tags = (meta_tags or []) + [chain_label, f"prompt_name:{prompt_name}"]
-    return {
-        "run_name": f"{chain_label}_out",  # chain1_out 등
-        "tags": tags,
-        "metadata": {"prompt_name": prompt_name, "chain": chain_label},
-    }
+# 실행 헬퍼들
+def run_chain1(user_msgs: List[HumanMessage], people_count: int, config: dict | None = None) -> dict:
+    t0 = perf_counter()
+    c1_raw = (chain1_prompt | llm | StrOutputParser()).invoke({"user_input": user_msgs}, config=config)
+    c1 = _inject_people_into_json(c1_raw, people_count)
+    t1 = perf_counter()
+    return {"chain1_out": c1, "elapsed": t1 - t0}
 
-def build_pipeline_with_tags(meta_tags: list[str] | None = None):
-    meta_tags = meta_tags or []
-    return (
-        RunnablePassthrough()
-        # chain1
-        .assign(
-            chain1_out_raw=(chain1_prompt | llm | StrOutputParser())
-            .with_config(_tags_for("chain1", meta_tags, CHAIN1_PROMPT_TXT))
-        )
-        .assign(
-            chain1_out=RunnableLambda(_inject_people_value)
-            .with_config(_tags_for("chain1", meta_tags, CHAIN1_PROMPT_TXT))
-        )
-        # chain2
-        .assign(
-            chain2_image=RunnableLambda(_chain2_image_value)
-            .with_config(_tags_for("chain2", meta_tags, CHAIN2_PROMPT_TXT))
-        )
-        .assign(
-            chain2_out=(chain2_prompt | llm | StrOutputParser())
-            .with_config(_tags_for("chain2", meta_tags, CHAIN2_PROMPT_TXT))
-        )
-        # chain3
-        .assign(
-            chain3_image=RunnableLambda(_chain3_image_value)
-            .with_config(_tags_for("chain3", meta_tags, C3_SYSTEM_TXT))
-        )
-        .assign(
-            chain3_out=(chain3_prompt | llm | StrOutputParser())
-            .with_config(_tags_for("chain3", meta_tags, C3_SYSTEM_TXT))
-        )
-        # chain4
-        .assign(
-            chain4_out=RunnableLambda(lambda inputs: _run_chain4_transform(inputs)["chain4_out"])
-            .with_config(_tags_for("chain4", meta_tags, C3_SYSTEM_TXT))
-        )
+def run_chain2(user_msgs: List[HumanMessage], chain1_out: str, config: dict | None = None) -> dict:
+    t0 = perf_counter()
+    chain2_image = _extract_chain2_image({"user_input": user_msgs})["chain2_image"]
+    c2 = (chain2_prompt | llm | StrOutputParser()).invoke(
+        {"chain1_out": chain1_out, "chain2_image": chain2_image},
+        config=config,
     )
+    t1 = perf_counter()
+    return {"chain2_out": c2, "elapsed": t1 - t0}
 
-def tetris_chain_with(meta_tags: list[str] | None = None):
-    return build_pipeline_with_tags(meta_tags) | RunnableLambda(_select_outputs)
+def run_chain3(chain2_out: str, config: dict | None = None) -> dict:
+    t0 = perf_counter()
+    c3 = (chain3_prompt | llm | StrOutputParser()).invoke(
+        {"chain2_out": chain2_out},
+        config=config,
+    )
+    t1 = perf_counter()
+    return {"chain3_out": c3, "elapsed": t1 - t0}
+
+def run_chain4(chain3_out: str, config: dict | None = None) -> dict:
+    t0 = perf_counter()
+    json_str = _extract_json_str_for_chain4(chain3_out)
+    c4 = _chain4_converter.convert_from_json_string(json_str)
+    c4 = (c4 or "").strip()
+    if not c4.isdigit():
+        raise ValueError(f"chain4 result is not numeric: {c4}")
+    if len(c4) < 16:
+        c4 = c4.rjust(16, "0")
+    elif len(c4) > 16:
+        c4 = c4[:16]
+    t1 = perf_counter()
+    return {"chain4_out": c4, "elapsed": t1 - t0}

@@ -1,0 +1,23 @@
+{
+  "chain1_out": "{\n  \"people\": 2,\n  \"total_luggage_count\": 8,\n  \"luggage_details\": {\n    \"luggage_1\": {\n      \"object\": \"나무 옷걸이\",\n      \"color\": \"황토색\",\n      \"material\": \"목재\",\n      \"shape\": \"긴 기둥에 여러 개의 짧은 가지가 돌출된 형태의 비정형\",\n      \"special_note\": \"공간 차지 max. 매우 길고 불규칙한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움\"\n    },\n    \"luggage_2\": {\n      \"object\": \"컴퓨터 모니터\",\n      \"color\": \"검은색\",\n      \"material\": \"플라스틱\",\n      \"shape\": \"직사각형 화면과 받침대가 결합된 형태의 비정형\",\n      \"text\": \"SAMSUNG, Space Monitor\"\n    },\n    \"luggage_3\": {\n      \"object\": \"데스크탑 컴퓨터 본체\",\n      \"color\": \"검은색\",\n      \"material\": \"금속\",\n      \"shape\": \"직육면체\"\n    },\n    \"luggage_4\": {\n      \"object\": \"침낭\",\n      \"color\": \"빨간색\",\n      \"material\": \"폴리에스터\",\n      \"shape\": \"원통형\",\n      \"text\": \"K2, RH+\"\n    },\n    \"luggage_5\": {\n      \"object\": \"백팩\",\n      \"color\": \"검은색\",\n      \"material\": \"나일론\",\n      \"shape\": \"비정형\",\n      \"text\": \"대한민국 공군, ROXAF\"\n    },\n    \"luggage_6\": {\n      \"object\": \"소화기\",\n      \"color\": \"빨간색, 노란색\",\n      \"material\": \"금속\",\n      \"shape\": \"원통형\",\n      \"special_note\": \"공간 차지 min\"\n    },\n    \"luggage_7\": {\n      \"object\": \"대형 박스 (모니터 상자)\",\n      \"color\": \"갈색\",\n      \"material\": \"골판지\",\n      \"shape\": \"직육면체\",\n      \"text\": \"68.4cm, 144 Hz, NVIDIA G-SYNC Compatible\"\n    },\n    \"luggage_8\": {\n      \"object\": \"중형 박스 (PC 케이스 상자)\",\n      \"color\": \"갈색\",\n      \"material\": \"골판지\",\n      \"shape\": \"직육면체\",\n      \"text\": \"GIGABYTE, Y300M, WHITE\"\n    }\n  }\n}",
+  "chain2_out": "{\n  \"instruction\": {\n    \"seats\": {\n      \"1\": [\"x\", \"A\", \"R\", \"storage\"],\n      \"2\": [\"x\", \"C\", \"L\", \"chair\"],\n      \"3\": [\"x\", \"A\", \"R\", \"storage\"],\n      \"4\": [\"x\", \"C\", \"L\", \"chair\"]\n    }\n  }\n}",
+  "chain3_out": "```json\n{\n  \"environment_before\": {\n    \"seats\": {\n      \"1\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"M\",\n        \"facing\": \"F\",\n        \"mode\": \"chair\"\n      },\n      \"2\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"M\",\n        \"facing\": \"F\",\n        \"mode\": \"chair\"\n      },\n      \"3\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"M\",\n        \"facing\": \"F\",\n        \"mode\": \"chair\"\n      },\n      \"4\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"M\",\n        \"facing\": \"F\",\n        \"mode\": \"chair\"\n      }\n    }\n  },\n  \"instruction\": {\n    \"seats\": {\n      \"1\": [\n        \"x\",\n        \"A\",\n        \"R\",\n        \"storage\"\n      ],\n      \"2\": [\n        \"x\",\n        \"C\",\n        \"L\",\n        \"chair\"\n      ],\n      \"3\": [\n        \"x\",\n        \"A\",\n        \"R\",\n        \"storage\"\n      ],\n      \"4\": [\n        \"x\",\n        \"C\",\n        \"L\",\n        \"chair\"\n      ]\n    }\n  },\n  \"task_sequence\": {\n    \"1\": [\n      \"fold(1)\",\n      \"seat_rotate(90)\",\n      \"move_on_rail(A)\"\n    ],\n    \"2\": [\n      \"fold(2)\",\n      \"seat_rotate(270)\",\n      \"move_on_rail(C)\",\n      \"unfold(2)\"\n    ],\n    \"3\": [\n      \"fold(3)\",\n      \"seat_rotate(90)\",\n      \"move_on_rail(A)\"\n    ],\n    \"4\": [\n      \"fold(4)\",\n      \"seat_rotate(270)\",\n      \"move_on_rail(C)\",\n      \"unfold(4)\"\n    ]\n  },\n  \"environment_after\": {\n    \"seats\": {\n      \"1\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"A\",\n        \"facing\": \"R\",\n        \"mode\": \"storage\"\n      },\n      \"2\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"C\",\n        \"facing\": \"L\",\n        \"mode\": \"chair\"\n      },\n      \"3\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"A\",\n        \"facing\": \"R\",\n        \"mode\": \"storage\"\n      },\n      \"4\": {\n        \"rail_axis\": \"x\",\n        \"position\": \"C\",\n        \"facing\": \"L\",\n        \"mode\": \"chair\"\n      }\n    }\n  }\n}\n```",
+  "chain4_out": "1101320011013200",
+  "chain_elapsed_sec": 181.99237100000028,
+  "error": null,
+  "metrics_chain1": {
+    "success": 1.0,
+    "count_pred": 8,
+    "count_accuracy": 0.0
+  },
+  "metrics_chain2": {
+    "accuracy": 1.0,
+    "matched_label": "0"
+  },
+  "metrics_chain3": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "matched_label": "0"
+  }
+}
