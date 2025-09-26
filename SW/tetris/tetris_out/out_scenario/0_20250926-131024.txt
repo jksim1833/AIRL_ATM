@@ -1,0 +1,142 @@
+====================[ chain1_out ]====================
+{
+  "people": 2,
+  "total_luggage_count": 9,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "PC 케이스",
+      "color": "검은색",
+      "material": "금속, 플라스틱",
+      "shape": "직육면체"
+    },
+    "luggage_2": {
+      "object": "의자",
+      "color": "회색",
+      "material": "플라스틱, 금속",
+      "shape": "등받이와 좌석이 결합된 비정형",
+      "special_note": "공간 차지 max. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지하며 다른 짐과 함께 효율적으로 쌓기 어려움"
+    },
+    "luggage_3": {
+      "object": "침낭",
+      "color": "빨간색",
+      "material": "폴리에스터",
+      "shape": "원통형",
+      "text": "K2"
+    },
+    "luggage_4": {
+      "object": "모니터",
+      "color": "검은색",
+      "material": "플라스틱, 유리",
+      "shape": "직사각형 (화면)과 스탠드가 결합된 비정형",
+      "text": "SAMSUNG"
+    },
+    "luggage_5": {
+      "object": "모니터 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "68.4cm, 144 Hz, NVIDIA G-SYNC Compatible"
+    },
+    "luggage_6": {
+      "object": "PC 케이스 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "Y300M DYD, WHITE, BLACK"
+    },
+    "luggage_7": {
+      "object": "백팩",
+      "color": "검은색",
+      "material": "나일론",
+      "shape": "비정형",
+      "text": "A&U, 대한민국 공군, ROXAF"
+    },
+    "luggage_8": {
+      "object": "소화기",
+      "color": "빨간색, 노란색",
+      "material": "금속",
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_9": {
+      "object": "나무 옷걸이 스탠드",
+      "color": "밝은 갈색",
+      "material": "목재",
+      "shape": "긴 막대에 여러 개의 짧은 가지가 돌출된 비정형"
+    }
+  }
+}
+🕒 [chain1_out 생성 시간]: 16.947초
+================================[ chain2_out ]==================================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "chair"]
+    }
+  }
+}
+```
+🕒 [chain2_out 생성 시간]: 39.974초
+================================[ chain3_out ]==================================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x", "A", "R", "storage"],
+      "2": ["x", "C", "L", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "chair"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(4)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "chair" }
+    }
+  }
+}
+```
+🕒 [chain3_out 생성 시간]: 48.390초
+================================[ chain4_out ]==================================
+1101320011013200
+🕒 [chain4_out 생성 시간]: 0.001초
+
+🕒 [chain_run_time]: 105.312s

@@ -1,0 +1,22 @@
+Start working. The instruction is as follows:
+"""
+{"instruction": [INSTRUCTION]}
+"""
+Follow these rules:
+1. Keep track of all items listed in the "seats" section of the "instruction" field. Please ensure that you fill out the "seats" sections for all listed items.
+2. Return exactly one structured tool call only (no free text / no code fences).
+3. Seats maps must be native JSON objects with outer braces — never strings. Keys must be quoted ("1","2",...). Do not stringify nested objects.
+- instruction.seats = exactly the seats object from [INSTRUCTION] (no add/remove/modify).
+4. Your seat control sequence must obey the following constraints:
+- move_on_rail(target) can only be used when the seat is in the "storage" state.
+- If "facing" changes from F to R or R to B or B to L or L to F, "degree" is 90
+- If "facing" changes from F to B or B to F or R to L or L to R, "degree" is 180
+- If "facing" changes from F to L or L to B or B to R or R to F, "degree" is 270
+- **Within each seat's action sequence, follow this order: disk_rotate → fold → seat_rotate → move_on_rail → unfold.**
+  (This is a rule for the order of operations, not a requirement to use every function.)
+- task_sequence should include only seats that change and list the minimal valid sequence. 
+  (**If the arrangement of the instruction and initial environment is the same, output "unchanged".**)
+
+**Plan sequentially: after each action, update the working state; decide the next action from that updated state.**
+**In "task_sequence", output only pure function call strings like "func_name(key=value, ...)".  No bullets, numbers, backticks, or extra text — only valid function calls.**
+Follow the rules above. Think step by step.

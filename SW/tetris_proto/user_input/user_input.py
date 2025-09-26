@@ -1,32 +1,119 @@
-# interface_test.py
-# - UI만 확인하는 테스트 서버 (QR 페이지 + 인터페이스)
-# - 변경 사항:
-#   1) 탑승 인원 버튼에 "0명" 추가
-#   2) JS에서 people 전송 조건을 seatSelection !== null 로 변경(0도 전송)
+#user_input.py
 
-from __future__ import annotations
-from flask import Flask, request, jsonify, make_response, render_template_string, send_from_directory, abort
-from datetime import datetime
-from pathlib import Path
-from io import BytesIO
-import socket, threading, time, argparse
-import qrcode  # pip install qrcode[pil]
+import base64
 import mimetypes
+from io import BytesIO
+from pathlib import Path
+from typing import Tuple, Optional
 
-app = Flask(__name__)
+def file_to_data_url(p: Path) -> str:
+    """파일 경로 > data URL. 시나리오 모드"""
+    mime, _ = mimetypes.guess_type(str(p))
+    if not mime:
+        mime = "application/octet-stream"
+    b64 = base64.b64encode(p.read_bytes()).decode("utf-8")
+    return f"data:{mime};base64,{b64}"
 
-# 테스트용 자원 디렉토리(있으면 서빙, 없어도 무방)
-BASE_DIR = Path(__file__).resolve().parent
-WEB_DIR  = (BASE_DIR / "user_input" / "web")  # 기존 구조 유지 시 자동 인식
-WEB_DIR.mkdir(parents=True, exist_ok=True)
+def _file_bytes_to_data_url(raw: bytes, mime: Optional[str]) -> str:
+    """원본 바이트 → data URL. 웹 모드"""
+    if not mime:
+        mime = "application/octet-stream"
+    b64 = base64.b64encode(raw).decode("utf-8")
+    return f"data:{mime};base64,{b64}"
 
-mimetypes.add_type("font/woff2", ".woff2")
+def _ext_from_filename(filename: str) -> str:
+    """원본 파일명에서 확장자 추출"""
+    if not filename:
+        return ""
+    dot = filename.rfind(".")
+    return filename[dot:].lower() if dot != -1 else ""
 
-# 간단한 메모리 상태
-JOBS: dict[str, dict] = {}
-LATEST_SCENARIO: str | None = None
+def _guess_ext_by_content(raw: bytes, fallback_ext: str) -> str:
+    """실제 파일 포맷 판별 후 확장자 확정. (Pillow 미설치/미인식 시 안전 폴백)"""
+    try:
+        from PIL import Image  
+        with Image.open(BytesIO(raw)) as im:
+            fmt = (im.format or "").lower()
+    except Exception:
+        fmt = None
 
-APP_HTML = """<!doctype html>
+    table = {
+        "jpeg": ".jpeg", "jpg": ".jpg", "png": ".png", "webp": ".webp",
+        "heic": ".heic", "heif": ".heic", "bmp": ".bmp", "gif": ".gif", "tiff": ".tiff",
+    }
+    if fallback_ext:
+        return fallback_ext if fallback_ext.startswith(".") else "." + fallback_ext
+    if fmt in table:
+        return table[fmt]
+    return ".bin"
+
+# ================================ 시나리오 모드 ================================
+def input_scenario_image() -> str:
+    while True:
+        s = input("시나리오명을 입력하세요: ").strip()
+        if s:
+            return s
+        print("❌ 시나리오명을 입력해주세요.")
+
+def input_scenario_people() -> int:
+    while True:
+        ppl = input("1열을 제외한 차량 탑승 인원을 알려주세요! : ").strip()
+        try:
+            n = int(ppl)
+            if n < 0:
+                print("❌ 0 이상의 정수만 입력 가능합니다.")
+                continue
+           
+            while True:
+                confirm = input(f"차량 탑승 인원은 \"{n}명\"이 맞나요? (1) 네 (2) 아니요 : ").strip()
+                if confirm == "1":
+                    return n
+                elif confirm == "2":
+                    break  
+                else:
+                    print("❌ 1 또는 2로 입력해주세요.")
+        except ValueError:
+            print("❌ 숫자만 입력해주세요.")
+
+def get_user_input_scenario() -> Tuple[int, str, str]:
+    user_input_dir = Path(__file__).resolve().parent
+    images_dir = user_input_dir / "luggage_image"
+
+    scenario = input_scenario_image()
+    people_count = input_scenario_people()
+
+    img_path = images_dir / f"{scenario}.jpg"
+    if not img_path.exists():
+        raise FileNotFoundError(f"이미지 파일을 찾을 수 없습니다: {img_path}")
+
+    image_data_url = file_to_data_url(img_path)
+    
+    return people_count, image_data_url, scenario
+
+# ================================ 웹 모드 ================================
+def get_user_input_web(
+    port: int = 5002,
+    auto_open_browser: bool = True,
+) -> Tuple[int, str, str]:
+
+    from flask import Flask, request, jsonify, make_response, render_template_string, send_from_directory, abort
+    from werkzeug.serving import make_server
+    import socket, threading, time
+    import qrcode  # pip install qrcode[pil]
+
+    base_dir = Path(__file__).resolve().parent
+    web_dir = base_dir / "web"
+    upload_dir = base_dir / "luggage_image_rt"
+    web_dir.mkdir(parents=True, exist_ok=True)
+    upload_dir.mkdir(parents=True, exist_ok=True)
+
+    mimetypes.add_type("font/woff2", ".woff2")
+
+    app = Flask(__name__)
+    JOBS: dict[str, dict] = {}
+    LATEST_SCENARIO: Optional[str] = None
+
+    APP_HTML = """<!doctype html>
 <html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -151,7 +238,7 @@ APP_HTML = """<!doctype html>
     <p class="section-desc">1열을 제외한 차량 탑승 인원을 알려주세요.</p>
 
     <div class="chips" role="group" aria-label="탑승 인원 선택">
-      <button class="chip" type="button" data-seats="0">0명</button> 
+      <button class="chip" type="button" data-seats="0">0명</button>
       <button class="chip" type="button" data-seats="1">1명</button>
       <button class="chip" type="button" data-seats="2">2명</button>
       <button class="chip" type="button" data-seats="3">3명</button>
@@ -189,7 +276,7 @@ chips.forEach(ch=>{
   ch.addEventListener('click', ()=>{
     chips.forEach(c=>c.classList.remove('selected'));
     ch.classList.add('selected');
-    seatSelection = ch.dataset.seats; // 문자열 "0","1",...
+    seatSelection = ch.dataset.seats;
   });
 });
 
@@ -206,7 +293,7 @@ function showNotice(msg){
   notice.textContent = msg;
   notice.classList.remove('show'); void notice.offsetWidth; notice.classList.add('show');
 }
-
+ 
 /* 촬영 → 미리보기 → 자동 업로드 */
 photo.addEventListener('change', async ()=>{
   if(!photo.files.length) return;
@@ -219,7 +306,6 @@ photo.addEventListener('change', async ()=>{
   try{
     const fd=new FormData();
     fd.append('photo', photo.files[0]);
-    // ✅ 0도 전송되도록 null 체크(기존 truthy 체크 제거)
     if (seatSelection !== null) fd.append('people', seatSelection);
 
     const r=await fetch('/api/upload',{method:'POST',body:fd});
@@ -253,7 +339,6 @@ submit.addEventListener('click', ()=>{
       const dj = await rs.json();
       if(dj.ok && dj.status === 'done'){
         clearInterval(pollTimer);
-        showNotice('테스트 완료: 상태 done');
       }else if(dj.ok && dj.status === 'error'){
         clearInterval(pollTimer);
         alert('분석 실패: ' + (dj.error_msg||''));
@@ -271,7 +356,7 @@ submit.addEventListener('click', ()=>{
 </body>
 </html>"""
 
-QR_HTML = """<!doctype html>
+    QR_HTML = """<!doctype html>
 <html lang="ko">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -320,101 +405,164 @@ document.addEventListener('click', ()=>{
 </body>
 </html>"""
 
-def _lan_ip() -> str:
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
+    def _lan_ip() -> str:
+        """동일 LAN 접근용 IP. 실패 시 로컬호스트 폴백(라즈베리파이 오프라인 대비)."""
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         try:
-            s.connect(("8.8.8.8", 80))
-            ip = s.getsockname()[0]
+            try:
+                s.connect(("8.8.8.8", 80))
+                ip = s.getsockname()[0]
+            except Exception:
+                ip = "127.0.0.1" 
+        finally:
+            s.close()
+        return ip
+
+    def _server_url() -> str:
+        return f"http://{_lan_ip()}:{port}"
+
+    @app.route("/", methods=["GET"])
+    def home():
+        return APP_HTML
+
+    @app.route("/qr", methods=["GET"])
+    def qr_fullscreen():
+        from datetime import datetime
+        return render_template_string(QR_HTML, ts=datetime.now().timestamp())
+
+    @app.route("/web/<path:filename>")
+    def web_assets(filename):
+        p = web_dir / filename
+        if not p.exists():
+            abort(404)
+        return send_from_directory(web_dir, filename)
+
+    # QR 이미지
+    @app.route("/qr.png")
+    def qr_png():
+        url = _server_url()
+        qr = qrcode.QRCode(box_size=10, border=2)
+        qr.add_data(url); qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
+        buf = BytesIO(); img.save(buf, format="PNG")
+        resp = make_response(buf.getvalue()); resp.headers["Content-Type"] = "image/png"; return resp
+
+    # 업로드 저장
+    def _save_upload_as_original(file_storage, scenario: str) -> Path:
+        raw = file_storage.read()
+        ext = _guess_ext_by_content(raw, _ext_from_filename(file_storage.filename or ""))
+        dst = upload_dir / f"{scenario}{ext}"
+        with open(dst, "wb") as f:
+            f.write(raw)
+        return dst
+
+    @app.route("/api/upload", methods=["POST"])
+    def api_upload():
+        from datetime import datetime
+        nonlocal LATEST_SCENARIO
+        scenario = datetime.now().strftime("items_%Y%m%d_%H%M%S")
+        file = request.files.get("photo")
+        if not file:
+            return jsonify(ok=False, error="파일이 없습니다."), 400
+
+        people_raw = (request.form.get("people") or "").strip()
+        try:
+            people_int = int(people_raw) if people_raw else None
         except Exception:
-            ip = "127.0.0.1"
-    finally:
-        s.close()
-    return ip
+            people_int = None
 
-def _server_url(port: int) -> str:
-    return f"http://{_lan_ip()}:{port}"
-
-@app.route("/", methods=["GET"])
-def home():
-    return APP_HTML
-
-@app.route("/qr", methods=["GET"])
-def qr_fullscreen():
-    return render_template_string(QR_HTML, ts=time.time())
-
-@app.route("/web/<path:filename>")
-def web_assets(filename):
-    p = WEB_DIR / filename
-    if not p.exists():
-        abort(404)
-    return send_from_directory(WEB_DIR, filename)
-
-@app.route("/qr.png")
-def qr_png():
-    # 현재 서버 루트 URL을 QR에 넣어 모바일 접속 확인
-    port = int(request.host.split(":")[1]) if ":" in request.host else 5002
-    url = _server_url(port)
-    qr = qrcode.QRCode(box_size=10, border=2)
-    qr.add_data(url); qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
-    buf = BytesIO(); img.save(buf, format="PNG")
-    resp = make_response(buf.getvalue()); resp.headers["Content-Type"] = "image/png"; return resp
-
-# ====== 테스트용 가짜 업로드/상태 엔드포인트 ======
-@app.route("/api/upload", methods=["POST"])
-def api_upload():
-    global LATEST_SCENARIO
-    scenario = datetime.now().strftime("items_%Y%m%d_%H%M%S")
-    file = request.files.get("photo")
-    if not file:
-        return jsonify(ok=False, error="파일이 없습니다."), 400
-
-    people_raw = (request.form.get("people") or "").strip()
-    # 여기선 검증만, 실제 저장/처리는 하지 않음
-    try:
-        people_int = int(people_raw) if people_raw != "" else None  # "0"도 int(0)로 처리
-    except Exception:
-        people_int = None
-
-    JOBS[scenario] = {
-        "status": "uploaded",
-        "people": people_int,   # 0도 올바르게 들어옴
-        "error_msg": None,
-    }
-    LATEST_SCENARIO = scenario
-    return jsonify(ok=True, stage="uploaded", scenario=scenario)
-
-@app.route("/api/status", methods=["GET"])
-def api_status():
-    scenario = (request.args.get("scenario") or "").strip()
-    if not scenario or scenario not in JOBS:
-        return jsonify(ok=False, error="unknown scenario"), 404
-
-    job = JOBS[scenario]
-    # 업로드 후 첫 조회에 done으로 바꿔주는 간단한 모의 동작
-    if job["status"] == "uploaded":
-        job["status"] = "done"
-
-    return jsonify(ok=True, status=job["status"], error_msg=job.get("error_msg"))
-
-def main():
-    parser = argparse.ArgumentParser(description="AI TETRIS UI Interface Test")
-    parser.add_argument("--port", type=int, default=5002)
-    parser.add_argument("--no-browser", action="store_true")
-    args = parser.parse_args()
-
-    # 안내 출력
-    print(f"\n[AI TETRIS · UI TEST] 휴대폰 접속:  http://{_lan_ip()}:{args.port}\n(같은 Wi-Fi 필요)")
-    if not args.no_browser:
         try:
-            import webbrowser
-            webbrowser.open(f"http://127.0.0.1:{args.port}/qr")
+            img_path = _save_upload_as_original(file, scenario)
+            JOBS[scenario] = {
+                "status": "uploaded",
+                "people": people_int,
+                "path": str(img_path),
+                "data_url": None,
+                "error_msg": None,
+            }
+            LATEST_SCENARIO = scenario
+            return jsonify(ok=True, stage="uploaded", scenario=scenario)
+        except Exception as e:
+            return jsonify(ok=False, error=f"오류: {e}"), 500
+
+    @app.route("/api/status", methods=["GET"])
+    def api_status():
+        scenario = (request.args.get("scenario") or "").strip()
+        if not scenario or scenario not in JOBS:
+            return jsonify(ok=False, error="unknown scenario"), 404
+
+        job = JOBS[scenario]
+        # 특정 업로드에 대한 상태 기록
+        if job["status"] == "uploaded":
+            try:
+                p = Path(job["path"])
+                raw = p.read_bytes()
+                mime, _ = mimetypes.guess_type(str(p))
+                if not mime:
+                    mime = "application/octet-stream"
+                job["data_url"] = _file_bytes_to_data_url(raw, mime)
+                job["status"] = "done"
+            except Exception as e:
+                job["status"] = "error"
+                job["error_msg"] = str(e)
+
+        return jsonify(ok=True, status=job["status"], error_msg=job["error_msg"])
+
+    # ---------- 서버 구동/종료 및 결과 반환 ----------
+    server = make_server("0.0.0.0", port, app)
+    srv_thread = threading.Thread(target=server.serve_forever, daemon=True)
+    srv_thread.start()
+
+    if auto_open_browser:
+        try:
+            import webbrowser, threading
+            url_qr = f"http://127.0.0.1:{port}/qr"
+            webbrowser.open(url_qr, new=1)                         
+            threading.Timer(0.5, lambda: webbrowser.open(url_qr, new=1)).start()  
         except Exception:
             pass
 
-    # 플라스크 실행
-    app.run(host="0.0.0.0", port=args.port, debug=False)
+    print(f"\n[AI TETRIS · WEB] 휴대폰 접속:  http://{_lan_ip()}:{port}\n(같은 Wi-Fi 필요)\n")
 
+    collected_people: Optional[int] = None
+    collected_data_url: Optional[str] = None
+
+    try:
+        deadline = time.monotonic() + 600  # 최대 10분 대기
+        while time.monotonic() < deadline:
+            key = LATEST_SCENARIO
+            if key and key in JOBS:
+                job = JOBS[key]
+                if job.get("status") == "done":
+                    collected_people = int(job.get("people") or 0)
+                    collected_data_url = job.get("data_url") or ""
+                    break
+                if job.get("status") == "error":
+                    raise RuntimeError(job.get("error_msg") or "수집 실패")
+            time.sleep(0.5)
+        else:
+           
+            raise TimeoutError("웹 입력 수집 대기 시간이 초과되었습니다.")
+    finally:
+        try:
+            server.shutdown()
+        except Exception:
+            pass
+        try:
+            srv_thread.join(timeout=2.0)
+        except Exception:
+            pass
+
+    if not collected_data_url:
+        raise RuntimeError("이미지 수집에 실패했습니다.")
+    if not isinstance(collected_people, int) or collected_people < 0:
+        raise RuntimeError("탑승 인원 수집에 실패했습니다.")
+
+    return collected_people, collected_data_url, (LATEST_SCENARIO or "items_unknown")
+
+# ---------------------- 단독 실행 테스트 ----------------------
 if __name__ == "__main__":
-    main()
+    ppl, url, scenario = get_user_input_scenario()
+    print("people_count =", ppl)
+    print("scenario =", scenario)
+    print("image_data_url(head) =", url[:64], "...")

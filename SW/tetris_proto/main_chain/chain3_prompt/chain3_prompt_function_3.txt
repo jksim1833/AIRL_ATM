@@ -1,0 +1,36 @@
+[user]
+Necessary and sufficient seat control actions are defined as follows:
+
+"""
+"SEAT CONTROL LIST"
+
+#Motion action
+- disk_rotate(degree):
+  Rotate the floor disk; the rail is embedded through the disk’s center line.
+  degree ∈ {90}.
+  Effect: toggles rail_axis between "x" and "y"; and rotates facing by +90 (clockwise):
+          F→R, R→B, B→L, L→F. position(A/M/C) does not change.
+
+- move_on_rail(target):
+  Move the seat along the embedded rail to an absolute stop.
+  target ∈ {"A","M","C"}  (A=negative end, M=center, C=positive end).
+  Effect: changes only position(A/M/C); rail_axis and facing do not change.
+
+- seat_rotate(degree):
+  Rotate the seat body relative to the vehicle.
+  degree ∈ {90, 180, 270}.
+  Effect: updates facing among {F,R,B,L}; 
+          rail_axis and position(A/M/C) do not change.
+
+#State action
+- unfold(id):
+  Change mode to "chair". 
+
+- fold(id):
+  Change mode to "storage" (fully folded, space-saving).
+
+"""
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. Waiting for next input.

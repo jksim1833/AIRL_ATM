@@ -1,0 +1,91 @@
+=====================chain1_out =====================
+{
+  "people": 4,
+  "total_luggage_count": 3,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "골프백",
+      "color": "검은색, 빨간색",
+      "material": "폴리에스터",
+      "shape": "길고 원통형이며 상단에 골프 클럽 헤드들이 돌출된 비정형",
+      "text": "Titleist",
+      "special_note": "공간 차지 max. 길고 불규칙한 형태로 인해 차량 내 효율적인 배치가 까다로움"
+    },
+    "luggage_2": {
+      "object": "스포츠 가방",
+      "color": "검은색, 흰색",
+      "material": "나일론",
+      "shape": "직육면체",
+      "text": "세 개의 흰색 줄무늬 로고"
+    },
+    "luggage_3": {
+      "object": "골프화 한 켤레",
+      "color": "흰색, 검은색, 빨간색",
+      "material": "합성 가죽",
+      "shape": "비정형",
+      "text": "BOA, ZZI",
+      "special_note": "공간 차지 min"
+    }
+  }
+}
+
+🕒 chain1_run_time: 15.764s
+
+=====================chain2_out =====================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "M", "F", "chair"],
+      "4": ["x", "M", "F", "chair"]
+    }
+  }
+}
+```
+
+🕒 chain2_run_time: 14.962s
+
+=====================chain3_out =====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x", "M", "F", "chair"],
+      "2": ["x", "M", "F", "chair"],
+      "3": ["x", "M", "F", "chair"],
+      "4": ["x", "M", "F", "chair"]
+    }
+  },
+  "task_sequence": {
+    "1": ["unchanged"],
+    "2": ["unchanged"],
+    "3": ["unchanged"],
+    "4": ["unchanged"]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  }
+}
+```
+
+🕒 chain3_run_time: 54.488s
+
+=====================chain4_out =====================
+0000000000000000
+🕒 chain_run_time: 85.221s
+🕒 tetris_run_time: 89.403s

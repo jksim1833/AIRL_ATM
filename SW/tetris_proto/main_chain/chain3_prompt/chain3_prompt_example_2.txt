@@ -1,0 +1,138 @@
+[user]
+I will give you some examples of the input and the output you will generate. 
+Examples 1–4 use a single seat for explanation; at runtime, generate actions for all seats listed in instruction.seats 
+Example 1:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["x","M","F","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": ["unchanged"]}}
+"""
+Example 2:
+"""
+- Input:
+{"instruction": { 
+  "seats": { 
+    "1": ["y","A","F","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(270)",
+    "move_on_rail(A)",
+    "unfold(1)"]}}
+"""
+Example 3:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["y","A","L","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(180)",
+    "move_on_rail(A)",
+    "unfold(1)"]}}
+"""
+Example 4:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["y","A","B","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(90)",
+    "move_on_rail(A)",
+    "unfold(1)"]}}
+"""
+Example 5:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["x","A","F","chair"],
+    "2": ["x","C","R","storage"],
+    "3": ["x","A","F","chair"],
+    "4": ["x","C","L","storage"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "fold(1)",
+    "move_on_rail(A)",
+    "unfold(1)"
+    ],
+    "2": [
+    "fold(2)",
+    "seat_rotate(90)",
+    "move_on_rail(C)"
+    ],
+    "3": [
+    "fold(3)",
+    "move_on_rail(A)",
+    "unfold(3)"
+    ],
+    "4": [
+    "fold(4)",
+    "seat_rotate(270)",
+    "move_on_rail(C)"]
+}}
+"""
+Example 6:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["y","A","B","storage"],
+    "2": ["y","C","L","chair"],
+    "3": ["y","A","R","chair"],
+    "4": ["y","C","F","storage"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(90)",
+    "move_on_rail(A)"
+    ],
+    "2": [
+    "disk_rotate(90)",
+    "fold(2)",
+    "seat_rotate(180)",
+    "move_on_rail(C)",
+    "unfold(2)"
+    ],
+    "3": [
+    "disk_rotate(90)",
+    "fold(3)",
+    "move_on_rail(A)",
+    "unfold(3)"
+    ],
+    "4": [
+    "disk_rotate(90)",
+    "fold(4)",
+    "seat_rotate(270)",
+    "move_on_rail(C)"]
+}}
+"""
+Generate the minimal valid sequence from initial environment to the instruction target, strictly obeying action-order dependencies.
+-------------------------------------------------------
+The texts above are part of the overall instruction. Do not start working yet:
+[assistant]
+Understood. I will wait for further instructions before starting to work.

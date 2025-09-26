@@ -1,0 +1,181 @@
+=====================chain1_out =====================
+{
+  "people": 1,
+  "total_luggage_count": 1,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "안마의자",
+      "color": "아이보리색, 베이지색, 검은색",
+      "material": "인조가죽",
+      "shape": "인체공학적 형태의 비정형. 접이식 불가",
+      "special_note": "공간 차지 max. 매우 크고 부피가 고정된 비정형 형태로, 차량 내부에 배치 시 상당한 공간을 차지하며 다른 짐과 효율적으로 적재하기 어려움. 공간 차지 min"
+    }
+  }
+}
+
+🕒 chain1_run_time: 19.852s
+
+=====================chain2_out =====================
+meta_data.step_1:
+입력된 짐은 '안마의자'이며, 이미지와 텍스트 설명을 통해 매우 크고 부피가 고정된 비정형 형태임을 확인했습니다. 접이식은 불가합니다.
+
+meta_data.step_2:
+안마의자의 대략적인 치수를 이미지와 일반적인 안마의자 크기를 바탕으로 추정합니다.
+- 높이: 약 120 cm
+- 너비: 약 80 cm
+- 깊이: 약 90 cm
+부피 계산: (120 cm * 80 cm * 90 cm) / 1000 = 864 L.
+PV5 트렁크의 기본 용량은 600L로 가정합니다.
+
+meta_data.step_3:
+안마의자의 부피(864L)는 PV5 트렁크의 기본 용량(600L)을 초과합니다. 또한, "매우 크고 부피가 고정된 비정형 형태"라는 설명과 추정된 치수를 고려할 때, 트렁크에 수납하는 것은 불가능하며 트렁크 문이 닫히지 않을 것으로 판단됩니다. 4인 탑승 가정 하에 좌석을 접거나 제거할 수 없으므로, 트렁크 외 다른 공간 활용은 고려하지 않습니다.
+
+meta_data.step_4:
+총 부피는 864L입니다.
+분류 규칙에 따라:
+- 소형(S): 총 부피 ≤ 300L
+- 중형(M): 300L < 총 부피 ≤ 600L
+- 대형(L): 총 부피 > 600L 또는 한 변의 길이 ≥ 150cm
+계산된 총 부피 864L는 600L를 초과하므로 '대형(L)'으로 분류됩니다. 트렁크 용량을 초과하므로 'L' 분류가 적절합니다.
+
+meta_data.step_5:
+인원수: 1명
+짐의 전체 용량: L
+주어진 `option_list`에서 `people_count`가 1이고 `luggage_amount`가 "L"인 경우에 해당하는 `instruction`을 선택합니다.
+
+{
+  "instruction": {
+    "seats": {
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+
+🕒 chain2_run_time: 23.218s
+
+=====================chain3_out =====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": [
+        "y",
+        "A",
+        "B",
+        "storage"
+      ],
+      "2": [
+        "y",
+        "C",
+        "L",
+        "chair"
+      ],
+      "3": [
+        "y",
+        "A",
+        "R",
+        "chair"
+      ],
+      "4": [
+        "y",
+        "C",
+        "F",
+        "storage"
+      ]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "2": [
+      "disk_rotate(90)",
+      "fold(2)",
+      "seat_rotate(180)",
+      "move_on_rail(C)",
+      "unfold(2)"
+    ],
+    "3": [
+      "disk_rotate(90)",
+      "fold(3)",
+      "move_on_rail(A)",
+      "unfold(3)"
+    ],
+    "4": [
+      "disk_rotate(90)",
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {
+        "rail_axis": "y",
+        "position": "A",
+        "facing": "B",
+        "mode": "storage"
+      },
+      "2": {
+        "rail_axis": "y",
+        "position": "C",
+        "facing": "L",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "y",
+        "position": "A",
+        "facing": "R",
+        "mode": "chair"
+      },
+      "4": {
+        "rail_axis": "y",
+        "position": "C",
+        "facing": "F",
+        "mode": "storage"
+      }
+    }
+  }
+}
+```
+
+🕒 chain3_run_time: 37.452s
+
+=====================chain4_out =====================
+1111221001103211
+🕒 chain_run_time: 80.532s
+🕒 tetris_run_time: 88.940s

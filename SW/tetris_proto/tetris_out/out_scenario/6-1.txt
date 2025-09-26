@@ -1,0 +1,98 @@
+=====================chain1_out =====================
+{
+  "people": 1,
+  "total_luggage_count": 2,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "게이밍 의자",
+      "color": "검은색, 빨간색",
+      "material": "인조 가죽, 직물",
+      "shape": "비정형. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함"
+    },
+    "luggage_2": {
+      "object": "게이밍 의자",
+      "color": "검은색, 빨간색",
+      "material": "인조 가죽, 직물",
+      "shape": "비정형. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함"
+    }
+  }
+}
+
+🕒 chain1_run_time: 13.518s
+
+=====================chain2_out =====================
+```json
+{
+  "instruction": {
+    "seats": {
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  }
+}
+```
+
+🕒 chain2_run_time: 17.928s
+
+=====================chain3_out =====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)",
+      "unfold(1)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": { "rail_axis": "y", "position": "A", "facing": "B", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
+    }
+  }
+}
+```
+
+🕒 chain3_run_time: 27.921s
+
+=====================chain4_out =====================
+1110320111013201
+🕒 chain_run_time: 59.374s
+🕒 tetris_run_time: 67.025s

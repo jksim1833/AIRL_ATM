@@ -11,7 +11,7 @@ import sys
 # 초기 로드 & 디버그
 HERE = Path(__file__).resolve().parent
 print(f"[DEBUG] script_dir={HERE} cwd={Path.cwd()} .env_exists={(HERE/'.env').exists()}")
-load_dotenv(override=True)
+load_dotenv()
 print("[DEBUG] Loaded .env via python-dotenv")
 print(f"[DEBUG] LANGSMITH_API_KEY (masked): {'SET' if os.getenv('LANGSMITH_API_KEY') else 'NOT SET'}")
 print(f"[DEBUG] LANGCHAIN_PROJECT: {os.getenv('LANGCHAIN_PROJECT')}")
@@ -236,129 +236,148 @@ def _build_trace_inputs_for_dashboard(scenario: str, people_count: int) -> dict:
         "chain3_query":   _read_text(C3_QUERY_TXT),
     }
 
-def _discover_run_via_http(api_url: str, api_key: str, project: str, name: str, timeout_s: int = 30, poll_interval: float = 2.0):
+def _discover_run_via_http(api_url: str, api_key: str, project: str, name: str, timeout_s: int = 10, poll_interval: float = 2.0):
     """
-    HTTP로 /runs 리스트를 반복 조회하여 name과 유사한 run을 찾고 id 반환.
-    (서버가 비동기로 run을 생성할 때 유용)
+    HTTP로 최신 runs를 조회하여 name과 매칭되는 run을 찾습니다.
+    LangSmith API 제약사항에 맞게 단순화된 쿼리 사용.
     """
-    url = api_url.rstrip("/") + "/runs"
+    url = api_url.rstrip("/") + "/runs/query"
     headers = {"x-api-key": api_key, "Content-Type": "application/json"}
     deadline = time.time() + timeout_s
-    print(f"[INFO] Attempting to discover run via list_runs for name={name} (timeout {timeout_s}s)...")
+    print(f"[INFO] Attempting to discover run via runs/query for name='{name}' (timeout {timeout_s}s)...")
+    
+    attempt = 0
     while time.time() < deadline:
+        attempt += 1
         try:
-            # server may accept query params; try simple list first
-            resp = requests.get(url, headers=headers, params={"project_name": project, "limit": 200}, timeout=10)
+            # 단순화된 쿼리 - limit을 100 이하로, filter 제거
+            query_payload = {
+                "project_name": project,
+                "limit": 50,  # 100 이하로 설정
+                "order": "desc"  # 최신순
+            }
+            
+            resp = requests.post(url, headers=headers, json=query_payload, timeout=10)
+            print(f"[DEBUG] runs/query attempt {attempt}, status: {resp.status_code}")
+            
             if resp.status_code in (200, 201, 202):
                 try:
                     j = resp.json()
-                except Exception:
-                    j = None
-                # j might be dict with 'data' or list — try to inspect
-                candidates = []
-                if isinstance(j, dict):
-                    # common shapes: {"runs": [...]} or {"data": [...]} or list in some key
-                    for key in ("runs", "data", "items"):
-                        if key in j and isinstance(j[key], list):
-                            candidates = j[key]
-                            break
-                    if not candidates:
-                        # maybe direct list fields
-                        for v in j.values():
-                            if isinstance(v, list):
-                                candidates = v
+                    # 가능한 응답 구조들 체크
+                    candidates = []
+                    if isinstance(j, dict):
+                        # 일반적인 구조들 시도
+                        for key in ("runs", "data", "items", "results"):
+                            if key in j and isinstance(j[key], list):
+                                candidates = j[key]
+                                print(f"[DEBUG] Found {len(candidates)} runs in response.{key}")
                                 break
-                elif isinstance(j, list):
-                    candidates = j
+                        
+                        # 키가 없으면 직접 리스트 찾기
+                        if not candidates:
+                            for k, v in j.items():
+                                if isinstance(v, list) and v:
+                                    candidates = v
+                                    print(f"[DEBUG] Found {len(candidates)} runs in response.{k}")
+                                    break
+                                    
+                    elif isinstance(j, list):
+                        candidates = j
+                        print(f"[DEBUG] Response is direct list with {len(candidates)} items")
 
-                if candidates:
-                    # try to match by name (exact or contains) and project
-                    for item in candidates:
+                    # 매칭 시도 - 최근 생성된 runs부터 확인
+                    for item in candidates[:20]:  # 최근 20개만 체크
                         if not isinstance(item, dict):
                             continue
-                        rn = item.get("name") or item.get("display_name") or item.get("title")
-                        rproj = item.get("project_name") or item.get("project")
-                        if rn and name in rn and (not project or project == rproj):
+                        rn = item.get("name") or item.get("display_name") or item.get("title") or ""
+                        rproj = item.get("project_name") or item.get("project") or ""
+                        
+                        # 이름 매칭 (정확한 매치 우선, 부분 매치도 허용)
+                        name_match = (rn == name) or (name in rn and len(rn) < len(name) + 20)
+                        project_match = (not project) or (project == rproj)
+                        
+                        if name_match and project_match:
                             rid = item.get("id") or item.get("run_id")
                             if rid:
-                                print("[INFO] Discovered run by listing:", rid)
+                                print(f"[INFO] Found matching run: '{rn}' -> {rid}")
                                 return rid, item
+                                
+                    print(f"[DEBUG] No matching run found among {len(candidates)} recent runs")
+                    
+                except Exception as e:
+                    print(f"[DEBUG] Error parsing query response: {e}")
+                    
+            elif resp.status_code == 422:
+                error_detail = ""
+                try:
+                    error_detail = resp.json().get("detail", "")
+                except:
+                    error_detail = resp.text[:200]
+                print(f"[DEBUG] runs/query validation error: {error_detail}")
+                break  # 422는 재시도해도 같은 오류
+                
             else:
-                print("[DEBUG] list_runs returned status", resp.status_code, resp.text[:300])
+                print(f"[DEBUG] runs/query status {resp.status_code}: {resp.text[:200]}")
+                
         except Exception as e:
-            print("[DEBUG] list_runs exception:", e)
-        time.sleep(poll_interval)
-    print("[WARN] discover_run_via_http: no matching run found within timeout.")
+            print(f"[DEBUG] runs/query exception: {e}")
+            
+        # 첫 시도에서 성공 가능성이 높으므로 짧은 간격으로만 재시도
+        if attempt >= 3:
+            break
+        time.sleep(min(poll_interval, 2.0))
+        
+    print("[WARN] Could not discover run within timeout - continuing without ID")
     return None, None
 
 
 def _safe_create_run(client, project: str, name: str, inputs: dict, tags: list[str]):
     """
-    Robust create_run:
-      - try SDK.create_run() first (dump everything)
-      - if no id, try HTTP fallback using x-api-key
-      - if HTTP returned success but no id, attempt to discover run by listing (poll for up to 30s)
-      - always return an object/dict or None
+    개선된 create_run:
+      - SDK 우선 시도
+      - HTTP 폴백 사용
+      - run discovery를 위한 개선된 쿼리 방식 사용
     """
     api_key = os.getenv("LANGSMITH_API_KEY")
     api_url = (os.getenv("LANGSMITH_API_URL") or "https://api.smith.langchain.com").rstrip("/")
 
-    # 1) SDK attempt
-    try:
-        run = client.create_run(
-            run_type="chain",
-            project_name=project,
-            name=name,
-            inputs=inputs,
-            tags=tags,
-            extra={"runtime": {"name": "tetris-eval"}},
-            start_time=datetime.now(timezone.utc),
-        )
-        print("[DEBUG] SDK create_run returned (type):", type(run))
+    # 1) SDK 시도
+    if client:
         try:
-            print("[DEBUG] repr(run):", repr(run))
-        except Exception:
-            pass
+            run = client.create_run(
+                run_type="chain",
+                project_name=project,
+                name=name,
+                inputs=inputs,
+                tags=tags,
+                extra={"runtime": {"name": "tetris-eval"}},
+                start_time=datetime.now(timezone.utc),
+            )
+            print(f"[DEBUG] SDK create_run returned (type): {type(run)}")
+            
+            # run ID 추출 시도
+            rid = None
+            if isinstance(run, dict):
+                rid = run.get("id") or run.get("run_id")
+            elif hasattr(run, 'id'):
+                rid = run.id
+            elif hasattr(run, 'run_id'):
+                rid = run.run_id
+                
+            if rid:
+                print(f"[INFO] SDK successfully created run: {rid}")
+                return run
+                
+            print("[WARN] SDK returned run object but no ID found")
+            
+        except Exception as e:
+            print(f"[WARN] SDK create_run failed: {e}")
 
-        if isinstance(run, dict):
-            try:
-                print("[DEBUG] SDK run (json):\n", json.dumps(run, ensure_ascii=False, indent=2))
-            except Exception:
-                print("[DEBUG] SDK run (raw dict):", run)
-        else:
-            # try introspect attributes
-            try:
-                attrs = {}
-                for a in dir(run):
-                    if a.startswith("_"):
-                        continue
-                    try:
-                        v = getattr(run, a)
-                        if callable(v):
-                            continue
-                        attrs[a] = v
-                    except Exception:
-                        attrs[a] = "<error>"
-                print("[DEBUG] SDK run attributes dump:", attrs)
-            except Exception:
-                pass
-
-        rid = None
-        if isinstance(run, dict):
-            rid = run.get("id") or run.get("run_id")
-        else:
-            rid = getattr(run, "id", None) or getattr(run, "run_id", None)
-
-        if rid:
-            print("[INFO] SDK returned run_id:", rid)
-            return run
-
-        print("[WARN] SDK returned no id; will try HTTP fallback.")
-    except Exception as e:
-        print("[WARN] client.create_run raised exception:", e)
-        traceback.print_exc()
-
-    # 2) HTTP fallback using x-api-key
+    # 2) HTTP 폴백
+    if not api_key:
+        print("[ERROR] No LANGSMITH_API_KEY found for HTTP fallback")
+        return None
+        
     try:
         url = api_url + "/runs"
         headers = {"x-api-key": api_key, "Content-Type": "application/json"}
@@ -371,103 +390,122 @@ def _safe_create_run(client, project: str, name: str, inputs: dict, tags: list[s
             "extra": {"runtime": {"name": "tetris-eval"}},
             "start_time": datetime.now(timezone.utc).isoformat(),
         }
-        print("[INFO] Attempting HTTP fallback create_run (x-api-key) ->", url)
+        
+        print(f"[INFO] Attempting HTTP fallback create_run -> {url}")
         resp = requests.post(url, headers=headers, json=payload, timeout=20)
-        print("[DEBUG] HTTP create_run status:", resp.status_code)
-        body_text = ""
-        try:
-            body_text = resp.text
-            print("[DEBUG] HTTP create_run body (raw):", body_text)
+        print(f"[DEBUG] HTTP create_run status: {resp.status_code}")
+        
+        if resp.status_code in (200, 201, 202):
             try:
                 body_json = resp.json()
-                print("[DEBUG] HTTP create_run body (json):\n", json.dumps(body_json, ensure_ascii=False, indent=2))
-            except Exception:
-                body_json = None
-        except Exception as e:
-            print("[WARN] could not read response body:", e)
-            body_json = None
-
-        if resp.status_code in (200, 201, 202):
-            # if id present, return
-            if isinstance(body_json, dict):
+                print(f"[DEBUG] HTTP create_run response: {body_json}")
+                
+                # 직접 ID 확인
                 rid = body_json.get("id") or body_json.get("run_id")
                 if rid:
+                    print(f"[INFO] HTTP create_run returned ID: {rid}")
                     return {"id": rid, "raw": body_json}
-            # no id — attempt to discover by listing
-            discovered_id, discovered_obj = _discover_run_via_http(api_url, api_key, project, name, timeout_s=30)
-            if discovered_id:
-                return {"id": discovered_id, "raw": discovered_obj or body_json}
-            # still nothing -> return the raw HTTP response as evidence
-            return {"created_raw": body_json or body_text, "http_status": resp.status_code}
+                    
+                # ID가 없으면 discovery 시도 (더 간단한 방식)
+                print("[INFO] HTTP create_run succeeded but no ID returned, attempting simple discovery...")
+                time.sleep(1)  # 서버 처리 시간 대기
+                
+                # 간단한 최신 runs 조회 시도 (query 엔드포인트 사용)
+                discovered_id, discovered_obj = _discover_run_via_http(api_url, api_key, project, name, timeout_s=10)
+                if discovered_id:
+                    return {"id": discovered_id, "raw": discovered_obj}
+                    
+                # discovery 실패해도 생성은 성공했으므로 부분 성공으로 처리
+                print("[WARN] Run created but ID could not be discovered")
+                return {"created": True, "raw": body_json, "http_status": resp.status_code}
+                
+            except Exception as e:
+                print(f"[WARN] Error parsing HTTP response: {e}")
+                return {"created": True, "http_status": resp.status_code}
         else:
-            print("[WARN] HTTP fallback create_run non-success:", resp.status_code)
-            return {"http_status": resp.status_code, "body": body_text}
+            print(f"[ERROR] HTTP create_run failed: {resp.status_code} - {resp.text[:200]}")
+            return None
+            
     except Exception as e:
-        print("[ERROR] HTTP fallback create_run exception:", e)
-        traceback.print_exc()
+        print(f"[ERROR] HTTP fallback exception: {e}")
         return None
 
 
+# 추가: 더 관대한 업데이트 함수
 def _safe_update_run(client, run_id: Optional[str], outputs: dict, error: Optional[str] = None):
     """
-    Try to update run via SDK; if run_id is None or SDK/update fails, try HTTP fallback.
-    If run_id is None, write local backup JSON and return False.
+    업데이트 시도를 더 관대하게 처리하여 실패해도 로컬 백업 저장
     """
+    if not run_id:
+        print("[WARN] No run_id available - saving local backup only")
+        _save_local_backup(outputs, error)
+        return False
+        
     api_key = os.getenv("LANGSMITH_API_KEY")
     api_url = (os.getenv("LANGSMITH_API_URL") or "https://api.smith.langchain.com").rstrip("/")
-
-    if not run_id:
-        print("[WARN] run_id is None — cannot update remote run. Saving local backup.")
-        OUT_DIR = (Path(__file__).resolve().parent / "tetris_out" / "failed_langsmith_runs")
-        OUT_DIR.mkdir(parents=True, exist_ok=True)
-        ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
-        out_path = OUT_DIR / f"run_missing_{ts}.json"
+    
+    # SDK 시도
+    if client:
         try:
-            out_path.write_text(json.dumps(outputs, ensure_ascii=False, indent=2), encoding="utf-8")
-            print("[INFO] Saved local backup:", out_path)
+            client.update_run(
+                run_id=run_id,
+                outputs=outputs,
+                error=error,
+                end_time=datetime.now(timezone.utc)
+            )
+            print(f"[INFO] Successfully updated run via SDK: {run_id}")
+            return True
         except Exception as e:
-            print("[ERROR] Failed to write local backup:", e)
-        return False
-
-    # try SDK update_run
-    try:
+            print(f"[WARN] SDK update_run failed: {e}")
+    
+    # HTTP 폴백
+    if api_key:
         try:
-            resp = client.update_run(run_id, outputs=outputs, error=error, end_time=datetime.now(timezone.utc))
-            print("[DEBUG] update_run (positional) response:", repr(resp))
-            try:
-                client.flush()
-            except Exception:
-                pass
-            return True
-        except TypeError:
-            resp = client.update_run(run_id=run_id, outputs=outputs, error=error, end_time=datetime.now(timezone.utc))
-            print("[DEBUG] update_run (keyword) response:", repr(resp))
-            try:
-                client.flush()
-            except Exception:
-                pass
-            return True
-    except Exception as e:
-        print("[WARN] SDK update_run failed:", e)
-        traceback.print_exc()
+            url = f"{api_url}/runs/{run_id}"
+            headers = {"x-api-key": api_key, "Content-Type": "application/json"}
+            payload = {
+                "outputs": outputs,
+                "error": error,
+                "end_time": datetime.now(timezone.utc).isoformat()
+            }
+            
+            resp = requests.patch(url, headers=headers, json=payload, timeout=15)
+            if resp.status_code in (200, 201, 202):
+                print(f"[INFO] Successfully updated run via HTTP: {run_id}")
+                return True
+            else:
+                print(f"[WARN] HTTP update failed: {resp.status_code}")
+        except Exception as e:
+            print(f"[WARN] HTTP update exception: {e}")
+    
+    # 모든 시도 실패 - 로컬 백업
+    print("[WARN] All update attempts failed - saving local backup")
+    _save_local_backup(outputs, error, run_id)
+    return False
 
-    # HTTP fallback to patch runs/{run_id}
+
+def _save_local_backup(outputs: dict, error: Optional[str] = None, run_id: Optional[str] = None):
+    """로컬 백업 저장"""
     try:
-        url = f"{api_url}/runs/{run_id}"
-        headers = {"x-api-key": api_key, "Content-Type": "application/json"}
-        payload = {"outputs": outputs, "error": error, "end_time": datetime.now(timezone.utc).isoformat()}
-        print("[INFO] Attempting HTTP fallback update_run ->", url)
-        resp = requests.patch(url, headers=headers, json=payload, timeout=20)
-        print("[DEBUG] HTTP update_run status:", resp.status_code, "body:", resp.text[:300])
-        if resp.status_code in (200, 201, 202):
-            return True
-        else:
-            print("[WARN] HTTP update_run non-success:", resp.status_code)
-            return False
+        backup_dir = Path(__file__).resolve().parent / "tetris_out" / "langsmith_backup"
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"run_{run_id or 'unknown'}_{timestamp}.json"
+        
+        backup_data = {
+            "run_id": run_id,
+            "timestamp": timestamp,
+            "outputs": outputs,
+            "error": error
+        }
+        
+        backup_file = backup_dir / filename
+        backup_file.write_text(json.dumps(backup_data, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[INFO] Saved local backup: {backup_file}")
+        
     except Exception as e:
-        print("[ERROR] HTTP fallback update_run exception:", e)
-        traceback.print_exc()
-        return False
+        print(f"[ERROR] Failed to save local backup: {e}")
 
 # ---------------- run_once_eval (기존 로직 유지하되 _safe_create/_safe_update 사용) ----------------
 def run_once_eval(

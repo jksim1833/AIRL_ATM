@@ -1,0 +1,26 @@
+Start working. The instruction is as follows:
+"""
+{"instruction": [INSTRUCTION]}
+"""
+Follow these rules:
+1. Keep track of all items listed in the "seats" section of the "environment_before" field. Please ensure that you fill out the "seats" sections for all listed items.
+2. Return exactly one structured tool call only (no free text / no code fences).
+3. Seats maps must be native JSON objects with outer braces — never strings. Keys must be quoted ("1","2",...). Do not stringify nested objects.
+- environment_before.seats = the fixed initial state ; reproduce it verbatim for all seat ids.
+- instruction.seats = exactly the seats object from [INSTRUCTION] (no add/remove/modify).
+- environment_after.seats = exactly the same keys as environment_before.seats; for ids in instruction set the target SeatState {...}, otherwise "unchanged".
+4. Your seat control sequence must obey the following constraints:
+- move_on_rail(target) can only be used when the seat is in the "storage" state.
+- If "facing" changes from F to R or R to B or B to L or L to F, "degree" is 90
+- If "facing" changes from F to L or L to B or B to R or R to F, "degree" is 270
+- If "facing" changes from F to B or B to F or R to L or L to R, "degree" is 180
+- **Within each seat's action sequence, follow this order: disk_rotate → fold → seat_rotate → move_on_rail → unfold.**
+  (This is a rule for the order of operations, not a requirement to use every function.)
+- task_sequence should include only seats that change and list the minimal valid sequence (no redundant actions).
+5. Before submitting the tool call, verify:
+- keys(environment_after.seats) == keys(environment_before.seats)
+- All seats maps are JSON objects (not strings), with quoted keys.
+- instruction.seats exactly equals the given [INSTRUCTION].
+
+**Plan sequentially: after each action, update the working state; decide the next action from that updated state.** 
+Follow the rules above. Think step by step.
