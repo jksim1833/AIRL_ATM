@@ -1,132 +1,117 @@
 =====================chain1_out =====================
 {
-  "people": 0,
-  "total_luggage_count": 16,
+  "people": 1,
+  "total_luggage_count": 14,
   "luggage_details": {
     "luggage_1": {
       "object": "접이식 의자",
-      "color": "하늘색, 갈색",
+      "color": "하늘색",
       "material": "폴리에스터",
-      "shape": "접힌 상태의 직사각형",
-      "text": "COMFORT, THE PILLOW CHAIR"
+      "shape": "접이식 비정형",
+      "text": "COLEMAN"
     },
     "luggage_2": {
       "object": "접이식 의자",
-      "color": "녹색, 은색",
+      "color": "녹색",
       "material": "폴리에스터",
-      "shape": "접힌 상태의 직사각형"
+      "shape": "접이식 비정형"
     },
     "luggage_3": {
-      "object": "접이식 테이블",
-      "color": "연갈색, 갈색",
-      "material": "목재",
-      "shape": "접힌 상태의 직사각형"
+      "object": "바비큐 그릴",
+      "color": "검은색",
+      "material": "강철",
+      "shape": "원형"
     },
     "luggage_4": {
-      "object": "텐트",
-      "color": "올리브 녹색",
-      "material": "나일론",
-      "shape": "납작한 원형"
+      "object": "접이식 테이블",
+      "color": "황토색",
+      "material": "목재",
+      "shape": "직사각형"
     },
     "luggage_5": {
-      "object": "대형 쿨러",
+      "object": "텐트",
+      "color": "녹색",
+      "material": "폴리에스터",
+      "shape": "원형"
+    },
+    "luggage_6": {
+      "object": "아이스박스",
       "color": "회색, 흰색",
       "material": "플라스틱",
       "shape": "직육면체"
     },
-    "luggage_6": {
+    "luggage_7": {
       "object": "침낭",
-      "color": "베이지색",
+      "color": "베이지색, 갈색",
       "material": "폴리에스터",
       "shape": "원통형"
     },
-    "luggage_7": {
-      "object": "침낭",
-      "color": "갈색",
-      "material": "폴리에스터",
-      "shape": "원통형",
-      "text": "ULTRALIGHT"
-    },
     "luggage_8": {
-      "object": "장작 상자",
-      "color": "갈색",
+      "object": "캠핑 용품 상자",
+      "color": "녹색",
       "material": "골판지",
       "shape": "직육면체",
-      "text": "FIRE WOOD, CAMPING, OUTDOOR"
+      "text": "THULE"
     },
     "luggage_9": {
-      "object": "중형 박스",
-      "color": "갈색",
-      "material": "골판지",
-      "shape": "직육면체"
-    },
-    "luggage_10": {
-      "object": "바비큐 그릴",
-      "color": "검은색, 은색",
-      "material": "강철",
-      "shape": "원형 본체와 삼각대 형태의 다리가 결합된 비정형",
-      "text": "WEBER",
-      "special_note": "공간 차지 max. 원형 본체와 돌출된 다리로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
-    },
-    "luggage_11": {
-      "object": "캠핑 장비 수납 가방",
-      "color": "녹색",
-      "material": "폴리에스터",
-      "shape": "직육면체",
-      "text": "TYUMEN, Outdoor Camping & Life"
-    },
-    "luggage_12": {
       "object": "접이식 테이블",
       "color": "검은색",
-      "material": "금속",
-      "shape": "원형 상판과 접이식 다리가 결합된 비정형"
-    },
-    "luggage_13": {
-      "object": "패킹 큐브",
-      "color": "하늘색, 연한 파란색",
-      "material": "폴리에스터",
-      "shape": "직육면체",
+      "material": "플라스틱",
+      "shape": "원형",
       "special_note": "공간 차지 min"
     },
-    "luggage_14": {
-      "object": "패킹 큐브",
-      "color": "하늘색, 연한 파란색",
-      "material": "폴리에스터",
-      "shape": "직육면체"
+    "luggage_10": {
+      "object": "캠핑 용품 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "COLEMAN"
     },
-    "luggage_15": {
-      "object": "스포츠 가방",
-      "color": "검은색, 흰색",
+    "luggage_11": {
+      "object": "캠핑 용품 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "COLEMAN"
+    },
+    "luggage_12": {
+      "object": "수납 가방",
+      "color": "검은색",
       "material": "폴리에스터",
       "shape": "직육면체",
-      "text": "ADIDAS"
+      "text": "adidas"
     },
-    "luggage_16": {
-      "object": "쿨러 백",
-      "color": "회색, 검은색",
+    "luggage_13": {
+      "object": "수납 가방",
+      "color": "회색",
       "material": "폴리에스터",
       "shape": "직육면체"
+    },
+    "luggage_14": {
+      "object": "수납 가방",
+      "color": "하늘색",
+      "material": "폴리에스터",
+      "shape": "직육면체",
+      "special_note": "공간 차지 max. 부피가 크고 형태가 고정되어 있어 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     }
   }
 }
 
-🕒 chain1_run_time: 22.547s
+🕒 chain1_run_time: 7.755s
 
 =====================chain2_out =====================
-```json
 {
   "instruction": {
     "seats": {
-      "1": ["x", "A", "R", "storage"],
+      "1": ["y", "A", "B", "chair"],
       "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
     }
   }
 }
-```
 
-🕒 chain2_run_time: 18.685s
+🕒 chain2_run_time: 2.205s
 
 =====================chain3_out =====================
 ```json
@@ -141,7 +126,7 @@
   },
   "instruction": {
     "seats": {
-      "1": ["x", "A", "R", "storage"],
+      "1": ["y", "A", "B", "chair"],
       "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
@@ -149,9 +134,11 @@
   },
   "task_sequence": {
     "1": [
+      "disk_rotate(90)",
       "fold(1)",
       "seat_rotate(90)",
-      "move_on_rail(A)"
+      "move_on_rail(A)",
+      "unfold(1)"
     ],
     "2": [
       "fold(2)",
@@ -171,7 +158,7 @@
   },
   "environment_after": {
     "seats": {
-      "1": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "1": { "rail_axis": "y", "position": "A", "facing": "B", "mode": "chair" },
       "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" },
       "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
       "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
@@ -180,9 +167,9 @@
 }
 ```
 
-🕒 chain3_run_time: 21.616s
+🕒 chain3_run_time: 5.688s
 
 =====================chain4_out =====================
-1101320111013201
-🕒 chain_run_time: 62.858s
-🕒 tetris_run_time: 70.682s
+1110320111013201
+🕒 chain_run_time: 15.691s
+🕒 tetris_run_time: 20.370s

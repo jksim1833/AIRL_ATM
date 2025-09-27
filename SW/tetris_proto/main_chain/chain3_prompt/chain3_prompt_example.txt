@@ -1,6 +1,7 @@
 [user]
 I will give you some examples of the input and the output you will generate. 
 Examples 1–4 use a single seat for explanation; at runtime, generate actions for all seats listed in instruction.seats.
+
 Example 1:
 """
 - Input:
@@ -220,6 +221,7 @@ Example 6:
     "4": {"rail_axis": "y", "position": "C", "facing": "F", "mode": "storage"}}}}
 """
 Generate the minimal valid sequence from environment_before to the instruction target, strictly obeying action-order dependencies.
+**Return the output formatting exactly as shown in the Examples, adding no unnecessary whitespace or extra newlines.**
 -------------------------------------------------------
 The texts above are part of the overall instruction. Do not start working yet:
 [assistant]
