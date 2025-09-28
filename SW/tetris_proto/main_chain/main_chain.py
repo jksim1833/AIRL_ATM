@@ -33,7 +33,6 @@ C3_ENV_TXT       = CHAIN3_DIR / "chain3_prompt_environment_2.txt"
 C3_FUNC_TXT      = CHAIN3_DIR / "chain3_prompt_function.txt"
 C3_OUTFMT_TXT    = CHAIN3_DIR / "chain3_prompt_output_format.txt"
 C3_EXAMPLE_TXT   = CHAIN3_DIR / "chain3_prompt_example.txt"
-# C3_IMAGE_PNG   = CHAIN3_DIR / "chain3_prompt_image.png"
 
 def _read_text(p: Path) -> str:
     return p.read_text(encoding="utf-8")
@@ -68,12 +67,24 @@ if not GOOGLE_API_KEY and SECRETS_JSON.exists():
 if not GOOGLE_API_KEY:
     raise RuntimeError("GOOGLE_API_KEY가 설정되어야 합니다(환경변수 또는 tetris_secrets.json).")
 
-# === 모델/온도 ===
-MODEL_NAME  = os.getenv("TETRIS_LLM_MODEL", "gemini-2.5-flash-image-preview")
-TEMPERATURE = float(os.getenv("TETRIS_LLM_TEMPERATURE", "0.2"))
+# [LLM] — 체인별 하드코딩
+chain1_llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-pro",
+    temperature=0.2,
+    api_key=GOOGLE_API_KEY
+)
 
-# [LLM]
-llm = ChatGoogleGenerativeAI(model=MODEL_NAME, temperature=TEMPERATURE, api_key=GOOGLE_API_KEY)
+chain2_llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    temperature=0.2,
+    api_key=GOOGLE_API_KEY
+)
+
+chain3_llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash-image-preview",
+    temperature=0.2,
+    api_key=GOOGLE_API_KEY
+)
 
 # ------------------------------------------------ chain ------------------------------------------------
 # chain1
@@ -302,31 +313,30 @@ _pipeline = (
 
     # --- chain1 ---
     .assign(_t1_start=RunnableLambda(lambda _: perf_counter()))
-    .assign(chain1_out_raw=(chain1_prompt | llm | StrOutputParser()))
+    .assign(chain1_out_raw=(chain1_prompt | chain1_llm | StrOutputParser()))
     .assign(chain1_out=RunnableLambda(_inject_people_value))
     .assign(chain1_run_time=RunnableLambda(lambda d: perf_counter() - d["_t1_start"]))
-    .assign(_tap1=RunnableLambda(_tap_print_chain1))  # 즉시 출력
+    .assign(_tap1=RunnableLambda(_tap_print_chain1))
 
     # --- chain2 ---
     .assign(chain2_image=RunnableLambda(_chain2_image_value))
     .assign(_t2_start=RunnableLambda(lambda _: perf_counter()))
-    .assign(chain2_out=(chain2_prompt | llm | StrOutputParser()))
+    .assign(chain2_out=(chain2_prompt | chain2_llm | StrOutputParser()))
     .assign(chain2_run_time=RunnableLambda(lambda d: perf_counter() - d["_t2_start"]))
-    .assign(_tap2=RunnableLambda(_tap_print_chain2))  # 즉시 출력
+    .assign(_tap2=RunnableLambda(_tap_print_chain2))
 
     # --- chain3 ---
     .assign(_t3_start=RunnableLambda(lambda _: perf_counter()))
-    .assign(chain3_out=(chain3_prompt | llm | StrOutputParser()))
+    .assign(chain3_out=(chain3_prompt | chain3_llm | StrOutputParser()))
     .assign(chain3_run_time=RunnableLambda(lambda d: perf_counter() - d["_t3_start"]))
-    .assign(_tap3=RunnableLambda(_tap_print_chain3))  # 즉시 출력
+    .assign(_tap3=RunnableLambda(_tap_print_chain3))
 
     # --- chain4 (변환) ---
     .assign(chain4_out=RunnableLambda(lambda d: _run_chain4_transform(d)["chain4_out"]))
-    .assign(_tap4=RunnableLambda(_tap_print_chain4))  # 즉시 출력
+    .assign(_tap4=RunnableLambda(_tap_print_chain4))
 )
 
 def _select_outputs(d: dict) -> dict:
-    # 탭/타이머 보조키 제거하고 필요한 값만 반환
     return {
         "chain1_out": d.get("chain1_out", ""),
         "chain2_out": d.get("chain2_out", ""),

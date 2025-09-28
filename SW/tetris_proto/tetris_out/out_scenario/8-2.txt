@@ -1,62 +1,62 @@
 =====================chain1_out =====================
 {
-  "people": 1,
+  "people": 4,
   "total_luggage_count": 5,
   "luggage_details": {
     "luggage_1": {
       "object": "의자",
       "color": "회색",
-      "material": "폴리에스터",
-      "shape": "등받이와 좌석이 있는 비정형",
-      "special_note": "공간 차지 min"
+      "material": "천",
+      "shape": "비정형"
     },
     "luggage_2": {
       "object": "의자",
       "color": "회색",
-      "material": "폴리에스터",
-      "shape": "등받이와 좌석이 있는 비정형"
+      "material": "천",
+      "shape": "비정형"
     },
     "luggage_3": {
-      "object": "의자",
-      "color": "진회색",
-      "material": "폴리에스터",
-      "shape": "등받이와 좌석이 있는 비정형"
+      "object": "테이블",
+      "color": "흰색, 연두색",
+      "material": "금속, 유리",
+      "shape": "직사각형",
+      "special_note": "공간 차지 max. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함"
     },
     "luggage_4": {
       "object": "의자",
-      "color": "황토색",
-      "material": "인조가죽",
-      "shape": "등받이와 좌석이 있는 비정형"
+      "color": "베이지색",
+      "material": "목재",
+      "shape": "비정형"
     },
     "luggage_5": {
-      "object": "테이블",
-      "color": "흰색, 연두색",
-      "material": "강철",
-      "shape": "직사각형",
-      "special_note": "공간 차지 max. 크고 견고한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+      "object": "의자",
+      "color": "회색",
+      "material": "천",
+      "shape": "비정형"
     }
   }
 }
 
-🕒 chain1_run_time: 26.151s
+🕒 chain1_run_time: 3.658s
 
 =====================chain2_out =====================
 ```json
 {
   "instruction": {
     "seats": {
-      "1": ["y", "A", "B", "chair"],
-      "2": ["x", "C", "L", "storage"],
-      "3": ["x", "A", "R", "storage"],
-      "4": ["x", "C", "L", "storage"]
+      "1": ["x", "A", "F", "chair"],
+      "2": ["x", "C", "F", "chair"],
+      "3": ["x", "A", "F", "chair"],
+      "4": ["x", "C", "F", "chair"]
     }
   }
 }
 ```
 
-🕒 chain2_run_time: 20.273s
+🕒 chain2_run_time: 17.507s
 
 =====================chain3_out =====================
+[assistant]
 ```json
 {
   "environment_before": {
@@ -69,50 +69,32 @@
   },
   "instruction": {
     "seats": {
-      "1": ["y", "A", "B", "chair"],
-      "2": ["x", "C", "L", "storage"],
-      "3": ["x", "A", "R", "storage"],
-      "4": ["x", "C", "L", "storage"]
+      "1": ["x", "A", "F", "chair"],
+      "2": ["x", "C", "F", "chair"],
+      "3": ["x", "A", "F", "chair"],
+      "4": ["x", "C", "F", "chair"]
     }
   },
   "task_sequence": {
-    "1": [
-      "disk_rotate(90)",
-      "fold(1)",
-      "seat_rotate(90)",
-      "move_on_rail(A)",
-      "unfold(1)"
-    ],
-    "2": [
-      "fold(2)",
-      "seat_rotate(270)",
-      "move_on_rail(C)"
-    ],
-    "3": [
-      "fold(3)",
-      "seat_rotate(90)",
-      "move_on_rail(A)"
-    ],
-    "4": [
-      "fold(4)",
-      "seat_rotate(270)",
-      "move_on_rail(C)"
-    ]
+    "1": ["move_on_rail(A)"],
+    "2": ["move_on_rail(C)"],
+    "3": ["move_on_rail(A)"],
+    "4": ["move_on_rail(C)"]
   },
   "environment_after": {
     "seats": {
-      "1": {"rail_axis": "y", "position": "A", "facing": "B", "mode": "chair"},
-      "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"},
-      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
-      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
+      "1": {"rail_axis": "x", "position": "A", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "C", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "A", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "C", "facing": "F", "mode": "chair"}
     }
   }
 }
 ```
 
-🕒 chain3_run_time: 56.933s
+🕒 chain3_run_time: 1.924s
 
 =====================chain4_out =====================
-1110320111013201
-🕒 chain_run_time: 103.362s
-🕒 tetris_run_time: 108.448s
+0100020001000200
+🕒 chain_run_time: 23.117s
+🕒 tetris_run_time: 31.793s

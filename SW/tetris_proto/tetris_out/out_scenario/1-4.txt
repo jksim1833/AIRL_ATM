@@ -1,145 +1,131 @@
 =====================chain1_out =====================
 {
   "people": 1,
-  "total_luggage_count": 16,
+  "total_luggage_count": 14,
   "luggage_details": {
     "luggage_1": {
-      "object": "접이식 캠핑 의자",
-      "color": "하늘색, 갈색",
-      "material": "폴리에스터, 금속",
-      "shape": "접이식 형태로, 펼쳤을 때 비정형",
-      "text": "COMPACTED, HIGH BACK"
+      "object": "접이식 의자",
+      "color": "하늘색",
+      "material": "폴리에스터",
+      "shape": "접힌 형태의 직사각형",
+      "text": "COCOONED"
     },
     "luggage_2": {
-      "object": "접이식 캠핑 의자",
+      "object": "접이식 의자",
       "color": "녹색",
-      "material": "폴리에스터, 금속",
-      "shape": "접이식 형태로, 펼쳤을 때 비정형"
+      "material": "폴리에스터",
+      "shape": "접힌 형태의 직사각형"
     },
     "luggage_3": {
-      "object": "휴대용 바비큐 그릴",
+      "object": "바비큐 그릴",
       "color": "검은색",
-      "material": "금속",
-      "shape": "뚜껑이 있는 원형 본체와 세 개의 다리가 결합된 비정형"
+      "material": "강철",
+      "shape": "원형 그릴과 삼각대 다리가 결합된 형태"
     },
     "luggage_4": {
       "object": "아이스박스",
-      "color": "흰색, 회색",
+      "color": "흰색",
       "material": "플라스틱",
-      "shape": "직육면체",
-      "special_note": "공간 차지 max. 크고 단단한 직육면체 형태로, 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+      "shape": "직육면체"
     },
     "luggage_5": {
-      "object": "접이식 캠핑 장비 가방",
-      "color": "녹색",
-      "material": "폴리에스터",
-      "shape": "납작한 직사각형",
-      "text": "TYUMEN, Balance. Camping."
+      "object": "접이식 테이블",
+      "color": "갈색",
+      "material": "목재",
+      "shape": "직사각형"
     },
     "luggage_6": {
-      "object": "텐트 가방",
-      "color": "어두운 녹색",
+      "object": "텐트",
+      "color": "녹색",
       "material": "폴리에스터",
-      "shape": "원형으로 접힌 형태의 비정형"
+      "shape": "원형"
     },
     "luggage_7": {
       "object": "침낭",
-      "color": "연갈색, 흰색",
+      "color": "베이지색",
       "material": "폴리에스터",
       "shape": "원통형"
     },
     "luggage_8": {
       "object": "침낭",
-      "color": "진갈색",
+      "color": "갈색",
       "material": "폴리에스터",
       "shape": "원통형"
     },
     "luggage_9": {
-      "object": "캠핑 매트 가방",
-      "color": "하늘색, 갈색",
+      "object": "캠핑용 가방",
+      "color": "녹색",
       "material": "폴리에스터",
-      "shape": "직육면체"
+      "shape": "직사각형",
+      "text": "TYUMEN"
     },
     "luggage_10": {
-      "object": "캠핑 매트 가방",
-      "color": "하늘색, 갈색",
+      "object": "캠핑용 매트",
+      "color": "하늘색",
       "material": "폴리에스터",
       "shape": "직육면체"
     },
     "luggage_11": {
-      "object": "접이식 원형 테이블",
-      "color": "검은색",
-      "material": "금속",
-      "shape": "원형 상판과 접이식 다리가 결합된 비정형"
+      "object": "캠핑용 매트",
+      "color": "하늘색",
+      "material": "폴리에스터",
+      "shape": "직육면체"
     },
     "luggage_12": {
-      "object": "접이식 캠핑 테이블",
-      "color": "연갈색",
-      "material": "목재, 금속",
-      "shape": "접이식 직사각형"
+      "object": "접이식 테이블",
+      "color": "검은색",
+      "material": "강철",
+      "shape": "원형 상판과 접이식 다리가 결합된 형태",
+      "special_note": "공간 차지 min"
     },
     "luggage_13": {
       "object": "장작 상자",
       "color": "갈색",
       "material": "골판지",
       "shape": "직육면체",
-      "text": "FIRE WOOD, GOOD FIRE, PREMIUM"
+      "text": "FIRE WOOD"
     },
     "luggage_14": {
-      "object": "캠핑 장비 상자",
-      "color": "갈색",
-      "material": "골판지",
-      "shape": "직육면체"
-    },
-    "luggage_15": {
-      "object": "스포츠 가방",
-      "color": "검은색, 흰색",
-      "material": "폴리에스터",
-      "shape": "직육면체에 가까운 비정형",
-      "text": "세 줄 로고"
-    },
-    "luggage_16": {
-      "object": "보냉 가방",
-      "color": "검은색, 회색",
+      "object": "캠핑용 가방",
+      "color": "검은색",
       "material": "폴리에스터",
       "shape": "직육면체",
-      "special_note": "공간 차지 min"
+      "text": "adidas",
+      "special_note": "공간 차지 max. 부피가 크고 형태가 고정되어 있어 다른 짐과 함께 배치하기가 까다로움"
     }
   }
 }
 
-🕒 chain1_run_time: 33.065s
+🕒 chain1_run_time: 6.538s
 
 =====================chain2_out =====================
-```json
 {
   "instruction": {
     "seats": {
-      "1": ["x", "M", "F", "chair"],
+      "1": ["y", "A", "B", "chair"],
       "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
     }
   }
 }
-```
 
-🕒 chain2_run_time: 59.242s
+🕒 chain2_run_time: 2.032s
 
 =====================chain3_out =====================
 ```json
 {
   "environment_before": {
     "seats": {
-      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
-      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
-      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
-      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
     }
   },
   "instruction": {
     "seats": {
-      "1": ["x", "M", "F", "chair"],
+      "1": ["y", "A", "B", "chair"],
       "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
@@ -147,7 +133,11 @@
   },
   "task_sequence": {
     "1": [
-      "unchanged"
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)",
+      "unfold(1)"
     ],
     "2": [
       "fold(2)",
@@ -167,18 +157,18 @@
   },
   "environment_after": {
     "seats": {
-      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
-      "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"},
-      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
-      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
+      "1": { "rail_axis": "y", "position": "A", "facing": "B", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
     }
   }
 }
 ```
 
-🕒 chain3_run_time: 30.374s
+🕒 chain3_run_time: 3.758s
 
 =====================chain4_out =====================
-0000320111013201
-🕒 chain_run_time: 122.691s
-🕒 tetris_run_time: 129.124s
+1110320111013201
+🕒 chain_run_time: 12.354s
+🕒 tetris_run_time: 15.927s

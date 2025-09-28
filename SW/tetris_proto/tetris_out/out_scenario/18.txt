@@ -1,0 +1,230 @@
+=====================chain1_out =====================
+{
+  "people": 2,
+  "total_luggage_count": 22,
+  "luggage_details": {
+    "luggage_1": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_2": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_3": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_4": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_5": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_6": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_7": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_8": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_9": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_10": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_11": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_12": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_13": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_14": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_15": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_16": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_17": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_18": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_19": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_20": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand, 도톰한 물티슈, THICKER WIPES"
+    },
+    "luggage_21": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "윗면 일부가 개방된 직육면체",
+      "text": "No Brand, 도톰한 물티슈"
+    },
+    "luggage_22": {
+      "object": "물티슈 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "No Brand"
+    }
+  }
+}
+
+🕒 chain1_run_time: 49.039s
+
+=====================chain2_out =====================
+```json
+{
+  "instruction":{
+    "seats":{
+      "1":["x","M","F","chair"],
+      "2":["x","M","F","chair"],
+      "3":["x","A","R","storage"],
+      "4":["x","C","L","storage"]
+    }
+  }
+}
+```
+
+🕒 chain2_run_time: 13.561s
+
+=====================chain3_out =====================
+```json
+{
+  "environment_before": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": ["x","M","F","chair"],
+      "2": ["x","M","F","chair"],
+      "3": ["x","A","R","storage"],
+      "4": ["x","C","L","storage"]
+    }
+  },
+  "task_sequence": {
+    "1": ["unchanged"],
+    "2": ["unchanged"],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
+    }
+  }
+}
+```
+
+🕒 chain3_run_time: 3.398s
+
+=====================chain4_out =====================
+0000000011013201
+🕒 chain_run_time: 66.027s
+🕒 tetris_run_time: 69.206s

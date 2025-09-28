@@ -7,132 +7,70 @@
       "object": "의자",
       "color": "회색",
       "material": "패브릭",
-      "shape": "등받이와 좌석이 있는 직사각형 형태의 비정형"
+      "shape": "등받이와 좌석이 있는 직사각형 형태",
+      "special_note": "공간 차지 min"
     },
     "luggage_2": {
       "object": "의자",
       "color": "회색",
       "material": "패브릭",
-      "shape": "등받이와 좌석이 있는 직사각형 형태의 비정형"
+      "shape": "등받이와 좌석이 있는 직사각형 형태"
     },
     "luggage_3": {
       "object": "테이블",
-      "color": "흰색, 옅은 회색",
-      "material": "금속",
-      "shape": "직사각형 상판과 X자형 다리 구조를 가진 비정형",
-      "special_note": "공간 차지 max. 복잡한 다리 구조와 고정된 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+      "color": "흰색, 옅은 연두색",
+      "material": "금속, 유리",
+      "shape": "상판이 두 부분으로 나뉘어 확장 가능한 직사각형 형태",
+      "special_note": "공간 차지 max. 하부 프레임 구조가 복잡하고 상판이 확장형이어서 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
     "luggage_4": {
       "object": "의자",
       "color": "베이지색",
       "material": "인조가죽",
-      "shape": "등받이와 좌석이 곡선으로 연결된 비정형"
+      "shape": "등받이와 좌석이 있는 곡선형 비정형"
     },
     "luggage_5": {
       "object": "의자",
-      "color": "짙은 회색",
+      "color": "진회색",
       "material": "패브릭",
-      "shape": "등받이와 좌석이 있는 직사각형 형태의 비정형",
-      "special_note": "공간 차지 min"
+      "shape": "등받이와 좌석이 있는 직사각형 형태"
     }
   }
 }
 
-🕒 chain1_run_time: 18.988s
+🕒 chain1_run_time: 52.280s
 
 =====================chain2_out =====================
-```json
 {
   "instruction": {
     "seats": {
-      "1": [
-        "y",
-        "A",
-        "B",
-        "chair"
-      ],
-      "2": [
-        "x",
-        "C",
-        "L",
-        "storage"
-      ],
-      "3": [
-        "x",
-        "A",
-        "R",
-        "storage"
-      ],
-      "4": [
-        "x",
-        "C",
-        "L",
-        "storage"
-      ]
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
     }
   }
 }
-```
 
-🕒 chain2_run_time: 23.651s
+🕒 chain2_run_time: 18.922s
 
 =====================chain3_out =====================
 ```json
 {
   "environment_before": {
     "seats": {
-      "1": {
-        "rail_axis": "x",
-        "position": "M",
-        "facing": "F",
-        "mode": "chair"
-      },
-      "2": {
-        "rail_axis": "x",
-        "position": "M",
-        "facing": "F",
-        "mode": "chair"
-      },
-      "3": {
-        "rail_axis": "x",
-        "position": "M",
-        "facing": "F",
-        "mode": "chair"
-      },
-      "4": {
-        "rail_axis": "x",
-        "position": "M",
-        "facing": "F",
-        "mode": "chair"
-      }
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
     }
   },
   "instruction": {
     "seats": {
-      "1": [
-        "y",
-        "A",
-        "B",
-        "chair"
-      ],
-      "2": [
-        "x",
-        "C",
-        "L",
-        "storage"
-      ],
-      "3": [
-        "x",
-        "A",
-        "R",
-        "storage"
-      ],
-      "4": [
-        "x",
-        "C",
-        "L",
-        "storage"
-      ]
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
     }
   },
   "task_sequence": {
@@ -161,38 +99,18 @@
   },
   "environment_after": {
     "seats": {
-      "1": {
-        "rail_axis": "y",
-        "position": "A",
-        "facing": "B",
-        "mode": "chair"
-      },
-      "2": {
-        "rail_axis": "x",
-        "position": "C",
-        "facing": "L",
-        "mode": "storage"
-      },
-      "3": {
-        "rail_axis": "x",
-        "position": "A",
-        "facing": "R",
-        "mode": "storage"
-      },
-      "4": {
-        "rail_axis": "x",
-        "position": "C",
-        "facing": "L",
-        "mode": "storage"
-      }
+      "1": { "rail_axis": "y", "position": "A", "facing": "B", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
     }
   }
 }
 ```
 
-🕒 chain3_run_time: 33.175s
+🕒 chain3_run_time: 4.281s
 
 =====================chain4_out =====================
 1110320111013201
-🕒 chain_run_time: 75.821s
-🕒 tetris_run_time: 78.697s
+🕒 chain_run_time: 75.508s
+🕒 tetris_run_time: 78.422s

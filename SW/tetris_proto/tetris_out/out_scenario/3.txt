@@ -1,51 +1,43 @@
 =====================chain1_out =====================
 {
   "people": 1,
-  "total_luggage_count": 2,
+  "total_luggage_count": 1,
   "luggage_details": {
     "luggage_1": {
-      "object": "대형 김치냉장고",
+      "object": "김치냉장고",
       "color": "회갈색",
-      "material": "금속",
+      "material": "강철",
       "shape": "직육면체",
-      "text": "CUCKOO, 9가지 스페셜 숙성*보관 과학, 쿠쿠가 만든 김치냉장고!!",
-      "special_note": "공간 차지 max. 크고 견고한 직육면체 형태로, 다른 짐과 함께 배치 시 유연성이 떨어짐"
-    },
-    "luggage_2": {
-      "object": "대형 박스",
-      "color": "갈색",
-      "material": "골판지",
-      "shape": "직육면체",
-      "special_note": "공간 차지 min"
+      "text": "CUCKOO, 9가지 스페셜 숙성+보관 과학, 쿠쿠가 만든 김치냉장고!, 초정온 냉기 시스템, 스마트 모드"
     }
   }
 }
 
-🕒 chain1_run_time: 10.826s
+🕒 chain1_run_time: 2.445s
 
 =====================chain2_out =====================
 {
-  "instruction": {
-    "seats": {
-      "1": ["y", "A", "B", "chair"],
-      "2": ["x", "C", "L", "storage"],
-      "3": ["x", "A", "R", "storage"],
-      "4": ["x", "C", "L", "storage"]
+  "instruction":{
+    "seats":{
+      "1":["y","A","B","chair"],
+      "2":["x","C","L","storage"],
+      "3":["x","A","R","storage"],
+      "4":["x","C","L","storage"]
     }
   }
 }
 
-🕒 chain2_run_time: 21.935s
+🕒 chain2_run_time: 2.057s
 
 =====================chain3_out =====================
 ```json
 {
   "environment_before": {
     "seats": {
-      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
-      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
-      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
-      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
+      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
     }
   },
   "instruction": {
@@ -82,18 +74,18 @@
   },
   "environment_after": {
     "seats": {
-      "1": {"rail_axis": "y", "position": "A", "facing": "B", "mode": "chair"},
-      "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"},
-      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
-      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
+      "1": { "rail_axis": "y", "position": "A", "facing": "B", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" },
+      "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
+      "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
     }
   }
 }
 ```
 
-🕒 chain3_run_time: 26.093s
+🕒 chain3_run_time: 4.573s
 
 =====================chain4_out =====================
 1110320111013201
-🕒 chain_run_time: 58.861s
-🕒 tetris_run_time: 63.776s
+🕒 chain_run_time: 9.100s
+🕒 tetris_run_time: 10.318s

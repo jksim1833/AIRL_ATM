@@ -1,26 +1,25 @@
 =====================chain1_out =====================
 {
-  "people": 4,
+  "people": 1,
   "total_luggage_count": 3,
   "luggage_details": {
     "luggage_1": {
-      "object": "골프백",
+      "object": "골프 가방 (골프채 포함)",
       "color": "검은색, 빨간색",
       "material": "폴리에스터",
-      "shape": "길고 원통형이며 상단에 골프 클럽 헤드들이 돌출된 비정형",
+      "shape": "원통형 몸체에 골프채가 돌출된 비정형",
       "text": "Titleist",
-      "special_note": "공간 차지 max. 길고 불규칙한 형태로 인해 차량 내 효율적인 배치가 까다로움"
+      "special_note": "공간 차지 max. 크고 골프채가 돌출되어 있어 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
     "luggage_2": {
       "object": "스포츠 가방",
       "color": "검은색, 흰색",
-      "material": "나일론",
-      "shape": "직육면체",
-      "text": "세 개의 흰색 줄무늬 로고"
+      "material": "폴리에스터",
+      "shape": "유연한 직육면체 형태"
     },
     "luggage_3": {
       "object": "골프화 한 켤레",
-      "color": "흰색, 검은색, 빨간색",
+      "color": "흰색, 검은색",
       "material": "합성 가죽",
       "shape": "비정형",
       "text": "BOA, ZZI",
@@ -29,63 +28,81 @@
   }
 }
 
-🕒 chain1_run_time: 15.764s
+🕒 chain1_run_time: 11.403s
 
 =====================chain2_out =====================
 ```json
 {
-  "instruction": {
-    "seats": {
-      "1": ["x", "M", "F", "chair"],
-      "2": ["x", "M", "F", "chair"],
-      "3": ["x", "M", "F", "chair"],
-      "4": ["x", "M", "F", "chair"]
+  "instruction":{
+    "seats":{
+      "1":["y","C","F","chair"],
+      "2":["x","C","L","storage"],
+      "3":["x","A","R","storage"],
+      "4":["x","C","L","storage"]
     }
   }
 }
 ```
 
-🕒 chain2_run_time: 14.962s
+🕒 chain2_run_time: 18.520s
 
 =====================chain3_out =====================
 ```json
 {
   "environment_before": {
     "seats": {
-      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+      "1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"},
+      "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}
     }
   },
   "instruction": {
     "seats": {
-      "1": ["x", "M", "F", "chair"],
-      "2": ["x", "M", "F", "chair"],
-      "3": ["x", "M", "F", "chair"],
-      "4": ["x", "M", "F", "chair"]
+      "1": ["y","C","F","chair"],
+      "2": ["x","C","L","storage"],
+      "3": ["x","A","R","storage"],
+      "4": ["x","C","L","storage"]
     }
   },
   "task_sequence": {
-    "1": ["unchanged"],
-    "2": ["unchanged"],
-    "3": ["unchanged"],
-    "4": ["unchanged"]
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(270)",
+      "move_on_rail(C)",
+      "unfold(1)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
   },
   "environment_after": {
     "seats": {
-      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+      "1": {"rail_axis": "y", "position": "C", "facing": "F", "mode": "chair"},
+      "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"},
+      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
+      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
     }
   }
 }
 ```
 
-🕒 chain3_run_time: 54.488s
+🕒 chain3_run_time: 4.731s
 
 =====================chain4_out =====================
-0000000000000000
-🕒 chain_run_time: 85.221s
-🕒 tetris_run_time: 89.403s
+3210320111013201
+🕒 chain_run_time: 34.682s
+🕒 tetris_run_time: 36.097s

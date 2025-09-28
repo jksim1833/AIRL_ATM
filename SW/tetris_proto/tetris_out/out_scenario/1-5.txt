@@ -1,85 +1,82 @@
 =====================chain1_out =====================
 {
-  "people": 2,
-  "total_luggage_count": 9,
+  "people": 1,
+  "total_luggage_count": 8,
   "luggage_details": {
     "luggage_1": {
-      "object": "접이식 테이블",
-      "color": "어두운 녹색, 은색",
-      "material": "나일론, 알루미늄",
-      "shape": "길고 납작한 직사각형",
-      "text": "TYUMEN"
+      "object": "캠핑 테이블",
+      "color": "녹색, 은색",
+      "material": "알루미늄, 폴리에스터",
+      "shape": "직사각형",
+      "text": "Coleman"
     },
     "luggage_2": {
-      "object": "캠핑 장비 가방",
-      "color": "어두운 녹색",
-      "material": "나일론",
-      "shape": "길쭉한 타원형"
-    },
-    "luggage_3": {
-      "object": "대형 쿨러",
+      "object": "아이스박스",
       "color": "회색, 흰색",
       "material": "플라스틱",
       "shape": "직육면체",
-      "special_note": "공간 차지 max. 크고 단단한 직육면체 형태로, 다른 짐과 유연하게 배치하기 어려우며 상당한 고정 공간을 차지함"
+      "special_note": "공간 차지 max. 크고 단단한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
-    "luggage_4": {
-      "object": "중형 가방",
-      "color": "하늘색, 갈색",
+    "luggage_3": {
+      "object": "캠핑 가방",
+      "color": "하늘색",
       "material": "폴리에스터",
       "shape": "직육면체",
-      "text": "Likino"
+      "text": "Chums"
     },
-    "luggage_5": {
-      "object": "중형 가방",
-      "color": "하늘색, 갈색",
+    "luggage_4": {
+      "object": "캠핑 가방",
+      "color": "하늘색",
       "material": "폴리에스터",
       "shape": "직육면체"
     },
-    "luggage_6": {
+    "luggage_5": {
       "object": "백팩",
-      "color": "검은색, 흰색",
-      "material": "나일론",
+      "color": "검은색",
+      "material": "폴리에스터",
       "shape": "비정형",
-      "special_note": "공간 차지 min"
+      "text": "adidas"
     },
-    "luggage_7": {
+    "luggage_6": {
       "object": "장작 상자",
-      "color": "갈색",
+      "color": "황토색",
       "material": "골판지",
       "shape": "직육면체",
-      "text": "THE WOOD, FIRE WOOD, 장작"
+      "text": "THE WOOD, FIRE WOOD"
     },
-    "luggage_8": {
+    "luggage_7": {
       "object": "침낭",
       "color": "베이지색, 갈색",
       "material": "폴리에스터",
       "shape": "원통형"
     },
-    "luggage_9": {
+    "luggage_8": {
       "object": "침낭",
-      "color": "갈색, 회색",
+      "color": "갈색, 흰색",
       "material": "폴리에스터",
-      "shape": "원통형"
+      "shape": "원통형",
+      "special_note": "공간 차지 min"
     }
   }
 }
 
-🕒 chain1_run_time: 23.701s
+🕒 chain1_run_time: 5.207s
 
 =====================chain2_out =====================
+```json
 {
   "instruction": {
     "seats": {
-      "1": ["x", "M", "F", "chair"],
-      "2": ["x", "M", "F", "chair"],
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
     }
   }
 }
+```
 
-🕒 chain2_run_time: 26.976s
+🕒 chain2_run_time: 1.961s
 
 =====================chain3_out =====================
 ```json
@@ -94,15 +91,25 @@
   },
   "instruction": {
     "seats": {
-      "1": ["x", "M", "F", "chair"],
-      "2": ["x", "M", "F", "chair"],
+      "1": ["y", "A", "B", "chair"],
+      "2": ["x", "C", "L", "storage"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
     }
   },
   "task_sequence": {
-    "1": ["unchanged"],
-    "2": ["unchanged"],
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)",
+      "unfold(1)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ],
     "3": [
       "fold(3)",
       "seat_rotate(90)",
@@ -116,8 +123,8 @@
   },
   "environment_after": {
     "seats": {
-      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
+      "1": { "rail_axis": "y", "position": "A", "facing": "B", "mode": "chair" },
+      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" },
       "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
       "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
     }
@@ -125,9 +132,9 @@
 }
 ```
 
-🕒 chain3_run_time: 54.059s
+🕒 chain3_run_time: 3.088s
 
 =====================chain4_out =====================
-0000000011013201
-🕒 chain_run_time: 104.745s
-🕒 tetris_run_time: 110.460s
+1110320111013201
+🕒 chain_run_time: 10.282s
+🕒 tetris_run_time: 13.666s
