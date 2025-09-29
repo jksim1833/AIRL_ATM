@@ -105,7 +105,7 @@ def run_pipeline(mode: str, port: int = 5002, open_browser: bool = True) -> dict
     lines.append(f"🕒 chain1_run_time: {result.get('chain1_run_time', 0.0):.3f}s")
     lines.append("")
     lines.append("=====================chain2_out =====================")
-    lines.append(result.get("chain2_out", ""))
+    lines.append(result.get("chain2_out_raw", ""))
     lines.append("")
     lines.append(f"🕒 chain2_run_time: {result.get('chain2_run_time', 0.0):.3f}s")
     lines.append("")

@@ -1,18 +1,18 @@
 =====================chain1_out =====================
 {
-  "people": 1,
+  "people": 2,
   "total_luggage_count": 12,
   "luggage_details": {
     "luggage_1": {
-      "object": "컵라면 묶음",
-      "color": "투명, 초록색",
-      "material": "플라스틱",
+      "object": "컵라면 상자",
+      "color": "투명색, 흰색",
+      "material": "골판지",
       "shape": "직육면체",
       "text": "농심, 육개장 사발면"
     },
     "luggage_2": {
       "object": "컵라면 상자",
-      "color": "흰색, 빨간색",
+      "color": "투명색, 흰색",
       "material": "골판지",
       "shape": "직육면체",
       "text": "농심, 육개장 사발면"
@@ -22,8 +22,7 @@
       "color": "갈색",
       "material": "골판지",
       "shape": "직육면체",
-      "text": "농심, 뚝배기, 멀티팩",
-      "special_note": "공간 차지 max. 단일 객체 중 가장 부피가 큼."
+      "text": "농심, 뚝배기, 멀티팩"
     },
     "luggage_4": {
       "object": "즉석밥 상자",
@@ -36,77 +35,80 @@
       "object": "소주 상자",
       "color": "흰색, 파란색",
       "material": "골판지",
-      "shape": "정육면체에 가까운 직육면체",
+      "shape": "직육면체",
       "text": "참이슬, fresh"
     },
     "luggage_6": {
       "object": "소주 상자",
-      "color": "흰색, 회색",
+      "color": "흰색",
       "material": "골판지",
-      "shape": "정육면체에 가까운 직육면체",
-      "text": "참이슬, 오리지널, SINCE 1924"
+      "shape": "직육면체",
+      "text": "참이슬, 오리지널, SINCE 1924",
+      "special_note": "공간 차지 max. 부피가 큰 직육면체 형태로, 짐 공간의 상당 부분을 차지함."
     },
     "luggage_7": {
       "object": "생수 묶음",
-      "color": "투명, 초록색",
+      "color": "투명색, 초록색",
       "material": "플라스틱",
-      "shape": "6개의 원기둥이 비닐로 포장된 직육면체 형태",
+      "shape": "여러 개의 원기둥이 비닐로 포장된 직육면체 형태",
       "text": "제주삼다수"
     },
     "luggage_8": {
-      "object": "과자 봉지",
-      "color": "노란색, 빨간색",
-      "material": "플라스틱",
+      "object": "과자",
+      "color": "주황색",
+      "material": "폴리에스터",
       "shape": "비정형",
-      "text": "크라운, 콘칲 패밀리, CORN CHIPS"
+      "text": "치어스",
+      "special_note": "공간 차지 min"
     },
     "luggage_9": {
-      "object": "과자 봉지",
-      "color": "노란색, 빨간색",
-      "material": "플라스틱",
+      "object": "과자",
+      "color": "빨간색",
+      "material": "폴리에스터",
       "shape": "비정형",
-      "text": "크라운, 콘칲 패밀리, CORN CHIPS"
+      "text": "신짱"
     },
     "luggage_10": {
-      "object": "과자 봉지",
+      "object": "과자",
       "color": "흰색, 노란색",
-      "material": "플라스틱",
+      "material": "폴리에스터",
       "shape": "비정형",
       "text": "콘치"
     },
     "luggage_11": {
-      "object": "과자 봉지",
-      "color": "빨간색",
-      "material": "플라스틱",
+      "object": "과자",
+      "color": "노란색",
+      "material": "폴리에스터",
       "shape": "비정형",
-      "text": "달달고소 신짱"
+      "text": "크라운, 콘칩, 패밀리"
     },
     "luggage_12": {
-      "object": "과자 봉지",
-      "color": "주황색",
-      "material": "플라스틱",
+      "object": "과자",
+      "color": "노란색",
+      "material": "폴리에스터",
       "shape": "비정형",
-      "text": "치어스",
-      "special_note": "공간 차지 min"
+      "text": "크라운, 콘칩, 패밀리"
     }
   }
 }
 
-🕒 chain1_run_time: 32.655s
+🕒 chain1_run_time: 39.137s
 
 =====================chain2_out =====================
+```json
 {
   "instruction": {
     "seats": {
       "1": ["y", "C", "F", "chair"],
-      "2": ["x", "C", "L", "storage"],
+      "2": ["y", "C", "F", "chair"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
     }
   }
 }
+```
 
-🕒 chain2_run_time: 18.258s
+🕒 chain2_run_time: 2.044s
 
 =====================chain3_out =====================
 ```json
@@ -122,7 +124,7 @@
   "instruction": {
     "seats": {
       "1": ["y", "C", "F", "chair"],
-      "2": ["x", "C", "L", "storage"],
+      "2": ["y", "C", "F", "chair"],
       "3": ["x", "A", "R", "storage"],
       "4": ["x", "C", "L", "storage"]
     }
@@ -136,9 +138,11 @@
       "unfold(1)"
     ],
     "2": [
+      "disk_rotate(90)",
       "fold(2)",
       "seat_rotate(270)",
-      "move_on_rail(C)"
+      "move_on_rail(C)",
+      "unfold(2)"
     ],
     "3": [
       "fold(3)",
@@ -154,7 +158,7 @@
   "environment_after": {
     "seats": {
       "1": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
-      "2": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" },
+      "2": { "rail_axis": "y", "position": "C", "facing": "F", "mode": "chair" },
       "3": { "rail_axis": "x", "position": "A", "facing": "R", "mode": "storage" },
       "4": { "rail_axis": "x", "position": "C", "facing": "L", "mode": "storage" }
     }
@@ -162,9 +166,9 @@
 }
 ```
 
-🕒 chain3_run_time: 3.943s
+🕒 chain3_run_time: 3.664s
 
 =====================chain4_out =====================
-3210320111013201
-🕒 chain_run_time: 54.886s
-🕒 tetris_run_time: 56.302s
+3210321011013201
+🕒 chain_run_time: 44.891s
+🕒 tetris_run_time: 50.040s

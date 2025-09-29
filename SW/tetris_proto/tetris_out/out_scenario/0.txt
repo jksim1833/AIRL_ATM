@@ -1,64 +1,76 @@
 =====================chain1_out =====================
 {
   "people": 1,
-  "total_luggage_count": 8,
+  "total_luggage_count": 9,
   "luggage_details": {
     "luggage_1": {
-      "object": "대형 박스",
-      "color": "갈색",
-      "material": "골판지",
-      "shape": "직육면체",
-      "text": "Y-300M DYD"
-    },
-    "luggage_2": {
-      "object": "소형 박스",
-      "color": "갈색",
-      "material": "골판지",
-      "shape": "직육면체",
-      "text": "Y-300M DYD"
-    },
-    "luggage_3": {
-      "object": "데스크탑 본체",
+      "object": "데스크탑 컴퓨터 본체",
       "color": "검은색",
+      "material": "강철",
       "shape": "직육면체"
     },
-    "luggage_4": {
-      "object": "침낭",
-      "color": "빨간색",
-      "material": "폴리에스터",
-      "shape": "원통형"
-    },
-    "luggage_5": {
+    "luggage_2": {
       "object": "의자",
       "color": "회색",
       "material": "플라스틱",
-      "shape": "비정형"
+      "shape": "비정형. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함"
+    },
+    "luggage_3": {
+      "object": "모니터 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "납작한 직육면체",
+      "text": "68.4cm, 144 Hz | 1ms GTG, NVIDIA G-SYNC Compatible"
+    },
+    "luggage_4": {
+      "object": "컴퓨터 케이스 상자",
+      "color": "갈색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "Y300M"
+    },
+    "luggage_5": {
+      "object": "침낭",
+      "color": "빨간색",
+      "material": "폴리에스터",
+      "shape": "원통형",
+      "text": "RHINO"
     },
     "luggage_6": {
-      "object": "모니터",
-      "color": "검은색",
-      "shape": "직사각형"
-    },
-    "luggage_7": {
       "object": "백팩",
       "color": "검은색",
-      "material": "나일론",
+      "material": "폴리에스터",
       "shape": "비정형",
-      "text": "ASU, 2024"
+      "text": "대한민국 공군, ROKAF"
+    },
+    "luggage_7": {
+      "object": "모니터",
+      "color": "검은색",
+      "material": "플라스틱",
+      "shape": "화면은 납작한 직사각형이고 스탠드가 결합된 형태",
+      "text": "SAMSUNG"
     },
     "luggage_8": {
       "object": "소화기",
       "color": "빨간색",
       "material": "강철",
-      "shape": "원통형",
-      "text": "ABC"
+      "shape": "손잡이가 달린 원통형",
+      "special_note": "공간 차지 min"
+    },
+    "luggage_9": {
+      "object": "옷걸이 스탠드",
+      "color": "밝은 갈색",
+      "material": "목재",
+      "shape": "긴 막대 형태에 여러 개의 가지가 뻗어 나온 비정형",
+      "special_note": "공간 차지 max. 길이가 길고 가지들이 돌출되어 있어 다른 짐과 효율적으로 배치하기 어려움"
     }
   }
 }
 
-🕒 chain1_run_time: 24.054s
+🕒 chain1_run_time: 31.195s
 
 =====================chain2_out =====================
+```json
 {
   "instruction": {
     "seats": {
@@ -69,8 +81,9 @@
     }
   }
 }
+```
 
-🕒 chain2_run_time: 21.383s
+🕒 chain2_run_time: 26.466s
 
 =====================chain3_out =====================
 ```json
@@ -126,9 +139,9 @@
 }
 ```
 
-🕒 chain3_run_time: 4.101s
+🕒 chain3_run_time: 3.300s
 
 =====================chain4_out =====================
 1110320111013201
-🕒 chain_run_time: 49.568s
-🕒 tetris_run_time: 52.655s
+🕒 chain_run_time: 61.001s
+🕒 tetris_run_time: 66.512s

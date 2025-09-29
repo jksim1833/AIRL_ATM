@@ -21,7 +21,7 @@ CHAIN1_PROMPT_TXT = ROOT / "chain1_prompt" / "chain1_prompt_3.txt"
 
 # [Chain2 경로]
 CHAIN2_PROMPT_DIR = ROOT / "chain2_prompt"
-CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_2.txt"
+CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_3.txt"
 CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 
 # [Chain3 경로]
@@ -47,7 +47,7 @@ def _require_exists(p: Path, label: str):
 
 for p, label in [
     (CHAIN1_PROMPT_TXT, "chain1_prompt_3.txt"),
-    (CHAIN2_PROMPT_TXT, "chain2_prompt_2.txt"),
+    (CHAIN2_PROMPT_TXT, "chain2_prompt_3.txt"),
     (CHAIN2_OPTION_TXT, "chain2_option.txt"),
     (C3_SYSTEM_TXT, "chain3_system.txt"),
     (C3_QUERY_TXT, "chain3_query.txt"),
@@ -73,13 +73,11 @@ chain1_llm = ChatGoogleGenerativeAI(
     temperature=0.2,
     api_key=GOOGLE_API_KEY
 )
-
 chain2_llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
     temperature=0.2,
     api_key=GOOGLE_API_KEY
 )
-
 chain3_llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash-image-preview",
     temperature=0.2,
@@ -116,6 +114,7 @@ def _inject_people_into_json(result_text: str, people_count: int) -> str:
             out.update(data)
         else:
             out["model_output"] = data
+        # indent=2 유지(일관성), seats 등 배열은 chain2 단계에서 압축 처리
         return json.dumps(out, ensure_ascii=False, indent=2)
     except Exception:
         return json.dumps(
@@ -144,10 +143,79 @@ _chain2_system = _escape_braces(_read_text(CHAIN2_PROMPT_TXT))
 _chain2_option = _escape_braces(_read_text(CHAIN2_OPTION_TXT))
 chain2_prompt = ChatPromptTemplate.from_messages([
     ("system", _chain2_system),
+    ("system", _chain2_option),
     ("human", "{chain1_out}"),
     MessagesPlaceholder(variable_name="chain2_image"),
-    ("human", _chain2_option),
 ])
+
+def _extract_instruction_json(result_text: str) -> str:
+    """
+    chain2_out_raw 전체 응답에서 instruction 딕셔너리만 꺼내
+    {"instruction": { ... }} 형태로 반환.
+    - 배열/콜론 뒤 공백 제거: separators=(",", ":")
+    - 보기 좋게 들여쓰기 2칸 유지: indent=2
+    """
+    text = (result_text or "").strip()
+
+    # 코드펜스 우선 추출
+    m = re.search(r"```(?:json)?\s*(.*?)```", text, re.S | re.I)
+    if m:
+        text = m.group(1).strip()
+
+    # 바깥 텍스트 섞인 경우 { ... }만 재추출
+    if not (text.startswith("{") and text.endswith("}")):
+        first = text.find("{"); last = text.rfind("}")
+        if first != -1 and last != -1 and first < last:
+            text = text[first:last+1]
+
+    def _wrap(instr_obj: dict) -> str:
+        # 최종 포맷: {"instruction":{ ... }}  (콤마/콜론 뒤 공백 없음)
+        return json.dumps({"instruction": instr_obj}, ensure_ascii=False, indent=2, separators=(",", ":"))
+
+    # 1) 정식 JSON 파싱
+    try:
+        data = json.loads(text)
+
+        # (a) 표준 형태: {"instruction": {...}, ...}
+        if isinstance(data, dict) and "instruction" in data:
+            instr = data["instruction"]
+            # instruction이 dict가 아니면 안전하게 감싼다
+            if isinstance(instr, dict):
+                return _wrap(instr)
+            else:
+                return _wrap({"raw_model_output": instr})
+
+        # (b) 축약형: 최상위가 instruction 내용(= seats 포함)
+        if isinstance(data, dict) and ("seats" in data or "1" in data or "2" in data):
+            return _wrap(data)
+
+        # (c) dict지만 구조가 다른 경우도 래핑하여 반환
+        if isinstance(data, dict):
+            return _wrap(data)
+
+        # dict 아님 → raw 보존
+        return _wrap({"raw_model_output": data})
+
+    except Exception:
+        # 2) 정규식으로 "instruction": {...} 블록만 재시도
+        m2 = re.search(r'"instruction"\s*:\s*(\{.*\})', text, re.S | re.I)
+        if m2:
+            block = m2.group(1)
+            try:
+                instr = json.loads(block)
+                if isinstance(instr, dict):
+                    return _wrap(instr)
+                else:
+                    return _wrap({"raw_model_output": instr})
+            except Exception:
+                pass
+
+        # 실패 시 raw를 instruction으로 감싸서 반환
+        return _wrap({"raw_model_output": result_text})
+
+def _inject_instruction_value(inputs: dict) -> str:
+    """pipeline용: chain2_out_raw -> chain2_out(= {"instruction": {...}})"""
+    return _extract_instruction_json(inputs.get("chain2_out_raw", ""))
 
 # chain3
 _chain3_system  = _escape_braces(_read_text(C3_SYSTEM_TXT))
@@ -292,7 +360,7 @@ def _tap_print_chain1(d):
 
 def _tap_print_chain2(d):
     print("\n=====================chain2_out =====================")
-    print(d.get("chain2_out", ""))
+    print(d.get("chain2_out_raw", ""))
     print(f"\n🕒 chain2_run_time: {d.get('chain2_run_time', 0.0):.3f}s")
     return ""
 
@@ -321,7 +389,8 @@ _pipeline = (
     # --- chain2 ---
     .assign(chain2_image=RunnableLambda(_chain2_image_value))
     .assign(_t2_start=RunnableLambda(lambda _: perf_counter()))
-    .assign(chain2_out=(chain2_prompt | chain2_llm | StrOutputParser()))
+    .assign(chain2_out_raw=(chain2_prompt | chain2_llm | StrOutputParser()))
+    .assign(chain2_out=RunnableLambda(_inject_instruction_value))
     .assign(chain2_run_time=RunnableLambda(lambda d: perf_counter() - d["_t2_start"]))
     .assign(_tap2=RunnableLambda(_tap_print_chain2))
 
@@ -339,12 +408,13 @@ _pipeline = (
 def _select_outputs(d: dict) -> dict:
     return {
         "chain1_out": d.get("chain1_out", ""),
-        "chain2_out": d.get("chain2_out", ""),
+        "chain2_out": d.get("chain2_out", ""),           # {"instruction":{...}}
         "chain3_out": d.get("chain3_out", ""),
         "chain4_out": d.get("chain4_out", ""),
         "chain1_run_time": d.get("chain1_run_time", 0.0),
         "chain2_run_time": d.get("chain2_run_time", 0.0),
         "chain3_run_time": d.get("chain3_run_time", 0.0),
+        "chain2_out_raw": d.get("chain2_out_raw", ""),   # 원문(로그용)
     }
 
 tetris_chain = _pipeline | RunnableLambda(_select_outputs)
