@@ -4,57 +4,56 @@
   "total_luggage_count": 9,
   "luggage_details": {
     "luggage_1": {
-      "object": "원형 가방",
+      "object": "원형 그릴 가방",
       "color": "카키색",
       "material": "폴리에스터",
       "shape": "납작한 원통형"
     },
     "luggage_2": {
-      "object": "아이스박스",
+      "object": "대형 아이스박스",
       "color": "회색, 흰색",
       "material": "플라스틱",
       "shape": "직육면체",
-      "special_note": "공간 차지 max. 단단하고 부피가 커서 유연한 공간 활용을 어렵게 함"
+      "special_note": "공간 차지 max. 부피가 크고 단단한 직육면체 형태로, 다른 짐을 배치할 때 기준점이 되지만 유연성이 없어 공간 활용을 제한함."
     },
     "luggage_3": {
-      "object": "소프트 케이스",
-      "color": "하늘색",
-      "material": "폴리에스터",
-      "shape": "직육면체",
-      "text": "Likina"
-    },
-    "luggage_4": {
-      "object": "소프트 케이스",
+      "object": "정리 가방",
       "color": "하늘색",
       "material": "폴리에스터",
       "shape": "직육면체"
+    },
+    "luggage_4": {
+      "object": "정리 가방",
+      "color": "하늘색",
+      "material": "폴리에스터",
+      "shape": "직육면체",
+      "text": "Likino"
     },
     "luggage_5": {
       "object": "백팩",
       "color": "검은색",
       "material": "폴리에스터",
       "shape": "비정형",
-      "text": "세 개의 흰색 줄무늬"
+      "special_note": "공간 차지 min"
     },
     "luggage_6": {
       "object": "장작 상자",
       "color": "황토색",
       "material": "골판지",
       "shape": "직육면체",
-      "text": "FIRE WOOD, 참나무 장작"
+      "text": "참나무 장작, FIRE WOOD"
     },
     "luggage_7": {
       "object": "침낭",
-      "color": "베이지색",
+      "color": "베이지색, 갈색",
       "material": "나일론",
       "shape": "원통형"
     },
     "luggage_8": {
       "object": "침낭",
-      "color": "갈색",
+      "color": "갈색, 흰색",
       "material": "나일론",
-      "shape": "원통형",
-      "special_note": "공간 차지 min"
+      "shape": "원통형"
     },
     "luggage_9": {
       "object": "접이식 테이블 가방",
@@ -66,11 +65,76 @@
   }
 }
 
-🕒 chain1_run_time: 35.220s
+🕒 chain1_run_time: 23.321s
 
 =====================chain2_out =====================
-```json
 {
+  "Meta data": {
+    "people_count": 2,
+    "PV5_trunk_capacity": "600L",
+    "luggage_details": [
+      {
+        "object": "원형 그릴 가방",
+        "estimated_dimensions_cm": "70(지름) x 15(두께)",
+        "calculated_volume_L": 57.7,
+        "flexibility": "낮음"
+      },
+      {
+        "object": "대형 아이스박스",
+        "estimated_dimensions_cm": "70(가로) x 45(세로) x 45(높이)",
+        "calculated_volume_L": 141.75,
+        "flexibility": "없음",
+        "note": "공간 차지 max. 부피가 크고 단단한 직육면체 형태로, 다른 짐을 배치할 때 기준점이 되지만 유연성이 없어 공간 활용을 제한함."
+      },
+      {
+        "object": "정리 가방",
+        "estimated_dimensions_cm": "45(가로) x 30(세로) x 20(높이)",
+        "calculated_volume_L": 27.0,
+        "flexibility": "중간"
+      },
+      {
+        "object": "정리 가방",
+        "estimated_dimensions_cm": "45(가로) x 30(세로) x 20(높이)",
+        "calculated_volume_L": 27.0,
+        "flexibility": "중간"
+      },
+      {
+        "object": "백팩",
+        "estimated_dimensions_cm": "45(높이) x 30(가로) x 20(깊이)",
+        "calculated_volume_L": 27.0,
+        "flexibility": "높음",
+        "note": "공간 차지 min"
+      },
+      {
+        "object": "장작 상자",
+        "estimated_dimensions_cm": "50(가로) x 30(세로) x 25(높이)",
+        "calculated_volume_L": 37.5,
+        "flexibility": "낮음"
+      },
+      {
+        "object": "침낭",
+        "estimated_dimensions_cm": "25(지름) x 50(길이)",
+        "calculated_volume_L": 24.5,
+        "flexibility": "중간"
+      },
+      {
+        "object": "침낭",
+        "estimated_dimensions_cm": "25(지름) x 50(길이)",
+        "calculated_volume_L": 24.5,
+        "flexibility": "중간"
+      },
+      {
+        "object": "접이식 테이블 가방",
+        "estimated_dimensions_cm": "90(길이) x 40(폭) x 10(두께)",
+        "calculated_volume_L": 36.0,
+        "flexibility": "낮음"
+      }
+    ],
+    "total_volume_L": 402.95,
+    "luggage_classification": "M",
+    "trunk_overload": "초과하지 않음",
+    "optimal_storage_plan": "대형 아이스박스를 트렁크 안쪽 중앙에 배치하여 기준점으로 삼고, 길이가 긴 접이식 테이블 가방은 아이스박스 옆면에 눕혀 배치합니다. 원형 그릴 가방과 장작 상자는 남은 직사각형 공간에 채워 넣고, 정리 가방들은 그 위에 쌓습니다. 유연한 침낭과 백팩은 남은 틈새 공간에 밀어 넣어 공간 활용을 극대화합니다. 총 부피가 PV5 트렁크 용량(600L)보다 작으므로, 4인 탑승 시에도 좌석을 접지 않고 충분히 수납 가능합니다."
+  },
   "instruction":{
     "seats":{
       "1":["x","M","F","chair"],
@@ -81,9 +145,8 @@
   },
   "option_no": 8
 }
-```
 
-🕒 chain2_run_time: 18.349s
+🕒 chain2_run_time: 20.627s
 
 =====================chain3_out =====================
 ```json
@@ -193,9 +256,9 @@
 }
 ```
 
-🕒 chain3_run_time: 3.651s
+🕒 chain3_run_time: 3.305s
 
 =====================chain4_out =====================
 0000000011013201
-🕒 chain_run_time: 57.256s
-🕒 tetris_run_time: 62.124s
+🕒 chain_run_time: 47.301s
+🕒 tetris_run_time: 49.020s
