@@ -7,60 +7,123 @@
       "object": "골프백",
       "color": "검은색, 빨간색",
       "material": "폴리에스터",
-      "shape": "긴 원통형에 가까우나, 여러 개의 주머니와 골프채로 인해 전체적으로 비정형. 접이식이 불가한 형태로, 배치 시 상당한 공간을 차지함.",
+      "shape": "내부에 골프채가 수납되어 있어 전체적으로 비정형",
       "text": "Titleist",
-      "special_note": "공간 차지 max. 길고 단단한 비정형 형태로 인해 다른 짐과 효율적으로 배치하기 어려워 주변에 사용하지 못하는 공간이 많이 발생함."
+      "special_note": "공간 차지 max. 높고 형태가 불규칙하며, 골프채가 돌출되어 있어 다른 짐과 함께 효율적으로 배치하기가 까다로움"
     },
     "luggage_2": {
-      "object": "더플백",
-      "color": "검은색",
-      "material": "폴리에스터",
-      "shape": "직육면체에 가까운 비정형",
-      "text": "흰색 세 줄 로고"
+      "object": "스포츠 가방",
+      "color": "검은색, 흰색",
+      "material": "나일론",
+      "shape": "유연한 직육면체"
     },
     "luggage_3": {
       "object": "골프화",
-      "color": "흰색, 검은색",
+      "color": "흰색, 검은색, 빨간색",
+      "material": "합성 가죽",
       "shape": "비정형",
+      "text": "BOA",
       "special_note": "공간 차지 min"
     }
   }
 }
 
-🕒 chain1_run_time: 18.109s
+🕒 chain1_run_time: 17.011s
 
 =====================chain2_out =====================
 {
-  "instruction":{
-    "seats":{
-      "1":["y","C","F","chair"],
-      "2":["y","C","F","chair"],
-      "3":["x","A","R","storage"],
-      "4":["x","C","L","storage"]
+  "Meta data": {
+    "luggage_1": {
+      "object": "골프백",
+      "estimated_dimensions_cm": "30x30x120",
+      "estimated_volume_L": 108
+    },
+    "luggage_2": {
+      "object": "스포츠 가방",
+      "estimated_dimensions_cm": "50x25x25",
+      "estimated_volume_L": 31.25
+    },
+    "luggage_3": {
+      "object": "골프화",
+      "estimated_dimensions_cm": "30x20x15",
+      "estimated_volume_L": 9
+    },
+    "total_volume_L": 148.25,
+    "trunk_capacity_L": 600,
+    "placement_strategy": "골프백(luggage_1)은 트렁크 바닥에 눕혀서 배치하고, 스포츠 가방(luggage_2)은 골프백 위에 겹쳐서 배치합니다. 골프화(luggage_3)는 남은 틈새 공간에 배치하여 효율성을 극대화합니다. 4인 탑승 시 좌석을 접거나 제거할 수 없다는 가정하에, 트렁크 공간 내에서 모든 짐을 수납할 수 있습니다.",
+    "exceeds_trunk_capacity": false,
+    "luggage_amount_classification": "S"
+  },
+  "instruction": {
+    "seats": {
+      "1": ["y", "C", "F", "chair"],
+      "2": ["y", "C", "F", "chair"],
+      "3": ["x", "A", "R", "storage"],
+      "4": ["x", "C", "L", "storage"]
     }
   },
   "option_no": 7
 }
 
-🕒 chain2_run_time: 11.619s
+🕒 chain2_run_time: 6.382s
 
 =====================chain3_out =====================
 ```json
 {
   "environment_before": {
     "seats": {
-      "1": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "2": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "3": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" },
-      "4": { "rail_axis": "x", "position": "M", "facing": "F", "mode": "chair" }
+      "1": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      }
     }
   },
   "instruction": {
     "seats": {
-      "1": ["y","C","F","chair"],
-      "2": ["y","C","F","chair"],
-      "3": ["x","A","R","storage"],
-      "4": ["x","C","L","storage"]
+      "1": [
+        "y",
+        "C",
+        "F",
+        "chair"
+      ],
+      "2": [
+        "y",
+        "C",
+        "F",
+        "chair"
+      ],
+      "3": [
+        "x",
+        "A",
+        "R",
+        "storage"
+      ],
+      "4": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ]
     }
   },
   "task_sequence": {
@@ -91,18 +154,38 @@
   },
   "environment_after": {
     "seats": {
-      "1": {"rail_axis": "y", "position": "C", "facing": "F", "mode": "chair"},
-      "2": {"rail_axis": "y", "position": "C", "facing": "F", "mode": "chair"},
-      "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"},
-      "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "storage"}
+      "1": {
+        "rail_axis": "y",
+        "position": "C",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "y",
+        "position": "C",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "A",
+        "facing": "R",
+        "mode": "storage"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      }
     }
   }
 }
 ```
 
-🕒 chain3_run_time: 29.460s
+🕒 chain3_run_time: 6.018s
 
 =====================chain4_out =====================
 3210321011013201
-🕒 chain_run_time: 59.222s
-🕒 tetris_run_time: 62.902s
+🕒 chain_run_time: 29.452s
+🕒 tetris_run_time: 30.824s

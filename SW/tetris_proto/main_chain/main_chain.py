@@ -21,7 +21,7 @@ CHAIN1_PROMPT_TXT = ROOT / "chain1_prompt" / "chain1_prompt_3.txt"
 
 # [Chain2 경로]
 CHAIN2_PROMPT_DIR = ROOT / "chain2_prompt"
-CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_3.txt"
+CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_4.txt"
 CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 
 # [Chain3 경로]
@@ -47,7 +47,7 @@ def _require_exists(p: Path, label: str):
 
 for p, label in [
     (CHAIN1_PROMPT_TXT, "chain1_prompt_3.txt"),
-    (CHAIN2_PROMPT_TXT, "chain2_prompt_3.txt"),
+    (CHAIN2_PROMPT_TXT, "chain2_prompt_4.txt"),
     (CHAIN2_OPTION_TXT, "chain2_option.txt"),
     (C3_SYSTEM_TXT, "chain3_system.txt"),
     (C3_QUERY_TXT, "chain3_query.txt"),
@@ -69,18 +69,18 @@ if not GOOGLE_API_KEY:
 
 # [LLM] — 체인별 하드코딩
 chain1_llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-pro",
-    temperature=0.2,
+    model="gemini-2.5-flash",
+    temperature=0.2,                  
     api_key=GOOGLE_API_KEY
 )
 chain2_llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model="gemini-2.5-flash-image-preview",
     temperature=0.2,
     api_key=GOOGLE_API_KEY
 )
 chain3_llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash-image-preview",
-    temperature=0.2,
+    temperature=0.2,                     
     api_key=GOOGLE_API_KEY
 )
 
