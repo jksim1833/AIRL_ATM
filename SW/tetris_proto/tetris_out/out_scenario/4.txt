@@ -6,6 +6,7 @@
     "luggage_1": {
       "object": "골프백",
       "color": "검은색, 빨간색",
+<<<<<<< Updated upstream
       "material": "폴리에스터",
       "shape": "비정형",
       "text": "Titleist, YAMAHA",
@@ -21,13 +22,35 @@
       "object": "골프화",
       "color": "흰색, 검은색",
       "material": "합성 가죽",
+=======
+      "material": "나일론",
+      "shape": "원통형",
+      "text": "Titleist",
+      "special_note": "공간 차지 max. 여러 개의 골프채가 꽂혀 있어 부피가 크고, 형태가 불규칙하여 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+    },
+    "luggage_2": {
+      "object": "스포츠 가방",
+      "color": "검은색",
+      "material": "폴리에스터",
+      "shape": "직육면체",
+      "text": "adidas"
+    },
+    "luggage_3": {
+      "object": "골프화",
+      "color": "흰색, 검은색, 빨간색",
+      "material": "가죽",
+>>>>>>> Stashed changes
       "shape": "비정형",
       "special_note": "공간 차지 min"
     }
   }
 }
 
+<<<<<<< Updated upstream
 🕒 chain1_run_time: 14.084s
+=======
+🕒 chain1_run_time: 5.852s
+>>>>>>> Stashed changes
 
 =====================chain2_out =====================
 {
@@ -35,23 +58,38 @@
     "luggage_1": {
       "object": "골프백",
       "estimated_dimensions_cm": "30x30x120",
-      "estimated_volume_L": 108
+      "estimated_volume_L": 108,
+      "placement_difficulty": "높음"
     },
     "luggage_2": {
+<<<<<<< Updated upstream
       "object": "더플백",
       "estimated_dimensions_cm": "50x30x30",
       "estimated_volume_L": 45
+=======
+      "object": "스포츠 가방",
+      "estimated_dimensions_cm": "50x25x25",
+      "estimated_volume_L": 31.25,
+      "placement_difficulty": "보통"
+>>>>>>> Stashed changes
     },
     "luggage_3": {
       "object": "골프화",
       "estimated_dimensions_cm": "30x20x15",
-      "estimated_volume_L": 9
+      "estimated_volume_L": 9,
+      "placement_difficulty": "낮음"
     },
     "total_volume_L": 162,
     "luggage_amount_category": "S",
     "trunk_capacity_L": 600,
+<<<<<<< Updated upstream
     "exceeds_trunk_capacity": false,
     "optimal_arrangement_strategy": "골프백(luggage_1)을 트렁크 바닥에 눕혀 배치하고, 더플백(luggage_2)을 골프백 위에 겹쳐 놓습니다. 골프화(luggage_3)는 남은 틈새 공간에 배치하여 공간 활용을 극대화합니다. 4인 탑승 가정 시 좌석을 접거나 제거할 수 없으므로, 트렁크 공간 내에서 모든 짐을 수납합니다."
+=======
+    "trunk_exceeded": "아니오",
+    "luggage_amount_category": "S",
+    "optimal_arrangement_strategy": "골프백을 트렁크 바닥에 눕혀 배치하고, 스포츠 가방을 그 위에 겹쳐 놓습니다. 골프화는 남은 틈새 공간에 배치하여 공간 활용을 극대화합니다."
+>>>>>>> Stashed changes
   },
   "instruction":{
     "seats":{
@@ -64,7 +102,11 @@
   "option_no": 7
 }
 
+<<<<<<< Updated upstream
 🕒 chain2_run_time: 6.688s
+=======
+🕒 chain2_run_time: 6.298s
+>>>>>>> Stashed changes
 
 =====================chain3_out =====================
 ```json
@@ -98,9 +140,18 @@
 }
 ```
 
+<<<<<<< Updated upstream
 🕒 chain3_run_time: 2.144s
 
 =====================chain4_out =====================
 3210321011013201
 🕒 chain_run_time: 22.955s
 🕒 tetris_run_time: 25.255s
+=======
+🕒 chain3_run_time: 21.058s
+
+=====================chain4_out =====================
+3210321011013201
+🕒 chain_run_time: 33.258s
+🕒 tetris_run_time: 34.741s
+>>>>>>> Stashed changes
