@@ -31,8 +31,8 @@ C3_QUERY_TXT     = CHAIN3_DIR / "chain3_query.txt"
 C3_ROLE_TXT      = CHAIN3_DIR / "chain3_prompt_role.txt"
 C3_ENV_TXT       = CHAIN3_DIR / "chain3_prompt_environment_2.txt"
 C3_FUNC_TXT      = CHAIN3_DIR / "chain3_prompt_function.txt"
-C3_OUTFMT_TXT    = CHAIN3_DIR / "chain3_prompt_output_format.txt"
-C3_EXAMPLE_TXT   = CHAIN3_DIR / "chain3_prompt_example.txt"
+C3_OUTFMT_TXT    = CHAIN3_DIR / "chain3_prompt_output_format_2.txt"
+C3_EXAMPLE_TXT   = CHAIN3_DIR / "chain3_prompt_example_2.txt"
 
 def _read_text(p: Path) -> str:
     return p.read_text(encoding="utf-8")
@@ -54,8 +54,8 @@ for p, label in [
     (C3_ROLE_TXT, "chain3_prompt_role.txt"),
     (C3_ENV_TXT, "chain3_prompt_environment_2.txt"),
     (C3_FUNC_TXT, "chain3_prompt_function.txt"),
-    (C3_OUTFMT_TXT, "chain3_prompt_output_format.txt"),
-    (C3_EXAMPLE_TXT, "chain3_prompt_example.txt"),
+    (C3_OUTFMT_TXT, "chain3_prompt_output_format_2.txt"),
+    (C3_EXAMPLE_TXT, "chain3_prompt_example_2.txt"),
 ]:
     _require_exists(p, label)
 
@@ -74,12 +74,12 @@ chain1_llm = ChatGoogleGenerativeAI(
     api_key=GOOGLE_API_KEY
 )
 chain2_llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash-image-preview",
+    model="gemini-2.5-flash-image",
     temperature=0.2,
     api_key=GOOGLE_API_KEY
 )
 chain3_llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash-image-preview",
+    model="gemini-2.5-flash-image",
     temperature=0.2,                     
     api_key=GOOGLE_API_KEY
 )

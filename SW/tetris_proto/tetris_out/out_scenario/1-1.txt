@@ -1,245 +1,279 @@
 =====================chain1_out =====================
 {
-  "people": 2,
+  "people": 1,
   "total_luggage_count": 16,
   "luggage_details": {
     "luggage_1": {
       "object": "바비큐 그릴",
-      "color": "검정",
+      "color": "검은색",
       "material": "강철",
-      "shape": "삼각대 위에 반구가 얹어진 형태"
+      "shape": "반구형 몸체와 세 개의 다리가 결합된 비정형",
+      "special_note": "공간 차지 max. 분리가 어려운 일체형 구조와 독특한 형태로 인해 다른 짐과 함께 효율적으로 배치하기가 매우 까다로움"
     },
     "luggage_2": {
       "object": "대형 아이스박스",
       "color": "흰색, 회색",
       "material": "플라스틱",
-      "shape": "직육면체",
-      "special_note": "공간 차지 max. 부피가 가장 큰 직육면체 형태로 많은 공간을 차지함"
+      "shape": "직육면체"
     },
     "luggage_3": {
-      "object": "텐트 가방",
-      "color": "초록",
+      "object": "팝업 텐트 가방",
+      "color": "녹색",
       "material": "폴리에스터",
       "shape": "원형"
     },
     "luggage_4": {
       "object": "접이식 테이블",
       "color": "갈색",
-      "material": "알루미늄",
-      "shape": "접혀있는 직육면체 형태"
+      "material": "목재",
+      "shape": "접혀있는 상태의 납작한 직사각형"
     },
     "luggage_5": {
-      "object": "대형 가방",
-      "color": "초록",
+      "object": "캠핑용 가방",
+      "color": "녹색",
       "material": "폴리에스터",
       "shape": "직육면체",
       "text": "TYUMEN"
     },
     "luggage_6": {
-      "object": "장작 상자",
-      "color": "갈색",
-      "material": "골판지",
-      "shape": "직육면체",
-      "text": "FIRE WOOD"
+      "object": "사이드 테이블",
+      "color": "검은색",
+      "material": "강철",
+      "shape": "원형 상판과 세 개의 다리가 결합된 형태"
     },
     "luggage_7": {
       "object": "침낭",
-      "color": "베이지",
+      "color": "베이지색",
       "material": "폴리에스터",
-      "shape": "원통"
+      "shape": "원통형"
     },
     "luggage_8": {
       "object": "침낭",
       "color": "갈색",
       "material": "폴리에스터",
-      "shape": "원통"
+      "shape": "원통형"
     },
     "luggage_9": {
-      "object": "소형 테이블",
-      "color": "검정",
-      "material": "강철",
-      "shape": "원형 상판과 삼각 다리 형태",
-      "special_note": "공간 차지 min"
+      "object": "장작 상자",
+      "color": "황토색",
+      "material": "골판지",
+      "shape": "직육면체",
+      "text": "FIRE WOOD"
     },
     "luggage_10": {
-      "object": "보냉 가방",
-      "color": "파랑",
-      "material": "폴리에스터",
-      "shape": "직육면체"
-    },
-    "luggage_11": {
-      "object": "보냉 가방",
-      "color": "파랑",
-      "material": "폴리에스터",
-      "shape": "직육면체"
-    },
-    "luggage_12": {
-      "object": "종이 상자",
-      "color": "갈색",
+      "object": "캠핑용품 상자",
+      "color": "황토색",
       "material": "골판지",
       "shape": "직육면체"
     },
-    "luggage_13": {
-      "object": "스포츠 가방",
-      "color": "검정",
+    "luggage_11": {
+      "object": "캠핑 의자",
+      "color": "녹색",
       "material": "폴리에스터",
-      "shape": "비정형"
+      "shape": "접혀있는 상태의 길쭉한 비정형"
+    },
+    "luggage_12": {
+      "object": "캠핑 의자",
+      "color": "녹색",
+      "material": "폴리에스터",
+      "shape": "접혀있는 상태의 길쭉한 비정형"
+    },
+    "luggage_13": {
+      "object": "보냉 가방",
+      "color": "하늘색",
+      "material": "폴리에스터",
+      "shape": "직육면체"
     },
     "luggage_14": {
       "object": "보냉 가방",
-      "color": "회색",
+      "color": "하늘색",
       "material": "폴리에스터",
       "shape": "직육면체"
     },
     "luggage_15": {
-      "object": "접이식 의자",
-      "color": "초록",
+      "object": "스포츠 가방",
+      "color": "검은색",
       "material": "폴리에스터",
-      "shape": "접혀있어 긴 막대 형태",
-      "text": "J06 69"
+      "shape": "비정형",
+      "text": "세 개의 흰색 줄무늬"
     },
     "luggage_16": {
-      "object": "접이식 의자",
-      "color": "검정",
+      "object": "보냉 가방",
+      "color": "회색",
       "material": "폴리에스터",
-      "shape": "접혀있어 긴 막대 형태"
+      "shape": "직육면체",
+      "special_note": "공간 차지 min"
     }
   }
 }
 
-🕒 chain1_run_time: 39.814s
+🕒 chain1_run_time: 42.624s
 
 =====================chain2_out =====================
-```json
 {
-  "items": [
-    {
-      "id": "luggage_1",
-      "dims_cm": [50, 50, 70],
-      "volume_L": 175.0,
-      "note": "삼각대와 반구 형태를 고려하여 배치"
+  "Meta data": {
+    "luggage_volumes": {
+      "luggage_1": "바비큐 그릴, 50x50x60cm, 150L",
+      "luggage_2": "대형 아이스박스, 70x40x40cm, 112L",
+      "luggage_3": "팝업 텐트 가방, 90x90x10cm, 81L",
+      "luggage_4": "접이식 테이블, 60x40x10cm, 24L",
+      "luggage_5": "캠핑용 가방, 60x30x30cm, 54L",
+      "luggage_6": "사이드 테이블, 40x40x50cm, 80L",
+      "luggage_7": "침낭, 20x20x40cm, 16L",
+      "luggage_8": "침낭, 20x20x40cm, 16L",
+      "luggage_9": "장작 상자, 40x30x20cm, 24L",
+      "luggage_10": "캠핑용품 상자, 50x30x20cm, 30L",
+      "luggage_11": "캠핑 의자, 15x15x80cm, 18L",
+      "luggage_12": "캠핑 의자, 15x15x80cm, 18L",
+      "luggage_13": "보냉 가방, 40x25x25cm, 25L",
+      "luggage_14": "보냉 가방, 40x25x25cm, 25L",
+      "luggage_15": "스포츠 가방, 50x25x25cm, 31.25L",
+      "luggage_16": "보냉 가방, 30x20x20cm, 12L"
     },
-    {
-      "id": "luggage_2",
-      "dims_cm": [80, 45, 45],
-      "volume_L": 162.0,
-      "note": "가장 큰 직육면체로 바닥에 우선 배치"
-    },
-    {
-      "id": "luggage_3",
-      "dims_cm": [90, 90, 20],
-      "volume_L": 162.0,
-      "note": "원형으로 눕혀서 배치"
-    },
-    {
-      "id": "luggage_4",
-      "dims_cm": [60, 40, 10],
-      "volume_L": 24.0,
-      "note": "접이식으로 얇아 틈새 활용 가능"
-    },
-    {
-      "id": "luggage_5",
-      "dims_cm": [60, 40, 30],
-      "volume_L": 72.0,
-      "note": "직육면체 형태로 다른 짐 위에 쌓기 용이"
-    },
-    {
-      "id": "luggage_6",
-      "dims_cm": [50, 30, 20],
-      "volume_L": 30.0,
-      "note": "직육면체 형태로 안정적인 배치 가능"
-    },
-    {
-      "id": "luggage_7",
-      "dims_cm": [50, 25, 25],
-      "volume_L": 31.2,
-      "note": "원통형으로 틈새에 끼워 넣기 용이"
-    },
-    {
-      "id": "luggage_8",
-      "dims_cm": [50, 25, 25],
-      "volume_L": 31.2,
-      "note": "원통형으로 틈새에 끼워 넣기 용이"
-    },
-    {
-      "id": "luggage_9",
-      "dims_cm": [40, 40, 50],
-      "volume_L": 80.0,
-      "note": "소형으로 공간 효율적으로 배치"
-    },
-    {
-      "id": "luggage_10",
-      "dims_cm": [40, 30, 25],
-      "volume_L": 30.0,
-      "note": "직육면체 형태로 쌓기 용이"
-    },
-    {
-      "id": "luggage_11",
-      "dims_cm": [40, 30, 25],
-      "volume_L": 30.0,
-      "note": "직육면체 형태로 쌓기 용이"
-    },
-    {
-      "id": "luggage_12",
-      "dims_cm": [40, 30, 20],
-      "volume_L": 24.0,
-      "note": "직육면체 형태로 안정적인 배치 가능"
-    },
-    {
-      "id": "luggage_13",
-      "dims_cm": [50, 30, 30],
-      "volume_L": 45.0,
-      "note": "비정형이지만 유연하여 틈새 활용 가능"
-    },
-    {
-      "id": "luggage_14",
-      "dims_cm": [30, 20, 20],
-      "volume_L": 12.0,
-      "note": "작은 직육면체로 빈 공간 채우기 용이"
-    },
-    {
-      "id": "luggage_15",
-      "dims_cm": [80, 20, 20],
-      "volume_L": 32.0,
-      "note": "긴 막대 형태로 측면이나 상단에 배치"
-    },
-    {
-      "id": "luggage_16",
-      "dims_cm": [80, 20, 20],
-      "volume_L": 32.0,
-      "note": "긴 막대 형태로 측면이나 상단에 배치"
-    }
-  ],
-  "total_volume_L": 845.4,
-  "trunk_capacity_L": 600,
-  "exceeds_trunk": true,
-  "classification": "L",
-  "best_placement_reason": "대형 아이스박스와 텐트 가방을 바닥에 배치하고, 그릴과 대형 가방을 그 위에 쌓은 후, 나머지 작은 짐들을 틈새에 채워 넣는 방식으로 최대한 효율적으로 수납합니다."
-}
-
-{
-  "instruction": {
-    "seats": {
-      "1": ["x", "A", "R", "storage"],
-      "2": ["x", "C", "L", "chair"],
-      "3": ["x", "A", "R", "storage"],
-      "4": ["x", "C", "L", "chair"]
+    "total_volume": "781.25L",
+    "trunk_capacity": "600L",
+    "optimal_arrangement_strategy": [
+      "1. 바비큐 그릴(luggage_1)과 대형 아이스박스(luggage_2)를 트렁크 바닥에 배치하여 큰 공간을 확보합니다.",
+      "2. 팝업 텐트 가방(luggage_3)과 접이식 테이블(luggage_4)을 바비큐 그릴과 아이스박스 위에 평평하게 겹쳐 놓아 틈새를 메웁니다.",
+      "3. 캠핑용 가방(luggage_5)과 사이드 테이블(luggage_6)을 남은 공간에 세워서 배치하거나 눕혀서 공간을 효율적으로 활용합니다.",
+      "4. 침낭(luggage_7, luggage_8)은 유연하므로 남은 작은 틈새에 밀어 넣어 수납합니다.",
+      "5. 장작 상자(luggage_9)와 캠핑용품 상자(luggage_10)는 직육면체 형태이므로 다른 짐들 사이의 빈 공간에 끼워 넣습니다.",
+      "6. 캠핑 의자(luggage_11, luggage_12)는 길쭉한 형태이므로 트렁크 측면이나 상단에 배치합니다.",
+      "7. 보냉 가방(luggage_13, luggage_14, luggage_16)과 스포츠 가방(luggage_15)은 유연하거나 작은 부피이므로 마지막으로 남은 공간에 채워 넣습니다."
+    ],
+    "trunk_overload": "트렁크 용량(600L)을 초과하는 총 부피(781.25L)로, 4인 탑승 시 좌석을 접지 않으면 트렁크에 모두 수납하기 어렵습니다. 일부 짐은 좌석 공간을 활용해야 할 것으로 판단됩니다.",
+    "luggage_amount_classification": "L"
+  },
+  "instruction":{
+    "seats":{
+      "1":["y","A","B","chair"],
+      "2":["x","C","L","storage"],
+      "3":["x","A","R","storage"],
+      "4":["x","C","L","storage"]
     }
   },
-  "option_no": 9
+  "option_no": 6
 }
-```
 
-🕒 chain2_run_time: 12.228s
+🕒 chain2_run_time: 9.001s
 
 =====================chain3_out =====================
 ```json
-{"environment_before": {"seats": {"1": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}, "2": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}, "3": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}, "4": {"rail_axis": "x", "position": "M", "facing": "F", "mode": "chair"}}}, "instruction": {"seats": {"1": ["x", "A", "R", "storage"], "2": ["x", "C", "L", "chair"], "3": ["x", "A", "R", "storage"], "4": ["x", "C", "L", "chair"]}}, "task_sequence": {"1": ["fold(1)", "seat_rotate(90)", "move_on_rail(A)"], "2": ["fold(2)", "seat_rotate(270)", "move_on_rail(C)", "unfold(2)"], "3": ["fold(3)", "seat_rotate(90)", "move_on_rail(A)"], "4": ["fold(4)", "seat_rotate(270)", "move_on_rail(C)", "unfold(4)"]}, "environment_after": {"seats": {"1": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"}, "2": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "chair"}, "3": {"rail_axis": "x", "position": "A", "facing": "R", "mode": "storage"}, "4": {"rail_axis": "x", "position": "C", "facing": "L", "mode": "chair"}}}}
+{
+  "environment_before": {
+    "seats": {
+      "1": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "M",
+        "facing": "F",
+        "mode": "chair"
+      }
+    }
+  },
+  "instruction": {
+    "seats": {
+      "1": [
+        "y",
+        "A",
+        "B",
+        "chair"
+      ],
+      "2": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ],
+      "3": [
+        "x",
+        "A",
+        "R",
+        "storage"
+      ],
+      "4": [
+        "x",
+        "C",
+        "L",
+        "storage"
+      ]
+    }
+  },
+  "task_sequence": {
+    "1": [
+      "disk_rotate(90)",
+      "fold(1)",
+      "seat_rotate(90)",
+      "move_on_rail(A)",
+      "unfold(1)"
+    ],
+    "2": [
+      "fold(2)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ],
+    "3": [
+      "fold(3)",
+      "seat_rotate(90)",
+      "move_on_rail(A)"
+    ],
+    "4": [
+      "fold(4)",
+      "seat_rotate(270)",
+      "move_on_rail(C)"
+    ]
+  },
+  "environment_after": {
+    "seats": {
+      "1": {
+        "rail_axis": "y",
+        "position": "A",
+        "facing": "B",
+        "mode": "chair"
+      },
+      "2": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      },
+      "3": {
+        "rail_axis": "x",
+        "position": "A",
+        "facing": "R",
+        "mode": "storage"
+      },
+      "4": {
+        "rail_axis": "x",
+        "position": "C",
+        "facing": "L",
+        "mode": "storage"
+      }
+    }
+  }
+}
 ```
 
-🕒 chain3_run_time: 3.634s
+🕒 chain3_run_time: 4.606s
 
 =====================chain4_out =====================
-1101320011013200
-🕒 chain_run_time: 55.725s
-🕒 tetris_run_time: 69.360s
+1110320111013201
+🕒 chain_run_time: 56.271s
+🕒 tetris_run_time: 57.713s
