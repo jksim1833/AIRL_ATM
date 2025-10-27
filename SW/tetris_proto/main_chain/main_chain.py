@@ -21,7 +21,7 @@ CHAIN1_PROMPT_TXT = ROOT / "chain1_prompt" / "chain1_prompt_3.txt"
 
 # [Chain2 경로]
 CHAIN2_PROMPT_DIR = ROOT / "chain2_prompt"
-CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_3.txt"
+CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_fin.txt"
 CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 
 # [Chain3 경로]
@@ -47,7 +47,7 @@ def _require_exists(p: Path, label: str):
 
 for p, label in [
     (CHAIN1_PROMPT_TXT, "chain1_prompt_3.txt"),
-    (CHAIN2_PROMPT_TXT, "chain2_prompt_3.txt"),
+    (CHAIN2_PROMPT_TXT, "chain2_prompt_fin.txt"),
     (CHAIN2_OPTION_TXT, "chain2_option.txt"),
     (C3_SYSTEM_TXT, "chain3_system_k.txt"),
     (C3_QUERY_TXT, "chain3_query_k.txt"),
