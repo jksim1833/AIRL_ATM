@@ -1,0 +1,139 @@
+[user]
+입력과 당신이 생성할 출력의 예시를 몇 가지 제시하겠습니다.
+예시 1~4는 설명을 위해 단일 시트만 사용하지만, 실행 시에는 instruction.seats에 포함된 모든 시트에 대한 동작을 생성하세요.
+**출력 형식은 예시에 제시된 것과 완전히 동일하게 유지하고, 불필요한 공백이나 줄바꿈을 추가하지 마세요.**
+예시 1:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["x","M","F","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": ["unchanged"]}}
+"""
+예시 2:
+"""
+- Input:
+{"instruction": { 
+  "seats": { 
+    "1": ["y","A","F","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(270)",
+    "move_on_rail(A)",
+    "unfold(1)"]}}
+"""
+예시 3:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["y","A","L","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(180)",
+    "move_on_rail(A)",
+    "unfold(1)"]}}
+"""
+예시 4:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["y","A","B","chair"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(90)",
+    "move_on_rail(A)",
+    "unfold(1)"]}}
+"""
+예시 5:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["x","A","F","chair"],
+    "2": ["x","C","R","storage"],
+    "3": ["x","A","F","chair"],
+    "4": ["x","C","L","storage"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "fold(1)",
+    "move_on_rail(A)",
+    "unfold(1)"
+    ],
+    "2": [
+    "fold(2)",
+    "seat_rotate(90)",
+    "move_on_rail(C)"
+    ],
+    "3": [
+    "fold(3)",
+    "move_on_rail(A)",
+    "unfold(3)"
+    ],
+    "4": [
+    "fold(4)",
+    "seat_rotate(270)",
+    "move_on_rail(C)"]
+}}
+"""
+예시 6:
+"""
+- Input:
+{"instruction": {
+  "seats": {
+    "1": ["y","A","B","storage"],
+    "2": ["y","C","L","chair"],
+    "3": ["y","A","R","chair"],
+    "4": ["y","C","F","storage"]}}}
+
+- Output:
+{"task_sequence": {
+    "1": [
+    "disk_rotate(90)",
+    "fold(1)",
+    "seat_rotate(90)",
+    "move_on_rail(A)"
+    ],
+    "2": [
+    "disk_rotate(90)",
+    "fold(2)",
+    "seat_rotate(180)",
+    "move_on_rail(C)",
+    "unfold(2)"
+    ],
+    "3": [
+    "disk_rotate(90)",
+    "fold(3)",
+    "move_on_rail(A)",
+    "unfold(3)"
+    ],
+    "4": [
+    "disk_rotate(90)",
+    "fold(4)",
+    "seat_rotate(270)",
+    "move_on_rail(C)"]
+}}
+"""
+초기 상태에서 지시된 목표 상태까지 도달하는 최소한의 유효 시퀀스를 생성하되, 동작 간 순서 의존성을 엄격히 준수하세요.
+-------------------------------------------------------
+위의 텍스트는 전체 지침의 일부입니다. 아직 작업을 시작하지 마세요.
+[assistant]
+이해했습니다. 다음 입력을 기다리는 중입니다.

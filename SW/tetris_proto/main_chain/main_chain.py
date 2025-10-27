@@ -21,18 +21,18 @@ CHAIN1_PROMPT_TXT = ROOT / "chain1_prompt" / "chain1_prompt_3.txt"
 
 # [Chain2 경로]
 CHAIN2_PROMPT_DIR = ROOT / "chain2_prompt"
-CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_4.txt"
+CHAIN2_PROMPT_TXT = CHAIN2_PROMPT_DIR / "chain2_prompt_fin.txt"
 CHAIN2_OPTION_TXT = CHAIN2_PROMPT_DIR / "chain2_option.txt"
 
 # [Chain3 경로]
 CHAIN3_DIR       = ROOT / "chain3_prompt"
-C3_SYSTEM_TXT    = CHAIN3_DIR / "chain3_system.txt"
-C3_QUERY_TXT     = CHAIN3_DIR / "chain3_query.txt"
-C3_ROLE_TXT      = CHAIN3_DIR / "chain3_prompt_role.txt"
-C3_ENV_TXT       = CHAIN3_DIR / "chain3_prompt_environment_2.txt"
-C3_FUNC_TXT      = CHAIN3_DIR / "chain3_prompt_function.txt"
-C3_OUTFMT_TXT    = CHAIN3_DIR / "chain3_prompt_output_format_2.txt"
-C3_EXAMPLE_TXT   = CHAIN3_DIR / "chain3_prompt_example_2.txt"
+C3_SYSTEM_TXT    = CHAIN3_DIR / "chain3_system_k.txt"
+C3_QUERY_TXT     = CHAIN3_DIR / "chain3_query_k.txt"
+C3_ROLE_TXT      = CHAIN3_DIR / "chain3_prompt_role_k.txt"
+C3_ENV_TXT       = CHAIN3_DIR / "chain3_prompt_environment_k.txt"
+C3_FUNC_TXT      = CHAIN3_DIR / "chain3_prompt_function_k.txt"
+C3_OUTFMT_TXT    = CHAIN3_DIR / "chain3_prompt_output_format_k.txt"
+C3_EXAMPLE_TXT   = CHAIN3_DIR / "chain3_prompt_example_k.txt"
 
 def _read_text(p: Path) -> str:
     return p.read_text(encoding="utf-8")
@@ -47,15 +47,15 @@ def _require_exists(p: Path, label: str):
 
 for p, label in [
     (CHAIN1_PROMPT_TXT, "chain1_prompt_3.txt"),
-    (CHAIN2_PROMPT_TXT, "chain2_prompt_4.txt"),
+    (CHAIN2_PROMPT_TXT, "chain2_prompt_fin.txt"),
     (CHAIN2_OPTION_TXT, "chain2_option.txt"),
-    (C3_SYSTEM_TXT, "chain3_system.txt"),
-    (C3_QUERY_TXT, "chain3_query.txt"),
-    (C3_ROLE_TXT, "chain3_prompt_role.txt"),
-    (C3_ENV_TXT, "chain3_prompt_environment_2.txt"),
-    (C3_FUNC_TXT, "chain3_prompt_function.txt"),
-    (C3_OUTFMT_TXT, "chain3_prompt_output_format_2.txt"),
-    (C3_EXAMPLE_TXT, "chain3_prompt_example_2.txt"),
+    (C3_SYSTEM_TXT, "chain3_system_k.txt"),
+    (C3_QUERY_TXT, "chain3_query_k.txt"),
+    (C3_ROLE_TXT, "chain3_prompt_role_k.txt"),
+    (C3_ENV_TXT, "chain3_prompt_environment_k.txt"),
+    (C3_FUNC_TXT, "chain3_prompt_function_k.txt"),
+    (C3_OUTFMT_TXT, "chain3_prompt_output_format_k.txt"),
+    (C3_EXAMPLE_TXT, "chain3_prompt_example_k.txt"),
 ]:
     _require_exists(p, label)
 
@@ -70,7 +70,7 @@ if not GOOGLE_API_KEY:
 # [LLM] — 체인별 하드코딩
 chain1_llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
-    temperature=0.2,                  
+    temperature=0.2,
     api_key=GOOGLE_API_KEY
 )
 chain2_llm = ChatGoogleGenerativeAI(
@@ -80,7 +80,7 @@ chain2_llm = ChatGoogleGenerativeAI(
 )
 chain3_llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash-image",
-    temperature=0.2,                     
+    temperature=0.2,
     api_key=GOOGLE_API_KEY
 )
 
@@ -92,10 +92,10 @@ chain1_prompt = ChatPromptTemplate.from_messages([
     MessagesPlaceholder(variable_name="user_input"),
 ])
 
+# ✅ 사용자의 요구에 맞게: LLM에는 이미지 **만** 전달 (people_count는 post-processing으로만 주입)
 def make_chain1_user_input(people_count: int, image_data_url: str) -> List[HumanMessage]:
     return [
-        HumanMessage(content=f"people_count = {people_count}"),
-        HumanMessage(content=[{"type":"image_url","image_url":{"url":image_data_url}}]),
+        HumanMessage(content=[{"type": "image_url", "image_url": {"url": image_data_url}}]),
     ]
 
 def _inject_people_into_json(result_text: str, people_count: int) -> str:
@@ -114,7 +114,6 @@ def _inject_people_into_json(result_text: str, people_count: int) -> str:
             out.update(data)
         else:
             out["model_output"] = data
-        # indent=2 유지(일관성), seats 등 배열은 chain2 단계에서 압축 처리
         return json.dumps(out, ensure_ascii=False, indent=2)
     except Exception:
         return json.dumps(
@@ -169,7 +168,6 @@ def _extract_instruction_json(result_text: str) -> str:
             text = text[first:last+1]
 
     def _wrap(instr_obj: dict) -> str:
-        # 최종 포맷: {"instruction":{ ... }}  (콤마/콜론 뒤 공백 없음)
         return json.dumps({"instruction": instr_obj}, ensure_ascii=False, indent=2, separators=(",", ":"))
 
     # 1) 정식 JSON 파싱
@@ -179,17 +177,16 @@ def _extract_instruction_json(result_text: str) -> str:
         # (a) 표준 형태: {"instruction": {...}, ...}
         if isinstance(data, dict) and "instruction" in data:
             instr = data["instruction"]
-            # instruction이 dict가 아니면 안전하게 감싼다
             if isinstance(instr, dict):
                 return _wrap(instr)
             else:
                 return _wrap({"raw_model_output": instr})
 
-        # (b) 축약형: 최상위가 instruction 내용(= seats 포함)
+        # (b) 축약형: 최상위가 instruction 내용
         if isinstance(data, dict) and ("seats" in data or "1" in data or "2" in data):
             return _wrap(data)
 
-        # (c) dict지만 구조가 다른 경우도 래핑하여 반환
+        # (c) dict지만 구조가 다른 경우도 래핑
         if isinstance(data, dict):
             return _wrap(data)
 
@@ -226,15 +223,16 @@ _chain3_outfmt  = _escape_braces(_read_text(C3_OUTFMT_TXT))
 _chain3_example = _escape_braces(_read_text(C3_EXAMPLE_TXT))
 _chain3_query   = _escape_braces(_read_text(C3_QUERY_TXT))
 
+# ✅ 사용자의 요구에 맞게: chain2_out만 human, 나머지는 모두 system
 chain3_prompt = ChatPromptTemplate.from_messages([
     ("system", _chain3_system),
-    ("human",  _chain3_role),
-    ("human",  _chain3_env),
-    ("human",  _chain3_func),
-    ("human",  _chain3_outfmt),
-    ("human",  _chain3_example),
+    ("system", _chain3_role),
+    ("system", _chain3_env),
+    ("system", _chain3_func),
+    ("system", _chain3_outfmt),
+    ("system", _chain3_example),
+    ("system", _chain3_query),
     ("human",  "{chain2_out}"),
-    ("human",  _chain3_query),
 ])
 
 # ---------------------- chain4 변환기 ----------------------

@@ -5,18 +5,30 @@
   "luggage_details": {
     "luggage_1": {
       "object": "골프백",
+<<<<<<< HEAD
       "color": "검은색, 빨간색, 흰색",
       "material": "폴리에스터",
       "shape": "원통형의 가방에 골프채가 꽂혀 있어 상단부가 돌출된 비정형",
       "text": "Titleist, YAMAHA",
       "special_note": "공간 차지 max. 높이가 길고 골프채가 돌출되어 있어 다른 짐과 함께 배치 시 효율적인 공간 활용이 어려움"
+=======
+      "color": "검은색, 빨간색",
+      "material": "폴리에스터",
+      "shape": "골프채가 수납된 형태로 인해 전체적으로 비정형",
+      "text": "Titleist",
+      "special_note": "공간 차지 max. 골프채가 수납되어 높이가 높고 형태가 불규칙하여 다른 짐과 함께 효율적으로 배치하기가 까다로움"
+>>>>>>> 695b212b6b05db318df30da3e0b5f76e20fce153
     },
     "luggage_2": {
-      "object": "더플백",
+      "object": "스포츠 더플백",
       "color": "검은색, 흰색",
       "material": "폴리에스터",
+<<<<<<< HEAD
       "shape": "직육면체 형태의 유연한 가방",
       "text": "세 개의 흰색 줄무늬 로고"
+=======
+      "shape": "직육면체 형태의 유연한 가방"
+>>>>>>> 695b212b6b05db318df30da3e0b5f76e20fce153
     },
     "luggage_3": {
       "object": "골프화",
@@ -29,34 +41,50 @@
   }
 }
 
+<<<<<<< HEAD
 🕒 chain1_run_time: 87.525s
+=======
+🕒 chain1_run_time: 13.710s
+>>>>>>> 695b212b6b05db318df30da3e0b5f76e20fce153
 
 =====================chain2_out =====================
 {
   "Meta data": {
     "luggage_1": {
       "object": "골프백",
-      "estimated_dimensions_cm": "30x30x120",
-      "estimated_volume_L": 108,
-      "placement_difficulty": "높음"
+      "estimated_dimensions_cm": "30(가로) x 30(세로) x 120(높이)",
+      "estimated_volume_L": 108
     },
     "luggage_2": {
+<<<<<<< HEAD
       "object": "더플백",
       "estimated_dimensions_cm": "50x30x30",
       "estimated_volume_L": 45,
       "placement_difficulty": "낮음"
+=======
+      "object": "스포츠 더플백",
+      "estimated_dimensions_cm": "50(가로) x 25(세로) x 25(높이)",
+      "estimated_volume_L": 31.25
+>>>>>>> 695b212b6b05db318df30da3e0b5f76e20fce153
     },
     "luggage_3": {
       "object": "골프화",
-      "estimated_dimensions_cm": "30x20x15",
-      "estimated_volume_L": 9,
-      "placement_difficulty": "낮음"
+      "estimated_dimensions_cm": "30(가로) x 20(세로) x 15(높이)",
+      "estimated_volume_L": 9
     },
+<<<<<<< HEAD
     "total_volume_L": 162,
     "trunk_capacity_L": 600,
     "trunk_exceeded": "아니오",
     "luggage_amount_category": "S",
     "optimal_placement_strategy": "골프백(luggage_1)을 트렁크 바닥에 눕혀 배치하여 높이 문제를 해결하고, 더플백(luggage_2)을 골프백 옆 빈 공간에 배치합니다. 골프화(luggage_3)는 남은 틈새 공간에 넣어 효율적으로 수납합니다. 4인 탑승 가정 시 좌석을 접거나 제거할 수 없으므로, 트렁크 공간 내에서 최적의 배치를 찾습니다."
+=======
+    "total_volume_L": 148.25,
+    "trunk_capacity_L": 600,
+    "volume_classification": "S",
+    "trunk_over_capacity": "수납 가능",
+    "optimal_arrangement_strategy": "골프백(luggage_1)은 높이가 높아 트렁크 바닥에 눕혀서 배치하고, 스포츠 더플백(luggage_2)은 골프백 옆 빈 공간에 배치합니다. 골프화(luggage_3)는 남은 틈새 공간에 배치하여 공간 활용을 극대화합니다. 4인 탑승 시 좌석을 접거나 제거할 수 없다는 가정 하에, 트렁크 문이 닫히지 않거나 좌석을 접지 않으면 들어가지 않는 경우만 '초과'로 간주하며, 현재 짐은 트렁크 용량을 초과하지 않습니다."
+>>>>>>> 695b212b6b05db318df30da3e0b5f76e20fce153
   },
   "instruction":{
     "seats":{
@@ -69,7 +97,11 @@
   "option_no": 7
 }
 
+<<<<<<< HEAD
 🕒 chain2_run_time: 4.922s
+=======
+🕒 chain2_run_time: 5.254s
+>>>>>>> 695b212b6b05db318df30da3e0b5f76e20fce153
 
 =====================chain3_out =====================
 ```json
@@ -103,9 +135,18 @@
 }
 ```
 
+<<<<<<< HEAD
 🕒 chain3_run_time: 3.272s
 
 =====================chain4_out =====================
 3210321011013201
 🕒 chain_run_time: 95.768s
 🕒 tetris_run_time: 97.857s
+=======
+🕒 chain3_run_time: 3.482s
+
+=====================chain4_out =====================
+3210321011013201
+🕒 chain_run_time: 22.490s
+🕒 tetris_run_time: 26.710s
+>>>>>>> 695b212b6b05db318df30da3e0b5f76e20fce153
